@@ -33,16 +33,18 @@ const fontSize = {
   caption3: '1rem',
 };
 const button = {
-  common: {
-    size: {
-      full: '400px',
-      large: '150px',
-      medium: '100px',
-      small: '60px',
-    },
+  size: {
+    full: '400px',
+    xlarge: '300px',
+    large: '150px',
+    medium: '100px',
+    small: '60px',
   },
-  buyOrSell: {
-    size: {},
+  color: {
+    selling: '#f15746',
+    buying: '#31b46e',
+    dark: '#000000',
+    light: '#ffffff',
   },
 };
 const theme = {
