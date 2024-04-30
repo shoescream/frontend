@@ -3,7 +3,7 @@ name: Feat
 about: 새 기능 구현
 title: 'Feature: '
 labels: 'Feature'
-assignees: 'chaeyun-sim'
+assignees: ''
 ---
 
 ## 💡 작업 개요
