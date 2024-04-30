@@ -5,3 +5,9 @@ html {
 body {
 	font-size: 1.6rem;
 }
+
+@font-face {
+	font-family: 'PretendardVariable';
+	src: url('/public//fonts/PretendardVariable.woff2')
+		format('web open font format');
+}
