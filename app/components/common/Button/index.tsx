@@ -15,9 +15,9 @@ const Button = ({
   onClick,
   disabled,
   children,
-}: //   ...props
-ButtonProps) => {
+}: ButtonProps) => {
   const sizeValue = button.button.common.size[size];
+
   return (
     <Container
       type={type}
@@ -31,8 +31,18 @@ ButtonProps) => {
   );
 };
 const Container = styled.button<{ theme: string; size: string }>`
-  height: 50px;
-  border-radius: ;
+  height: 48px;
+  border-radius: 10px;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
   width: ${(props) => props.size};
+  color: ${(props) => (props.theme === 'dark' ? '#ffffff' : '#000000')};
+  background-color: ${(props) =>
+    props.theme === 'dark' ? '#000000' : '#ffffff'};
+  cursor: pointer;
+  &:active {
+    background-color: ${(props) =>
+      props.theme === 'dark' ? '#333333' : '#cccccc'};
+  }
 `;
 export default Button;
