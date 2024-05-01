@@ -88,4 +88,5 @@ const ErrorText = styled.p`
 	color: #f15746;
 	font-size: ${theme.fontSize.caption2};
 	line-height: 1.6rem;
+	margin-top: 0.2rem;
 `;
