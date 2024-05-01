@@ -1,33 +1,33 @@
 const TOP_NAV_DATA = [
   {
     title: '고객센터',
-    path: 'center',
+    path: '/center',
   },
   {
     title: '마이페이지',
-    path: 'mypage',
+    path: '/mypage',
   },
   {
     title: '관심상품',
-    path: 'favorites',
+    path: '/favorites',
   },
 ];
 const MAIN_NAV_DATA = [
   {
     title: '홈',
-    path: '',
+    path: '/',
   },
   {
     title: '랭킹',
-    path: 'ranking',
+    path: '/ranking',
   },
   {
     title: 'SHOP',
-    path: 'shop',
+    path: '/shop',
   },
   {
     title: '이벤트',
-    path: 'event',
+    path: '/event',
   },
 ];
 

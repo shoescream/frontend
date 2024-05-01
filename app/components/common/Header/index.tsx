@@ -16,9 +16,7 @@ const Header = () => {
           <ImageStyled
             src="/search.png"
             alt="돋보기 이미지"
-            onClick={() => {
-              console.log('검색 이벤트');
-            }}
+            onClick={() => null}
           ></ImageStyled>
         </SearchContainer>
       </HeaderInner>
@@ -26,42 +24,42 @@ const Header = () => {
   );
 };
 const HeaderWrapper = styled.header`
-  width: 1440px;
-  height: 180px;
+  width: 144rem;
+  height: 18rem;
   display: flex;
   flex-direction: column;
 `;
 const HeaderTop = styled.div`
   position: relative;
-  height: 100px;
+  height: 10rem;
 `;
 const HeaderInner = styled.div`
   display: flex;
-  padding: 0 50px 0 50px;
+  padding: 0 5rem 0 5rem;
   #header__logo {
     font-size: ${theme.fontSize.headline1};
-    font-weight: 1000;
+    font-weight: bold;
   }
   position: relative;
 `;
 const InputStyled = styled.input`
-  height: 38px;
-  width: 250px;
-  border-radius: 6px;
-  padding: 5px;
+  height: 3.8rem;
+  width: 25rem;
+  border-radius: 0.6rem;
+  padding: 0.5rem;
 `;
 const ImageStyled = styled.img`
-  width: 30px;
-  height: 30px;
-  margin-left: 10px;
+  width: 3rem;
+  height: 3rem;
+  margin-left: 1rem;
   cursor: pointer;
 `;
 const SearchContainer = styled.div`
-  width: 300px;
-  height: 40px;
-  border: 1px solid ${theme.colors.gray[200]};
-  border-radius: 6px;
+  width: 30rem;
+  height: 4rem;
+  border: 0.1rem solid ${theme.colors.gray[200]};
+  border-radius: 0.6rem;
   position: absolute;
-  right: 10px;
+  right: 1rem;
 `;
 export default Header;

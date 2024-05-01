@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 interface NavDataProps {
   title?: string;
-  path?: string;
+  path: string;
 }
 interface NavProps {
   type?: 'top' | 'main';
@@ -19,20 +19,17 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
       {data &&
         data.map((navData, idx) => (
           <ButtonWrapper
-            onClick={() => router.push('/' + navData.path)}
+            onClick={() => router.push(navData.path)}
             key={idx}
             type={type}
-            active={path === '/' + navData.path ? 'true' : 'false'}
+            active={path === navData.path ? 'true' : 'false'}
           >
             {navData.title}
           </ButtonWrapper>
         ))}
       {type === 'top' ? ( // 알람과 modal창을 띄워야해서 따로 분리 했습니다.
         <>
-          <ButtonWrapper
-            type={type}
-            onClick={() => console.log('알람 이벤트 처리')}
-          >
+          <ButtonWrapper type={type} onClick={() => null}>
             알림
           </ButtonWrapper>
           <ButtonWrapper type={type} onClick={() => router.push('/login')}>
@@ -46,7 +43,7 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
   );
 };
 const NavWrapper = styled.nav<{ type: string }>`
-  height: ${(props) => (props.type === 'top' ? '15px' : '42.5px')};
+  height: ${(props) => (props.type === 'top' ? '1.5rem' : '4.2rem')};
   font-size: ${(props) =>
     props.type === 'top' ? theme.fontSize.caption3 : theme.fontSize.title2};
   position: ${(props) => (props.type === 'top' ? 'absolute' : 'static')};
@@ -54,10 +51,10 @@ const NavWrapper = styled.nav<{ type: string }>`
   right: 0;
 `;
 const ButtonWrapper = styled.button<{ type: string; active?: string }>`
-  width: ${(props) => (props.type === 'top' ? '70px' : '100px')};
-  margin: 0 10px 0 5px;
+  width: ${(props) => (props.type === 'top' ? '7rem' : '10rem')};
+  margin: 0 1rem 0 0.5rem;
   background-color: #ffffff;
-  line-height: ${(props) => (props.type === 'top' ? '' : '42.5px')};
+  line-height: ${(props) => (props.type === 'top' ? '' : '4.2rem')};
   font-weight: ${(props) => (props.active === 'true' ? 'bold' : 'normal')};
   text-decoration: ${(props) =>
     props.active === 'true' ? 'underline' : 'none'};
