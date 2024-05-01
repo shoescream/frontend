@@ -13,23 +13,19 @@ const Footer = () => {
 			<div>
 				<Flex>
 					<Row>
-						<li>
-							<a>서비스소개</a>
-						</li>
-						<li>
-							<a>제휴문의</a>
-						</li>
-						<li>
-							<a>FAQ</a>
-						</li>
-						<li>
-							<a>이용약관</a>
-						</li>
-						<li>
-							<strong>
-								<a>개인정보처리방침</a>
-							</strong>
-						</li>
+						{['서비스소개', '제휴문의', 'FAQ', '이용약관', '개인정보처리방침'].map(
+							(item, idx) => (
+								<li key={item}>
+									{idx === 4 ? (
+										<a>
+											<strong>{item}</strong>
+										</a>
+									) : (
+										<a>{item}</a>
+									)}
+								</li>
+							)
+						)}
 					</Row>
 					<Row>
 						<a>
