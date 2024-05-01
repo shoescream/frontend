@@ -13,7 +13,13 @@ const Header = () => {
         <MultiNavBar type="main" data={NAV_DATA.MAIN_NAV_DATA} />
         <SearchContainer>
           <InputStyled type="text" placeholder="Search in site"></InputStyled>
-          <ImageStyled src="/search.png" alt="돋보기 이미지"></ImageStyled>
+          <ImageStyled
+            src="/search.png"
+            alt="돋보기 이미지"
+            onClick={() => {
+              console.log('검색 이벤트');
+            }}
+          ></ImageStyled>
         </SearchContainer>
       </HeaderInner>
     </HeaderWrapper>
@@ -48,6 +54,7 @@ const ImageStyled = styled.img`
   width: 30px;
   height: 30px;
   margin-left: 10px;
+  cursor: pointer;
 `;
 const SearchContainer = styled.div`
   width: 300px;
