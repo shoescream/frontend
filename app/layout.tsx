@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import theme from '@/styles/theme';
+import GlobalStyle from './GlobalStyle';
 
 const inter = Inter({ subsets: ['latin'] });
 const pretendard = localFont({
@@ -23,6 +24,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 			<ThemeProvider theme={theme}>
 				<html lang='en'>
 					<body className={`${inter.className} ${pretendard.className}`}>
+						<GlobalStyle />
 						{children}
 					</body>
 				</html>
