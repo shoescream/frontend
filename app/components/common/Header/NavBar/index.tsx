@@ -27,6 +27,21 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
             {navData.title}
           </ButtonWrapper>
         ))}
+      {type === 'top' ? ( // 알람과 modal창을 띄워야해서 따로 분리 했습니다.
+        <>
+          <ButtonWrapper
+            type={type}
+            onClick={() => console.log('알람 이벤트 처리')}
+          >
+            알림
+          </ButtonWrapper>
+          <ButtonWrapper type={type} onClick={() => router.push('/login')}>
+            로그인
+          </ButtonWrapper>
+        </>
+      ) : (
+        ''
+      )}
     </NavWrapper>
   );
 };
@@ -38,7 +53,7 @@ const NavWrapper = styled.nav<{ type: string }>`
   top: 0;
   right: 0;
 `;
-const ButtonWrapper = styled.button<{ type: string; active: string }>`
+const ButtonWrapper = styled.button<{ type: string; active?: string }>`
   width: ${(props) => (props.type === 'top' ? '70px' : '100px')};
   margin: 0 10px 0 5px;
   background-color: #ffffff;
@@ -47,4 +62,5 @@ const ButtonWrapper = styled.button<{ type: string; active: string }>`
   text-decoration: ${(props) =>
     props.active === 'true' ? 'underline' : 'none'};
 `;
+
 export default MultiNavBar;
