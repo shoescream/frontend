@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactQueryClientProvider } from './hooks/ReactQueryClientProvider';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import theme from '@/styles/theme';
@@ -25,7 +25,11 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 				<html lang='en'>
 					<body className={`${inter.className} ${pretendard.className}`}>
 						<GlobalStyle />
-						{children}
+						<Container>
+							<header>header</header>
+							<Content>{children}</Content>
+							<footer>footer</footer>
+						</Container>
 					</body>
 				</html>
 			</ThemeProvider>
@@ -34,3 +38,13 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 };
 
 export default RootLayout;
+
+const Container = styled.div`
+	width: 100%;
+`;
+
+const Content = styled.div`
+	max-width: 128rem;
+	margin: 0 auto;
+	padding: 0 4rem;
+`;
