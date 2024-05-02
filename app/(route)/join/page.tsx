@@ -17,7 +17,7 @@ const Join = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    mode: 'onChange', // 에러 실시간 탐지
+    mode: 'onChange',
   });
   const onSubmit = (data: FormData) => {
     //data submit
@@ -34,6 +34,17 @@ const Join = () => {
           placeholder="아이디를 입력해주세요"
           errormessage={errors.id?.message || ''}
           register={register}
+          rules={{
+            required: true,
+            minLength: {
+              value: 8,
+              message: '아이디는 8자이상 영문+숫자만 가능합니다.',
+            },
+            pattern: {
+              value: /^[a-zA-Z0-9]+$/,
+              message: '아이디는 8자이상 영문+숫자만 가능합니다.',
+            },
+          }}
         ></Input>
         <Input
           type="password"
@@ -42,6 +53,17 @@ const Join = () => {
           placeholder="비밀번호를 입력해주세요"
           errormessage={errors.password?.message || ''}
           register={register}
+          rules={{
+            required: true,
+            minLength: {
+              value: 8,
+              message: '8자이상 영문+숫자+특수문자로 입력해주세요.',
+            },
+            pattern: {
+              value: /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\W_]).{8,}$/,
+              message: '8자이상 영문+숫자+특수문자로 입력해주세요.',
+            },
+          }}
         ></Input>
         <Input
           type="text"
@@ -50,6 +72,13 @@ const Join = () => {
           placeholder="이메일을 입력해주세요"
           errormessage={errors.email?.message || ''}
           register={register}
+          rules={{
+            required: true,
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: '이메일 형식에 알맞게 입력해주세요.',
+            },
+          }}
         ></Input>
         <Button type="submit">가입하기</Button>
         <Button buttonColor="light" onClick={() => router.push('/')}>
