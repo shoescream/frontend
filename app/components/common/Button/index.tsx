@@ -53,7 +53,7 @@ const Container = styled.button<{
     props.buttonColor === '#ffffff' ? '#000000' : '#ffffff'};
   background-color: ${(props) => props.buttonColor};
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
   cursor: pointer;
   &:active {
     background-color: ${(props) =>
