@@ -24,10 +24,12 @@ const Header = () => {
   );
 };
 const HeaderWrapper = styled.header`
-  width: 144rem;
-  height: 18rem;
+  width: 128rem;
+  height: 13rem;
   display: flex;
   flex-direction: column;
+  border-bottom: 0.1rem solid ${theme.colors.border};
+  margin: auto;
 `;
 const HeaderTop = styled.div`
   position: relative;
@@ -35,7 +37,7 @@ const HeaderTop = styled.div`
 `;
 const HeaderInner = styled.div`
   display: flex;
-  padding: 0 5rem 0 5rem;
+  padding: 2rem 5rem 0 5rem;
   #header__logo {
     font-size: ${theme.fontSize.headline1};
     font-weight: bold;
