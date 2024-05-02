@@ -26,7 +26,9 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 					<body className={`${inter.className} ${pretendard.className}`}>
 						<GlobalStyle />
 						<Container>
+							<header>header</header>
 							<Content>{children}</Content>
+							<footer>footer</footer>
 						</Container>
 					</body>
 				</html>
