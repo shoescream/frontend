@@ -2,14 +2,19 @@ import styled from 'styled-components';
 import theme from '../../../styles/theme';
 import MultiNavBar from './NavBar';
 import { NAV_DATA } from './navProps';
+import { useRouter } from 'next/navigation';
+
 const Header = () => {
+	const router = useRouter();
 	return (
 		<HeaderWrapper>
 			<HeaderTop>
 				<MultiNavBar type='top' data={NAV_DATA.TOP_NAV_DATA} />
 			</HeaderTop>
 			<HeaderInner>
-				<div id='header__logo'>KREAM</div>
+				<div id='header__logo' onClick={() => router.push('/')}>
+					KREAM
+				</div>
 				<MultiNavBar type='main' data={NAV_DATA.MAIN_NAV_DATA} />
 				<SearchContainer>
 					<InputStyled type='text' placeholder='Search in site'></InputStyled>
@@ -40,6 +45,7 @@ const HeaderInner = styled.div`
 	#header__logo {
 		font-size: ${theme.fontSize.headline1};
 		font-weight: bold;
+		cursor: pointer;
 	}
 	position: relative;
 `;
