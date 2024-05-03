@@ -1,7 +1,7 @@
 'use client';
 
 import theme from '@/styles/theme';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import { RegisterOptions, UseFormRegister } from 'react-hook-form';
 
 interface InputProps {
@@ -12,6 +12,7 @@ interface InputProps {
 	type?: string;
 	errormessage: string;
 	placeholder?: string;
+	styles?: CSSProperties;
 }
 
 const Input = ({
@@ -22,9 +23,10 @@ const Input = ({
 	rules,
 	errormessage,
 	placeholder,
+	styles,
 }: InputProps) => {
 	return (
-		<InputWrapper>
+		<InputWrapper style={styles}>
 			<Label errormessage={errormessage}>{label}</Label>
 			<StyledInput
 				type={type}
@@ -44,7 +46,6 @@ export default Input;
 const InputWrapper = styled.div`
 	padding: 1rem 0 1.4rem;
 	position: relative;
-	width: 37rem;
 	height: 8rem;
 	margin: 0 auto;
 `;

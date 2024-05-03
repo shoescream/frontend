@@ -4,7 +4,6 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { FaInstagram } from 'react-icons/fa';
 import { MdOutlineFacebook } from 'react-icons/md';
-import KakaoChannel from 'public/kakao-channel.svg';
 import Image from 'next/image';
 
 const Footer = () => {
@@ -61,10 +60,8 @@ const Footer = () => {
 export default Footer;
 
 const StyledFooter = styled.footer`
-	padding: 4rem 4rem 3.5rem;
+	padding: 4rem 0rem 3.5rem;
 	border-top: 0.1rem solid ${theme.colors.border};
-	position: absolute;
-	bottom: 0;
 	width: 100%;
 `;
 
