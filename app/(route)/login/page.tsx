@@ -7,6 +7,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import KakaoLogin from '/public/kakao-login.svg';
+import { useRouter } from 'next/navigation';
 
 interface FormData {
 	id: string;
@@ -14,6 +15,8 @@ interface FormData {
 }
 
 const Login = () => {
+	const router = useRouter();
+
 	const {
 		register,
 		handleSubmit,
@@ -56,10 +59,14 @@ const Login = () => {
 						rules={{
 							pattern: {
 								value:
-									/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\\\|\[\]{};:'",.<>\/?]).{8,}$/,
+									/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\\\|\[\]{};:'",.<>\/?]).{8,16}$/,
 								message: '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8~16글자)',
 							},
 							maxLength: {
+								value: 16,
+								message: '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8~16글자)',
+							},
+							minLength: {
 								value: 8,
 								message: '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8~16글자)',
 							},
@@ -70,9 +77,13 @@ const Login = () => {
 					</Button>
 				</Form>
 				<List>
-					<ListItem>이메일 가입</ListItem>
-					<ListItem>이메일 찾기</ListItem>
-					<ListItem>비밀번호 찾기</ListItem>
+					<ListItem onClick={() => router.push('/join')}>이메일 가입</ListItem>
+					<ListItem onClick={() => router.push('/login/find_id')}>
+						아이디 찾기
+					</ListItem>
+					<ListItem onClick={() => router.push('/login/find_password')}>
+						비밀번호 찾기
+					</ListItem>
 				</List>
 				<Button type='button' styles={{ marginTop: '4rem' }} buttonColor={'none'}>
 					<SocialLoginButtonWrapper>
