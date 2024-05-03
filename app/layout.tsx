@@ -29,7 +29,16 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 						<GlobalStyle />
 						<Container>
 							<Content>
-								<Header />
+								<div
+									style={{
+										position: 'sticky',
+										top: 0,
+										backgroundColor: 'white',
+										width: '120rem',
+									}}
+								>
+									<Header />
+								</div>
 								<div>{children}</div>
 								<Footer />
 							</Content>
