@@ -25,17 +25,18 @@ const Header = () => {
 };
 const HeaderWrapper = styled.header`
 	width: 100%;
-	height: 18rem;
+	height: 13rem;
 	display: flex;
 	flex-direction: column;
 `;
 const HeaderTop = styled.div`
 	position: relative;
 	height: 10rem;
+	margin-top: 1rem;
 `;
 const HeaderInner = styled.div`
 	display: flex;
-	padding: 0 5rem 0 5rem;
+	padding: 0 5rem;
 	#header__logo {
 		font-size: ${theme.fontSize.headline1};
 		font-weight: bold;
