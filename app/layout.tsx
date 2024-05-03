@@ -6,6 +6,8 @@ import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import theme from '@/styles/theme';
 import GlobalStyle from './GlobalStyle';
+import Header from './components/common/Header';
+import Footer from './components/common/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 const pretendard = localFont({
@@ -26,9 +28,11 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 					<body className={`${inter.className} ${pretendard.className}`}>
 						<GlobalStyle />
 						<Container>
-							<header>header</header>
-							<Content>{children}</Content>
-							<footer>footer</footer>
+							<Content>
+								<Header />
+								<div>{children}</div>
+								<Footer />
+							</Content>
 						</Container>
 					</body>
 				</html>
@@ -41,10 +45,12 @@ export default RootLayout;
 
 const Container = styled.div`
 	width: 100%;
+	height: 100vh;
 `;
 
 const Content = styled.div`
-	max-width: 128rem;
+	width: 128rem;
+	height: 100%;
 	margin: 0 auto;
 	padding: 0 4rem;
 `;
