@@ -73,14 +73,7 @@ const Join = () => {
                         },
                     }}
                 ></Input>
-                <div
-                    style={{
-                        display: 'flex',
-                        width: '37rem',
-                        margin: '0 1.5rem',
-                        position: 'relative',
-                    }}
-                >
+                <EmailFormWrapper>
                     <Input
                         type="text"
                         label="이메일*"
@@ -96,12 +89,18 @@ const Join = () => {
                             },
                         }}
                     ></Input>
-                    <div style={{ paddingTop: '1.8rem' }}>
-                        <Button size="small" onClick={checkEmail}>
-                            확인
-                        </Button>
-                    </div>
-                </div>
+                    <Button
+                        size="small"
+                        onClick={checkEmail}
+                        styles={{
+                            height: '3.8rem',
+                            marginTop: '3.6rem',
+                            marginLeft: '1rem',
+                        }}
+                    >
+                        확인
+                    </Button>
+                </EmailFormWrapper>
                 <Input
                     type="text"
                     label="이름*"
@@ -117,7 +116,9 @@ const Join = () => {
                         },
                     }}
                 ></Input>
-                <Button type="submit">가입하기</Button>
+                <Button type="submit" styles={{ marginTop: '2rem' }}>
+                    가입하기
+                </Button>
                 <Button buttonColor="light" onClick={() => router.push('/')}>
                     돌아가기
                 </Button>
@@ -136,4 +137,11 @@ const JoinContainer = styled.div`
 `;
 const Title = styled.h2`
     text-align: center;
+    padding-bottom: 5rem;
+`;
+const EmailFormWrapper = styled.div`
+    display: flex;
+    width: 37rem;
+    margin: 0 1.5rem;
+    position: relative;
 `;
