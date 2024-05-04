@@ -1,7 +1,9 @@
+/** @format */
+
 'use client';
 
 import { ReactQueryClientProvider } from './hooks/ReactQueryClientProvider';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import theme from '@/styles/theme';
@@ -21,45 +23,45 @@ interface RootLayoutProps {
 }
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
-	return (
-		<ReactQueryClientProvider>
-			<ThemeProvider theme={theme}>
-				<html lang='en'>
-					<body className={`${inter.className} ${pretendard.className}`}>
-						<GlobalStyle />
-						<Container>
-							<Content>
-								<div
-									style={{
-										position: 'sticky',
-										top: 0,
-										backgroundColor: 'white',
-										width: '120rem',
-									}}
-								>
-									<Header />
-								</div>
-								<div>{children}</div>
-								<Footer />
-							</Content>
-						</Container>
-					</body>
-				</html>
-			</ThemeProvider>
-		</ReactQueryClientProvider>
-	);
+  return (
+    <ReactQueryClientProvider>
+      <ThemeProvider theme={theme}>
+        <html lang='en'>
+          <body className={`${inter.className} ${pretendard.className}`}>
+            <GlobalStyle />
+            <Container>
+              <Content>
+                <div
+                  style={{
+                    position: 'sticky',
+                    top: 0,
+                    backgroundColor: 'white',
+                    width: '120rem',
+                  }}
+                >
+                  <Header />
+                </div>
+                <div>{children}</div>
+                <Footer />
+              </Content>
+            </Container>
+          </body>
+        </html>
+      </ThemeProvider>
+    </ReactQueryClientProvider>
+  );
 };
 
 export default RootLayout;
 
 const Container = styled.div`
-	width: 100%;
-	height: 100vh;
+  width: 100%;
+  height: 100vh;
 `;
 
 const Content = styled.div`
-	width: 128rem;
-	height: 100%;
-	margin: 0 auto;
-	padding: 0 4rem;
+  width: 128rem;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 4rem;
 `;
