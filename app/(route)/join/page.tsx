@@ -41,14 +41,9 @@ const Join = () => {
                     errormessage={errors.id?.message || ''}
                     register={register}
                     rules={{
-                        required: true,
-                        minLength: {
-                            value: 8,
-                            message: '아이디는 8자이상 영문+숫자만 가능합니다.',
-                        },
                         pattern: {
-                            value: /^[a-zA-Z0-9]+$/,
-                            message: '아이디는 8자이상 영문+숫자만 가능합니다.',
+                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                            message: '올바르지 않은 형식입니다.',
                         },
                     }}
                 ></Input>
@@ -60,16 +55,20 @@ const Join = () => {
                     errormessage={errors.password?.message || ''}
                     register={register}
                     rules={{
-                        required: true,
+                        pattern: {
+                            value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\\\|\[\]{};:'",.<>\/?]).{8,16}$/,
+                            message:
+                                '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8~16글자)',
+                        },
+                        maxLength: {
+                            value: 16,
+                            message:
+                                '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8~16글자)',
+                        },
                         minLength: {
                             value: 8,
                             message:
-                                '8자이상 영문+숫자+특수문자로 입력해주세요.',
-                        },
-                        pattern: {
-                            value: /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\W_]).{8,}$/,
-                            message:
-                                '8자이상 영문+숫자+특수문자로 입력해주세요.',
+                                '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8~16글자)',
                         },
                     }}
                 ></Input>
