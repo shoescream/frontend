@@ -129,10 +129,10 @@ const Join = () => {
 export default Join;
 
 const JoinContainer = styled.div`
-    height: 100vh;
+    height: 100%;
     width: 40rem;
-    margin: auto;
-    padding: 5.8rem 0 16rem;
+    margin: 0 auto;
+    padding: 6rem 0 16rem;
 `;
 const Title = styled.h2`
     text-align: center;
