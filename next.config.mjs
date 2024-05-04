@@ -15,6 +15,11 @@ const nextConfig = {
 		config.resolve.alias['@types'] = join(__dirname, 'app/types/*');
 		config.resolve.alias['@utils'] = join(__dirname, 'app/utils/*');
 
+		config.module.rules.push({
+			test: /\.svg$/,
+			use: ['@svgr/webpack'],
+		});
+
 		return config;
 	},
 };
