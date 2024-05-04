@@ -28,33 +28,40 @@ const Header = () => {
 		</HeaderWrapper>
 	);
 };
+
 const HeaderWrapper = styled.header`
-	width: 100%;
-	height: 13rem;
-	display: flex;
-	flex-direction: column;
+  width: 128rem;
+  height: 13rem;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 0.1rem solid ${theme.colors.border};
+  margin: auto;
 `;
+
 const HeaderTop = styled.div`
 	position: relative;
 	height: 10rem;
 	margin-top: 1rem;
 `;
+
 const HeaderInner = styled.div`
-	display: flex;
-	padding: 0 5rem;
-	#header__logo {
-		font-size: ${theme.fontSize.headline1};
-		font-weight: bold;
-		cursor: pointer;
-	}
-	position: relative;
+  display: flex;
+  padding: 2rem 5rem 0;
+  #header__logo {
+    font-size: ${theme.fontSize.headline1};
+    font-weight: bold;
+    cursor: pointer;
+  }
+  position: relative;
 `;
+
 const InputStyled = styled.input`
 	height: 3.8rem;
 	width: 25rem;
 	border-radius: 0.6rem;
 	padding: 0.5rem;
 `;
+
 const ImageStyled = styled.img`
 	width: 3rem;
 	height: 3rem;
@@ -69,4 +76,5 @@ const SearchContainer = styled.div`
 	position: absolute;
 	right: 1rem;
 `;
+
 export default Header;

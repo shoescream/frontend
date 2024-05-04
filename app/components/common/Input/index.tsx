@@ -51,43 +51,43 @@ const InputWrapper = styled.div`
 `;
 
 const Label = styled.label<Pick<InputProps, 'errormessage'>>`
-	font-size: ${theme.fontSize.body2};
-	line-height: 1.8rem;
-	color: ${(props) => (props.errormessage ? '#f15746' : theme.colors.main)};
-	font-weight: 600;
+    font-size: ${theme.fontSize.body2};
+    line-height: 1.8rem;
+    color: ${(props) => (props.errormessage ? '#f15746' : theme.colors.main)};
+    font-weight: 600;
 `;
 
 const StyledInput = styled.input<Pick<InputProps, 'errormessage'>>`
-	border-bottom: 0.1rem solid
-		${(props) => (props.errormessage ? '#f15746' : theme.colors.border)};
-	border-top: 0;
-	border-left: 0;
-	border-right: 0;
-	height: 3.8rem;
-	width: 100%;
-	outline: none;
-	font-size: ${theme.fontSize.subtitle3};
-	color: ${theme.colors.main};
-	padding-bottom: 1.4rem;
-	padding-top: 1.4rem;
-	margin-top: 0.4rem;
-	&::placeholder {
-		color: #bcbcbc;
-	}
-	&:focus {
-		border-bottom: ${(props) =>
-			props.errormessage
-				? '0.1rem solid #f15746'
-				: `0.2rem solid ${theme.colors.main}`};
-		&::placeholder {
-			color: white;
-		}
-	}
+    border-bottom: 0.1rem solid
+        ${(props) => (props.errormessage ? '#f15746' : theme.colors.border)};
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    height: 3.8rem;
+    width: 100%;
+    outline: none;
+    font-size: ${theme.fontSize.subtitle3};
+    color: ${theme.colors.main};
+    padding-bottom: 1.4rem;
+    padding-top: 1.4rem;
+    margin-top: 0.4rem;
+    &::placeholder {
+        color: #bcbcbc;
+    }
+    &:focus {
+        border-bottom: ${(props) =>
+            props.errormessage
+                ? '0.1rem solid #f15746'
+                : `0.2rem solid ${theme.colors.main}`};
+        &::placeholder {
+            color: white;
+        }
+    }
 `;
 
 const ErrorText = styled.p`
-	color: #f15746;
-	font-size: ${theme.fontSize.caption2};
-	line-height: 1.6rem;
-	margin-top: 0.2rem;
+    color: #f15746;
+    font-size: ${theme.fontSize.caption2};
+    line-height: 1.6rem;
+    margin-top: 0.2rem;
 `;
