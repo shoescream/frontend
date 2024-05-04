@@ -1,40 +1,42 @@
 'use client';
 
 import theme from '@/styles/theme';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import { RegisterOptions, UseFormRegister } from 'react-hook-form';
 
 interface InputProps {
-    label?: string;
-    name: string;
-    register: UseFormRegister<any>;
-    rules?: RegisterOptions;
-    type?: string;
-    errormessage: string;
-    placeholder?: string;
+	label?: string;
+	name: string;
+	register: UseFormRegister<any>;
+	rules?: RegisterOptions;
+	type?: string;
+	errormessage: string;
+	placeholder?: string;
+	styles?: CSSProperties;
 }
 
 const Input = ({
-    label,
-    type,
-    name,
-    register,
-    rules,
-    errormessage,
-    placeholder,
+	label,
+	type,
+	name,
+	register,
+	rules,
+	errormessage,
+	placeholder,
+	styles,
 }: InputProps) => {
-    return (
-        <InputWrapper>
-            <Label errormessage={errormessage}>{label}</Label>
-            <StyledInput
-                type={type}
-                {...register(name, rules)}
-                errormessage={errormessage}
-                placeholder={placeholder}
-            />
-            {errormessage && <ErrorText>{errormessage}</ErrorText>}
-        </InputWrapper>
-    );
+	return (
+		<InputWrapper style={styles}>
+			<Label errormessage={errormessage}>{label}</Label>
+			<StyledInput
+				type={type}
+				{...register(name, rules)}
+				errormessage={errormessage}
+				placeholder={placeholder}
+			/>
+			{errormessage && <ErrorText>{errormessage}</ErrorText>}
+		</InputWrapper>
+	);
 };
 
 Input.displayName = 'Input';
@@ -42,11 +44,10 @@ Input.displayName = 'Input';
 export default Input;
 
 const InputWrapper = styled.div`
-    padding: 1rem 0 1.4rem;
-    position: relative;
-    width: 37rem;
-    height: 8rem;
-    margin: 0 auto;
+	padding: 1rem 0 1.4rem;
+	position: relative;
+	height: 8rem;
+	margin: 0 auto;
 `;
 
 const Label = styled.label<Pick<InputProps, 'errormessage'>>`

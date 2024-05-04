@@ -4,7 +4,6 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { FaInstagram } from 'react-icons/fa';
 import { MdOutlineFacebook } from 'react-icons/md';
-import KakaoChannel from 'public/kakao-channel.svg';
 import Image from 'next/image';
 
 const Footer = () => {
