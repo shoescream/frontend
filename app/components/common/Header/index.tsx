@@ -5,43 +5,44 @@ import { NAV_DATA } from './navProps';
 import { useRouter } from 'next/navigation';
 
 const Header = () => {
-	const router = useRouter();
-	return (
-		<HeaderWrapper>
-			<HeaderTop>
-				<MultiNavBar type='top' data={NAV_DATA.TOP_NAV_DATA} />
-			</HeaderTop>
-			<HeaderInner>
-				<div id='header__logo' onClick={() => router.push('/')}>
-					KREAM
-				</div>
-				<MultiNavBar type='main' data={NAV_DATA.MAIN_NAV_DATA} />
-				<SearchContainer>
-					<InputStyled type='text' placeholder='Search in site'></InputStyled>
-					<ImageStyled
-						src='/search.png'
-						alt='돋보기 이미지'
-						onClick={() => null}
-					></ImageStyled>
-				</SearchContainer>
-			</HeaderInner>
-		</HeaderWrapper>
-	);
+  const router = useRouter();
+  return (
+    <HeaderWrapper>
+      <HeaderTop>
+        <MultiNavBar type="top" data={NAV_DATA.TOP_NAV_DATA} />
+      </HeaderTop>
+      <HeaderInner>
+        <div id="header__logo" onClick={() => router.push('/')}>
+          KREAM
+        </div>
+        <MultiNavBar type="main" data={NAV_DATA.MAIN_NAV_DATA} />
+        <SearchContainer>
+          <InputStyled type="text" placeholder="Search in site"></InputStyled>
+          <ImageStyled
+            src="/search.png"
+            alt="돋보기 이미지"
+            onClick={() => null}
+          ></ImageStyled>
+        </SearchContainer>
+      </HeaderInner>
+    </HeaderWrapper>
+  );
 };
 
 const HeaderWrapper = styled.header`
-  width: 128rem;
+  width: 100%;
   height: 13rem;
   display: flex;
   flex-direction: column;
   border-bottom: 0.1rem solid ${theme.colors.border};
   margin: auto;
+  padding-bottom: 1rem;
 `;
 
 const HeaderTop = styled.div`
-	position: relative;
-	height: 10rem;
-	margin-top: 1rem;
+  position: relative;
+  height: 10rem;
+  margin-top: 1rem;
 `;
 
 const HeaderInner = styled.div`
@@ -56,25 +57,25 @@ const HeaderInner = styled.div`
 `;
 
 const InputStyled = styled.input`
-	height: 3.8rem;
-	width: 25rem;
-	border-radius: 0.6rem;
-	padding: 0.5rem;
+  height: 3.8rem;
+  width: 25rem;
+  border-radius: 0.6rem;
+  padding: 0.5rem;
 `;
 
 const ImageStyled = styled.img`
-	width: 3rem;
-	height: 3rem;
-	margin-left: 1rem;
-	cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  margin-left: 1rem;
+  cursor: pointer;
 `;
 const SearchContainer = styled.div`
-	width: 30rem;
-	height: 4rem;
-	border: 0.1rem solid ${theme.colors.gray[200]};
-	border-radius: 0.6rem;
-	position: absolute;
-	right: 1rem;
+  width: 30rem;
+  height: 4rem;
+  border: 0.1rem solid ${theme.colors.gray[200]};
+  border-radius: 0.6rem;
+  position: absolute;
+  right: 1rem;
 `;
 
 export default Header;
