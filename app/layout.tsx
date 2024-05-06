@@ -26,7 +26,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <ReactQueryClientProvider>
       <ThemeProvider theme={theme}>
-        <html lang='en'>
+        <html lang="en">
           <body className={`${inter.className} ${pretendard.className}`}>
             <GlobalStyle />
             <Container>
@@ -37,6 +37,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
                     top: 0,
                     backgroundColor: 'white',
                     width: '120rem',
+                    zIndex: 3,
                   }}
                 >
                   <Header />

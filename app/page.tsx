@@ -39,6 +39,7 @@ export default function Home() {
 const Content = styled.div`
   display: flex;
   position: relative;
+  z-index: 2;
 `;
 
 const Section = styled.div`
