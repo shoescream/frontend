@@ -5,7 +5,7 @@ const TOP_NAV_DATA = [
   },
   {
     title: '마이페이지',
-    path: '/mypage',
+    path: '/my',
   },
   {
     title: '관심상품',
