@@ -5,8 +5,13 @@ import OptionSelectModal from './OptionSelectModal';
 interface ModalProps {
   isOpenModal: boolean;
   setIsOpenModal: Dispatch<SetStateAction<boolean>>;
+  type?: 'option' | 'sidePanel';
 }
-const Modal = ({ isOpenModal, setIsOpenModal }: ModalProps) => {
+const Modal = ({
+  isOpenModal,
+  setIsOpenModal,
+  type = 'option',
+}: ModalProps) => {
   document.body.style.overflow = 'hidden'; // modal창이 열리면 스크롤 이벤트 막기
   const onClickModal = () => {
     setIsOpenModal(!isOpenModal);
@@ -15,8 +20,11 @@ const Modal = ({ isOpenModal, setIsOpenModal }: ModalProps) => {
   return (
     <>
       <ModalBackGround onClick={onClickModal}></ModalBackGround>
-      <SidePanel onClick={onClickModal}></SidePanel>
-      {/* <OptionSelectModal onClick={onClickModal}></OptionSelectModal> */}
+      {type === 'option' ? (
+        <OptionSelectModal onClick={onClickModal}></OptionSelectModal>
+      ) : (
+        <SidePanel onClick={onClickModal}></SidePanel>
+      )}
     </>
   );
 };

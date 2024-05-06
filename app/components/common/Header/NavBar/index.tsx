@@ -49,6 +49,7 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
         <Modal
           isOpenModal={isOpenModal}
           setIsOpenModal={setIsOpenModal}
+          type="sidePanel"
         ></Modal>
       )}
     </NavWrapper>
