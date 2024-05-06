@@ -53,14 +53,16 @@ const Footer = () => {
             <CompanyText>
               사업자등록번호 : 570-88-01618 <a>사업자 정보 확인</a>
             </CompanyText>
-            <CompanyText isLast>
+            <CompanyText style={{ marginRight: '1.7rem' }}>
               통신판매업 : 제 2021-성남분당C-0093호
             </CompanyText>
             <CompanyText>
               사업장소재지 : 경기도 성남시 분당구 분당내곡로 131 판교테크원
               타워1, 8층
             </CompanyText>
-            <CompanyText isLast>호스팅 서비스 : 네이버 클라우드 ㈜</CompanyText>
+            <CompanyText style={{ marginRight: '1.7rem' }}>
+              호스팅 서비스 : 네이버 클라우드 ㈜
+            </CompanyText>
           </Company>
           <Copyright>© SHOESCREAM Corp.</Copyright>
         </Flex>
@@ -112,8 +114,7 @@ const Company = styled.div`
   }
 `;
 
-const CompanyText = styled.span<{ isLast?: boolean }>`
-  margin-right: ${(props) => (props.isLast ? 0 : '1.7rem')};
+const CompanyText = styled.span`
   line-height: 2rem;
 `;
 
