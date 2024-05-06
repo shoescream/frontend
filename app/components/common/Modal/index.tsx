@@ -6,12 +6,13 @@ interface ModalProps {
   setIsOpenModal: Dispatch<SetStateAction<boolean>>;
 }
 const Modal = ({ isOpenModal, setIsOpenModal }: ModalProps) => {
+  const onClickModal = () => {
+    setIsOpenModal(!isOpenModal);
+  };
   return (
     <>
-      <ModalBackGround
-        onClick={() => setIsOpenModal(!isOpenModal)}
-      ></ModalBackGround>
-      <SidePanel></SidePanel>
+      <ModalBackGround onClick={onClickModal}></ModalBackGround>
+      <SidePanel onClick={onClickModal}></SidePanel>
     </>
   );
 };
