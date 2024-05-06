@@ -1,18 +1,22 @@
 import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import SidePanel from './SidePanel';
+import OptionSelectModal from './OptionSelectModal';
 interface ModalProps {
   isOpenModal: boolean;
   setIsOpenModal: Dispatch<SetStateAction<boolean>>;
 }
 const Modal = ({ isOpenModal, setIsOpenModal }: ModalProps) => {
+  document.body.style.overflow = 'hidden'; // modal창이 열리면 스크롤 이벤트 막기
   const onClickModal = () => {
     setIsOpenModal(!isOpenModal);
+    document.body.style.overflow = 'auto'; // 닫히면 스크롤 이벤트 다시 추가
   };
   return (
     <>
       <ModalBackGround onClick={onClickModal}></ModalBackGround>
       <SidePanel onClick={onClickModal}></SidePanel>
+      {/* <OptionSelectModal onClick={onClickModal}></OptionSelectModal> */}
     </>
   );
 };
