@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import KakaoLogin from '/public/kakao-login.svg';
 import { useRouter } from 'next/navigation';
+import { useLogin } from '@/hooks/queries/useAuth';
 
 interface FormData {
   id: string;
@@ -16,7 +17,7 @@ interface FormData {
 
 const Login = () => {
   const router = useRouter();
-
+  const { mutate } = useLogin();
   const {
     register,
     handleSubmit,
@@ -25,7 +26,12 @@ const Login = () => {
     mode: 'onBlur',
   });
 
-  const submitHandler = () => {};
+  const submitHandler = (data: FormData) => {
+    mutate({
+      userId: data.id,
+      password: data.password,
+    });
+  };
 
   return (
     <LoginContainer>
