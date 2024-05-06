@@ -1,7 +1,9 @@
 'use client';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
+import CustomToast from '@/components/common/Toast';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -13,6 +15,14 @@ interface FormData {
 }
 
 const FindPwd = () => {
+  const [isToast, setIsToast] = useState(false);
+  const [toastProps, setToastProps] = useState({ success: false, message: '' });
+  const onToast = () => {
+    setIsToast(true);
+    setTimeout(function () {
+      setIsToast(false);
+    }, 2000);
+  };
   const {
     register,
     handleSubmit,
@@ -22,6 +32,11 @@ const FindPwd = () => {
   });
   const onSubmit = (data: FormData) => {
     //data submit
+    setToastProps({
+      success: true,
+      message: '이메일로 임시 비밀번호를 전송했습니다.',
+    });
+    onToast();
   };
   const router = useRouter();
   return (
@@ -65,6 +80,7 @@ const FindPwd = () => {
           돌아가기
         </Button>
       </form>
+      <CustomToast {...toastProps} isToast={isToast}></CustomToast>
     </Container>
   );
 };
