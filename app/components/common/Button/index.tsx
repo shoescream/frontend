@@ -61,7 +61,6 @@ const Container = styled.button<{
   font-size: ${(props) => props.fontSize};
   color: ${(props) =>
     props.buttonColor === '#ffffff' ? '#000000' : '#ffffff'};
-  background-color: ${(props) => props.buttonColor};
   font-weight: bold;
   margin-top: 1rem;
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
