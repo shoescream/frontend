@@ -49,9 +49,9 @@ const Login = () => {
             placeholder="예) shoescream"
             styles={{ padding: '1rem 0 1.4rem' }}
             rules={{
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: '올바르지 않은 형식입니다.',
+              required: {
+                value: true,
+                message: '필수 값입니다.',
               },
             }}
           />
@@ -63,6 +63,10 @@ const Login = () => {
             label="비밀번호"
             styles={{ padding: '2.5rem 0 1.4rem', marginBottom: '2rem' }}
             rules={{
+              required: {
+                value: true,
+                message: '필수 값입니다.',
+              },
               pattern: {
                 value:
                   /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\\\|\[\]{};:'",.<>\/?]).{8,16}$/,
@@ -81,7 +85,7 @@ const Login = () => {
               },
             }}
           />
-          <Button type="submit" styles={{ marginTop: '2rem' }} disabled>
+          <Button type="submit" styles={{ marginTop: '2rem' }}>
             <Text>로그인</Text>
           </Button>
         </Form>
