@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import KakaoLogin from '/public/kakao-login.svg';
 import { useRouter } from 'next/navigation';
+import { useLogin } from '@/hooks/queries/useAuth';
 
 interface FormData {
   id: string;
@@ -16,7 +17,7 @@ interface FormData {
 
 const Login = () => {
   const router = useRouter();
-
+  const { mutate } = useLogin();
   const {
     register,
     handleSubmit,
@@ -25,7 +26,12 @@ const Login = () => {
     mode: 'onBlur',
   });
 
-  const submitHandler = () => {};
+  const submitHandler = (data: FormData) => {
+    mutate({
+      userId: data.id,
+      password: data.password,
+    });
+  };
 
   return (
     <LoginContainer>
@@ -43,9 +49,9 @@ const Login = () => {
             placeholder="예) shoescream"
             styles={{ padding: '1rem 0 1.4rem' }}
             rules={{
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: '올바르지 않은 형식입니다.',
+              required: {
+                value: true,
+                message: '필수 값입니다.',
               },
             }}
           />
@@ -57,25 +63,23 @@ const Login = () => {
             label="비밀번호"
             styles={{ padding: '2.5rem 0 1.4rem', marginBottom: '2rem' }}
             rules={{
-              pattern: {
-                value:
-                  /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\\\|\[\]{};:'",.<>\/?]).{8,16}$/,
-                message:
-                  '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8~16글자)',
+              required: {
+                value: true,
+                message: '필수 값입니다.',
               },
-              maxLength: {
-                value: 16,
+              pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{9,}$/,
                 message:
-                  '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8~16글자)',
+                  '영문, 숫자, 특수문자를 조합해서 9자 이상 입력해주세요. (대소문자 구분)',
               },
               minLength: {
-                value: 8,
+                value: 9,
                 message:
-                  '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8~16글자)',
+                  '영문, 숫자, 특수문자를 조합해서 9자 이상 입력해주세요. (대소문자 구분)',
               },
             }}
           />
-          <Button type="submit" styles={{ marginTop: '2rem' }} disabled>
+          <Button type="submit" styles={{ marginTop: '2rem' }}>
             <Text>로그인</Text>
           </Button>
         </Form>
