@@ -2,8 +2,10 @@
 
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
+import CustomToast from '@/components/common/Toast';
+import useMailNumber from '@/hooks/queries/useGetAuthcode';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 interface FormData {
@@ -11,8 +13,24 @@ interface FormData {
   password: string;
   email: string;
   username: string;
+  authNumber: string;
 }
 const Join = () => {
+  const [mailSuccess, setMailSuccess] = useState(false);
+  const [isToast, setIsToast] = useState(false);
+  const [toastProps, setToastProps] = useState({ success: false, message: '' });
+  const onToast = (success: boolean, message: string) => {
+    setIsToast(true);
+    setToastProps({ success: success, message: message });
+    setTimeout(function () {
+      setIsToast(false);
+    }, 2000);
+  };
+  const onClickAuthNumber = () => {
+    setMailSuccess(true);
+  };
+  const mailNumber = useMailNumber({ onToast, onClickAuthNumber });
+
   const {
     register,
     handleSubmit,
@@ -21,13 +39,16 @@ const Join = () => {
   } = useForm<FormData>({
     mode: 'onChange',
   });
+
   const onSubmit = (data: FormData) => {
     //data submit
   };
+
   const checkEmail = () => {
     const email = getValues('email');
-    //email 체크
+    mailNumber.mutate({ mail: email });
   };
+
   const router = useRouter();
   return (
     <JoinContainer>
@@ -42,7 +63,7 @@ const Join = () => {
           register={register}
           rules={{
             pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              value: /^[a-zA-Z]+([a-zA-Z0-9])*$/,
               message: '올바르지 않은 형식입니다.',
             },
           }}
@@ -84,10 +105,11 @@ const Join = () => {
             rules={{
               required: true,
               pattern: {
-                value: /^\S+@\S+$/i,
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: '이메일 형식에 알맞게 입력해주세요.',
               },
             }}
+            styles={{ width: '40rem' }}
           ></Input>
           <Button
             size="small"
@@ -101,6 +123,35 @@ const Join = () => {
             확인
           </Button>
         </EmailFormWrapper>
+        <AuthNumberWrapper mailSuccess={mailSuccess ? 'true' : 'false'}>
+          <Input
+            type="text"
+            label="인증번호 입력*"
+            name="authNumber"
+            placeholder="이메일로 받은 인증번호를 입력해주세요"
+            errormessage={errors.authNumber?.message || ''}
+            register={register}
+            rules={{
+              required: true,
+              pattern: {
+                value: /^[0-9]+$/,
+                message: '숫자만 입력 가능합니다',
+              },
+            }}
+            styles={{ width: '40rem' }}
+          ></Input>
+          <Button
+            size="small"
+            onClick={checkEmail}
+            styles={{
+              height: '3.8rem',
+              marginTop: '3.6rem',
+              marginLeft: '1rem',
+            }}
+          >
+            확인
+          </Button>
+        </AuthNumberWrapper>
         <Input
           type="text"
           label="이름*"
@@ -123,6 +174,7 @@ const Join = () => {
           돌아가기
         </Button>
       </form>
+      <CustomToast {...toastProps} isToast={isToast}></CustomToast>
     </JoinContainer>
   );
 };
@@ -135,13 +187,20 @@ const JoinContainer = styled.div`
   margin: 0 auto;
   padding: 6rem 0 16rem;
 `;
+
 const Title = styled.h2`
   text-align: center;
   padding-bottom: 5rem;
 `;
+
 const EmailFormWrapper = styled.div`
   display: flex;
-  width: 37rem;
-  margin: 0 1.5rem;
+  width: 40rem;
+  position: relative;
+`;
+
+const AuthNumberWrapper = styled.div<{ mailSuccess: string }>`
+  display: ${(props) => (props.mailSuccess === 'true' ? 'flex' : 'none')};
+  width: 40rem;
   position: relative;
 `;
