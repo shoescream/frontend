@@ -3,7 +3,9 @@
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import CustomToast from '@/components/common/Toast';
+import useCheckAuthCode from '@/hooks/queries/useCheckAuthcode';
 import useMailNumber from '@/hooks/queries/useGetAuthcode';
+import useJoin from '@/hooks/queries/useJoin';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,7 +15,7 @@ interface FormData {
   password: string;
   email: string;
   username: string;
-  authNumber: string;
+  authNumber: number;
 }
 const Join = () => {
   const [mailSuccess, setMailSuccess] = useState(false);
@@ -26,11 +28,14 @@ const Join = () => {
       setIsToast(false);
     }, 2000);
   };
-  const onClickAuthNumber = () => {
-    setMailSuccess(true);
-  };
-  const mailNumber = useMailNumber({ onToast, onClickAuthNumber });
 
+  const onClickAuthNumber = (isMail: boolean) => {
+    setMailSuccess(isMail);
+  };
+
+  const mailNumber = useMailNumber({ onToast, onClickAuthNumber });
+  const checkAuthCode = useCheckAuthCode({ onToast, onClickAuthNumber });
+  const join = useJoin();
   const {
     register,
     handleSubmit,
@@ -41,12 +46,24 @@ const Join = () => {
   });
 
   const onSubmit = (data: FormData) => {
-    //data submit
+    const { email, id, password, username } = data;
+    join.mutate({
+      memberId: id,
+      password: password,
+      name: username,
+      email: email,
+    });
+  };
+
+  const getAuthNumber = () => {
+    const email = getValues('email');
+    mailNumber.mutate({ mail: email });
   };
 
   const checkEmail = () => {
+    const authNumber = getValues('authNumber');
     const email = getValues('email');
-    mailNumber.mutate({ mail: email });
+    checkAuthCode.mutate({ mail: email, authNumber: authNumber });
   };
 
   const router = useRouter();
@@ -62,6 +79,7 @@ const Join = () => {
           errormessage={errors.id?.message || ''}
           register={register}
           rules={{
+            required: true,
             pattern: {
               value: /^[a-zA-Z]+([a-zA-Z0-9])*$/,
               message: '올바르지 않은 형식입니다.',
@@ -76,6 +94,7 @@ const Join = () => {
           errormessage={errors.password?.message || ''}
           register={register}
           rules={{
+            required: true,
             pattern: {
               value:
                 /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\\\|\[\]{};:'",.<>\/?]).{8,16}$/,
@@ -109,18 +128,18 @@ const Join = () => {
                 message: '이메일 형식에 알맞게 입력해주세요.',
               },
             }}
-            styles={{ width: '40rem' }}
+            styles={{ width: '30rem' }}
           ></Input>
           <Button
-            size="small"
-            onClick={checkEmail}
+            size="medium"
+            onClick={getAuthNumber}
             styles={{
               height: '3.8rem',
               marginTop: '3.6rem',
               marginLeft: '1rem',
             }}
           >
-            확인
+            인증번호 받기
           </Button>
         </EmailFormWrapper>
         <AuthNumberWrapper mailSuccess={mailSuccess ? 'true' : 'false'}>
@@ -167,10 +186,25 @@ const Join = () => {
             },
           }}
         ></Input>
-        <Button type="submit" styles={{ marginTop: '2rem' }}>
+        <Button
+          type="submit"
+          styles={{
+            marginTop: '2rem',
+            fontSize: ' 1.6rem',
+            color: 'white',
+            fontWeight: '700',
+          }}
+        >
           가입하기
         </Button>
-        <Button buttonColor="light" onClick={() => router.push('/')}>
+        <Button
+          buttonColor="light"
+          onClick={() => router.push('/')}
+          styles={{
+            fontSize: ' 1.6rem',
+            fontWeight: '700',
+          }}
+        >
           돌아가기
         </Button>
       </form>
