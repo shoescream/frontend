@@ -2,12 +2,13 @@
 
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
+import Timer from '@/components/common/Timer';
 import CustomToast from '@/components/common/Toast';
 import useCheckAuthCode from '@/hooks/queries/useCheckAuthcode';
 import useMailNumber from '@/hooks/queries/useGetAuthcode';
 import useJoin from '@/hooks/queries/useJoin';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 interface FormData {
@@ -21,6 +22,8 @@ const Join = () => {
   const [mailSuccess, setMailSuccess] = useState(false);
   const [isToast, setIsToast] = useState(false);
   const [toastProps, setToastProps] = useState({ success: false, message: '' });
+  const [time, setTime] = useState(0);
+
   const onToast = (success: boolean, message: string) => {
     setIsToast(true);
     setToastProps({ success: success, message: message });
@@ -33,7 +36,11 @@ const Join = () => {
     setMailSuccess(isMail);
   };
 
-  const mailNumber = useMailNumber({ onToast, onClickAuthNumber });
+  const setTimer = (timer: number) => {
+    setTime(timer * 60 * 1000);
+  };
+
+  const mailNumber = useMailNumber({ onToast, onClickAuthNumber, setTimer });
   const checkAuthCode = useCheckAuthCode({ onToast, onClickAuthNumber });
   const join = useJoin();
   const {
@@ -167,9 +174,11 @@ const Join = () => {
               marginTop: '3.6rem',
               marginLeft: '1rem',
             }}
+            disabled={!mailSuccess}
           >
             확인
           </Button>
+          {mailSuccess && <Timer time={time} setTime={setTime} />}
         </AuthNumberWrapper>
         <Input
           type="text"
@@ -234,7 +243,8 @@ const EmailFormWrapper = styled.div`
 `;
 
 const AuthNumberWrapper = styled.div<{ mailSuccess: string }>`
-  display: ${(props) => (props.mailSuccess === 'true' ? 'flex' : 'none')};
+  // display: ${(props) => (props.mailSuccess === 'true' ? 'flex' : 'none')};
+  display: flex;
   width: 40rem;
   position: relative;
 `;
