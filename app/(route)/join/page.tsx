@@ -164,6 +164,7 @@ const Join = () => {
                 message: '숫자만 입력 가능합니다',
               },
             }}
+            readonly={!mailSuccess}
             styles={{ width: '40rem' }}
           ></Input>
           <Button
