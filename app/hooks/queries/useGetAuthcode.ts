@@ -8,7 +8,7 @@ interface MailProps {
 
 interface MailNumberProps {
   onToast: (success: boolean, message: string) => void;
-  onClickAuthNumber: () => void;
+  onClickAuthNumber: (isMail: boolean) => void;
 }
 
 const useMailNumber = ({ onToast, onClickAuthNumber }: MailNumberProps) => {
@@ -21,15 +21,13 @@ const useMailNumber = ({ onToast, onClickAuthNumber }: MailNumberProps) => {
       return response;
     },
     onSuccess: (data) => {
-      if (data.result) {
-        onToast(true, '성공');
-        onClickAuthNumber();
-        console.log(data.result);
-      }
+      onToast(true, '입력하신 이메일로 인증 코드가 전송되었습니다.');
+      onClickAuthNumber(true);
+      console.log(data.result);
     },
     onError: (error) => {
       console.error(error);
-      onToast(false, '실패');
+      onToast(false, '다시 시도해 주세요.');
       throw error;
     },
   });
