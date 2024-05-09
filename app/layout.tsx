@@ -1,5 +1,3 @@
-/** @format */
-
 'use client';
 
 import { ReactQueryClientProvider } from './hooks/ReactQueryClientProvider';
@@ -10,6 +8,9 @@ import theme from '@/styles/theme';
 import GlobalStyle from './GlobalStyle';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { route } from './constants/route';
 
 const inter = Inter({ subsets: ['latin'] });
 const pretendard = localFont({
@@ -23,6 +24,17 @@ interface RootLayoutProps {
 }
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+  const router = usePathname();
+  const [doesPageExists, setDoesPageExists] = useState(false);
+
+  useEffect(() => {
+    if (!Object.values(route).includes(router)) {
+      setDoesPageExists(false);
+    } else {
+      setDoesPageExists(true);
+    }
+  }, [router]);
+
   return (
     <ReactQueryClientProvider>
       <ThemeProvider theme={theme}>
@@ -43,7 +55,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
                   <Header />
                 </div>
                 <div>{children}</div>
-                <Footer />
+                {doesPageExists && <Footer />}
               </Content>
             </Container>
           </body>
