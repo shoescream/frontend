@@ -68,6 +68,7 @@ const ButtonWrapper = styled.button<{ type: string; active?: string }>`
   margin: 0 1rem 0 0.5rem;
   background-color: #ffffff;
   line-height: ${(props) => (props.type === 'top' ? '' : '4.2rem')};
+  font-family: ${theme.fonts.pretendard}, sans-serif;
   font-weight: ${(props) => (props.active === 'true' ? 'bold' : 'normal')};
   text-decoration: ${(props) =>
     props.active === 'true' ? 'underline' : 'none'};
