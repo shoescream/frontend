@@ -39,7 +39,7 @@ const Kakao = () => {
     return <KakaoContainer>에러가 발생했습니다.</KakaoContainer>;
   }
 
-  return;
+  return <KakaoContainer>로딩 중...</KakaoContainer>;
 };
 
 export default Kakao;
