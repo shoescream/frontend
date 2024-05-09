@@ -22,7 +22,7 @@ const Join = () => {
   const [mailSuccess, setMailSuccess] = useState(false);
   const [isToast, setIsToast] = useState(false);
   const [toastProps, setToastProps] = useState({ success: false, message: '' });
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(5);
 
   const onToast = (success: boolean, message: string) => {
     setIsToast(true);
@@ -74,6 +74,14 @@ const Join = () => {
   };
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (time === 0) {
+      onToast(false, '시간이 만료 되었습니다.');
+      setTime(5);
+      setMailSuccess(false);
+    }
+  });
   return (
     <JoinContainer>
       <Title>회원가입</Title>
@@ -209,7 +217,7 @@ const Join = () => {
         </Button>
         <Button
           buttonColor="light"
-          onClick={() => router.push('/')}
+          onClick={() => router.push('/login')}
           styles={{
             fontSize: ' 1.6rem',
             fontWeight: '700',
