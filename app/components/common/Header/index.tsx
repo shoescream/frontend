@@ -6,11 +6,12 @@ import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const router = useRouter();
+  const token = localStorage.getItem('@token');
 
   return (
     <HeaderWrapper>
       <HeaderTop>
-        <MultiNavBar type="top" data={NAV_DATA.TOP_NAV_DATA} />
+        <MultiNavBar type="top" data={NAV_DATA.TOP_NAV_DATA(token!)} />
       </HeaderTop>
       <HeaderInner>
         <div id="header__logo" onClick={() => router.push('/')}>

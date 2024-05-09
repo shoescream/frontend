@@ -1,6 +1,4 @@
-const token = localStorage.getItem('@token');
-
-const TOP_NAV_DATA = [
+const TOP_NAV_DATA = (token: string) => [
   {
     title: '고객센터',
     path: '/center',

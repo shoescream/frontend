@@ -12,13 +12,13 @@ const nextConfig = {
     styledComponents: true,
   },
   webpack: (config) => {
-    config.resolve.alias['@components'] = join(__dirname, 'app/components/*');
-    config.resolve.alias['@constants'] = join(__dirname, 'app/constants/*');
-    config.resolve.alias['@hooks'] = join(__dirname, 'app/hooks/*');
-    config.resolve.alias['@store'] = join(__dirname, 'app/store/*');
-    config.resolve.alias['@styles'] = join(__dirname, 'app/styles/*');
-    config.resolve.alias['@types'] = join(__dirname, 'app/types/*');
-    config.resolve.alias['@utils'] = join(__dirname, 'app/utils/*');
+    config.resolve.alias['@components'] = join(__dirname, 'app/components');
+    config.resolve.alias['@constants'] = join(__dirname, 'app/constants');
+    config.resolve.alias['@hooks'] = join(__dirname, 'app/hooks');
+    config.resolve.alias['@store'] = join(__dirname, 'app/store');
+    config.resolve.alias['@styles'] = join(__dirname, 'app/styles');
+    config.resolve.alias['@types'] = join(__dirname, 'app/types');
+    config.resolve.alias['@utils'] = join(__dirname, 'app/utils');
 
     config.module.rules.push({
       test: /\.svg$/,
