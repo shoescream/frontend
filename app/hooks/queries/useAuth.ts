@@ -35,7 +35,6 @@ const useLogin = () => {
       return response;
     },
     onSuccess: (data) => {
-      console.log(data);
       if (data.resultCode === 'SUCCESS' && data.result) {
         localStorage.setItem('@token', data.result.tokenResponse.accessToken);
         localStorage.setItem(
@@ -142,9 +141,7 @@ const useSocialLogin = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log(data);
       if (data.resultCode === 'SUCCESS') {
-        console.log(data);
         localStorage.setItem('@token', data.result!.tokenResponse.accessToken);
         localStorage.setItem(
           '@refresh',
@@ -158,7 +155,7 @@ const useSocialLogin = () => {
       }
     },
     onError: (error) => {
-      console.error('useLogin: ', error);
+      console.error('useSocialLogin: ', error);
       throw error;
     },
   });
