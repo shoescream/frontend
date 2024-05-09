@@ -85,10 +85,10 @@ const Login = () => {
         </Form>
         <List>
           <ListItem onClick={() => router.push('/join')}>이메일 가입</ListItem>
-          <ListItem onClick={() => router.push('/login/find_id')}>
+          <ListItem onClick={() => router.push('/login/find/id')}>
             아이디 찾기
           </ListItem>
-          <ListItem onClick={() => router.push('/login/find_password')}>
+          <ListItem onClick={() => router.push('/login/find/password')}>
             비밀번호 찾기
           </ListItem>
         </List>
