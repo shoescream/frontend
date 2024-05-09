@@ -78,7 +78,7 @@ const Join = () => {
   useEffect(() => {
     if (time === 0) {
       onToast(false, '시간이 만료 되었습니다.');
-      setTime(5);
+      setTimer(5);
       setMailSuccess(false);
     }
   });
