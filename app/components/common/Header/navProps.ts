@@ -1,3 +1,5 @@
+const token = localStorage.getItem('@token');
+
 const TOP_NAV_DATA = [
   {
     title: '고객센터',
@@ -5,11 +7,11 @@ const TOP_NAV_DATA = [
   },
   {
     title: '마이페이지',
-    path: '/my',
+    path: token ? '/my' : '/login',
   },
   {
     title: '관심상품',
-    path: '/favorites',
+    path: token ? '/favorites' : '/login',
   },
 ];
 const MAIN_NAV_DATA = [

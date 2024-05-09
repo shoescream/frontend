@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const router = useRouter();
+
   return (
     <HeaderWrapper>
       <HeaderTop>

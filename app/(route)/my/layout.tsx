@@ -3,13 +3,11 @@
 import { MYPAGE_NAV } from '@/constants/navMypage';
 import theme from '@/styles/theme';
 import { usePathname } from 'next/navigation';
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import styled from 'styled-components';
 
 const MyPageLayout = ({ children }: PropsWithChildren) => {
   const pathname = usePathname();
-
-  console.log(pathname);
 
   return (
     <Layout>

@@ -17,6 +17,7 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
   const router = useRouter();
   const path = usePathname();
   const [isOpenModal, setIsOpenModal] = useState(false);
+
   return (
     <NavWrapper type={type}>
       {data &&
@@ -38,8 +39,9 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
           >
             알림
           </ButtonWrapper>
+          {/* TODO: 로그아웃 query 구현해야함 */}
           <ButtonWrapper type={type} onClick={() => router.push('/login')}>
-            로그인
+            {localStorage.getItem('@token') ? '로그아웃' : '로그인'}
           </ButtonWrapper>
         </>
       ) : (
