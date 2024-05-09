@@ -3,10 +3,11 @@ import theme from '../../../styles/theme';
 import MultiNavBar from './NavBar';
 import { NAV_DATA } from './navProps';
 import { useRouter } from 'next/navigation';
+import LocalStorage from '@/utils/localStorage';
 
 const Header = () => {
   const router = useRouter();
-  const token = localStorage.getItem('@token');
+  const token = LocalStorage.getItem('@token');
 
   return (
     <HeaderWrapper>

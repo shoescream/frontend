@@ -4,6 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../Modal';
+import LocalStorage from '@/utils/localStorage';
 
 interface NavDataProps {
   title?: string;
@@ -20,7 +21,7 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    setToken(localStorage.getItem('@token')!);
+    setToken(LocalStorage.getItem('@token')!);
   }, []);
 
   return (

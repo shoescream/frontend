@@ -5,18 +5,21 @@ import {
   useKakaoProfile,
   useSocialLogin,
 } from '@/hooks/queries/useAuth';
-import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Kakao = () => {
-  const params = useSearchParams();
-  const code = params.get('code');
-  const {
-    data: loginData,
-    isError: loginError,
-    isLoading: loginLoading,
-  } = useKakaoLogin(code!);
+  const [code, setCode] = useState('');
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const codeFromURL = query.get('code');
+    if (codeFromURL) {
+      setCode(codeFromURL);
+    }
+  }, []);
+
+  const { data: loginData, isError: loginError } = useKakaoLogin(code);
   const kakaoAccessToken = loginData?.data.access_token;
   const kakaoRefreshToken = loginData?.data.refresh_token;
   const { data: newData } = useKakaoProfile(
@@ -36,7 +39,7 @@ const Kakao = () => {
     return <KakaoContainer>에러가 발생했습니다.</KakaoContainer>;
   }
 
-  return <KakaoContainer>로딩 중...</KakaoContainer>;
+  return;
 };
 
 export default Kakao;

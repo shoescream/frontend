@@ -1,4 +1,5 @@
 import { Response } from '@/types/Response';
+import LocalStorage from '@/utils/localStorage';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Instance } from 'app/api';
 import axios from 'axios';
@@ -36,7 +37,7 @@ const useLogin = () => {
     },
     onSuccess: (data) => {
       if (data.resultCode === 'SUCCESS' && data.result) {
-        localStorage.setItem('@token', data.result.tokenResponse.accessToken);
+        LocalStorage.setItem('@token', data.result.tokenResponse.accessToken);
         localStorage.setItem(
           '@refresh',
           data.result.tokenResponse.refreshToken
