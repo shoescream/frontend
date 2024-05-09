@@ -43,17 +43,9 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
             <GlobalStyle />
             <Container>
               <Content>
-                <div
-                  style={{
-                    position: 'sticky',
-                    top: 0,
-                    backgroundColor: 'white',
-                    width: '120rem',
-                    zIndex: 3,
-                  }}
-                >
+                <HeaderWrapper>
                   <Header />
-                </div>
+                </HeaderWrapper>
                 <div>{children}</div>
                 {doesPageExists && <Footer />}
               </Content>
@@ -77,4 +69,12 @@ const Content = styled.div`
   height: 100%;
   margin: 0 auto;
   padding: 0 4rem;
+`;
+
+const HeaderWrapper = styled.div`
+  position: sticky;
+  top: 0;
+  background-color: white;
+  width: 120rem;
+  z-index: 3;
 `;
