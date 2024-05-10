@@ -1,9 +1,10 @@
 'use client';
 import theme from '@/styles/theme';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../Modal';
+import LocalStorage from '@/utils/localStorage';
 
 interface NavDataProps {
   title?: string;
@@ -17,6 +18,12 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
   const router = useRouter();
   const path = usePathname();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    setToken(LocalStorage.getItem('@token')!);
+  }, []);
+
   return (
     <NavWrapper type={type}>
       {data &&
@@ -38,8 +45,9 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
           >
             알림
           </ButtonWrapper>
+          {/* TODO: 로그아웃 query 구현해야함 */}
           <ButtonWrapper type={type} onClick={() => router.push('/login')}>
-            로그인
+            {token ? '로그아웃' : '로그인'}
           </ButtonWrapper>
         </>
       ) : (
@@ -68,6 +76,7 @@ const ButtonWrapper = styled.button<{ type: string; active?: string }>`
   margin: 0 1rem 0 0.5rem;
   background-color: #ffffff;
   line-height: ${(props) => (props.type === 'top' ? '' : '4.2rem')};
+  font-family: ${theme.fonts.pretendard}, sans-serif;
   font-weight: ${(props) => (props.active === 'true' ? 'bold' : 'normal')};
   text-decoration: ${(props) =>
     props.active === 'true' ? 'underline' : 'none'};

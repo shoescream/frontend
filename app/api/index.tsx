@@ -1,3 +1,4 @@
+import LocalStorage from '@/utils/localStorage';
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
 const Instance = axios.create({
@@ -9,7 +10,7 @@ const Instance = axios.create({
 });
 
 Instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  config.headers.authorization = localStorage.getItem('@token');
+  config.headers.authorization = LocalStorage.getItem('@token');
   return config;
 });
 

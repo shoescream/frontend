@@ -3,13 +3,16 @@ import theme from '../../../styles/theme';
 import MultiNavBar from './NavBar';
 import { NAV_DATA } from './navProps';
 import { useRouter } from 'next/navigation';
+import LocalStorage from '@/utils/localStorage';
 
 const Header = () => {
   const router = useRouter();
+  const token = LocalStorage.getItem('@token');
+
   return (
     <HeaderWrapper>
       <HeaderTop>
-        <MultiNavBar type="top" data={NAV_DATA.TOP_NAV_DATA} />
+        <MultiNavBar type="top" data={NAV_DATA.TOP_NAV_DATA(token!)} />
       </HeaderTop>
       <HeaderInner>
         <div id="header__logo" onClick={() => router.push('/')}>

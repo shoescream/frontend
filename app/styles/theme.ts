@@ -18,6 +18,10 @@ const colors = {
   },
 };
 
+const fonts = {
+  pretendard: 'Pretendard, sans-serif',
+};
+
 const fontSize = {
   headline1: '3.6rem',
   headline2: '2.4rem',
@@ -32,6 +36,7 @@ const fontSize = {
   caption2: '1.1rem',
   caption3: '1rem',
 };
+
 const button = {
   size: {
     full: '400px',
@@ -49,6 +54,7 @@ const button = {
 };
 const theme = {
   colors,
+  fonts,
   fontSize,
   button,
 };

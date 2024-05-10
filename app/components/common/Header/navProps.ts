@@ -1,15 +1,15 @@
-const TOP_NAV_DATA = [
+const TOP_NAV_DATA = (token: string) => [
   {
     title: '고객센터',
     path: '/center',
   },
   {
     title: '마이페이지',
-    path: '/my',
+    path: token ? '/my' : '/login',
   },
   {
     title: '관심상품',
-    path: '/favorites',
+    path: token ? '/favorites' : '/login',
   },
 ];
 const MAIN_NAV_DATA = [
