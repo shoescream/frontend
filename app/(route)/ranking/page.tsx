@@ -11,7 +11,7 @@ const RankingPage = () => {
         setAdditionalImagesCounts((prev) => prev.map((value, i) => (i === index ? value + 5 : value))); // 더보기 클릭 시 5개씩 추가 출력
     };
 
-    const buttonLabels = ["남성 신발 인기 순위", "여성 신발 인기 순위", "샌들 인기 순위"];
+    const buttonLabels = ['남성 신발 인기 순위', '여성 신발 인기 순위', '샌들 인기 순위'];
 
     return (
         <div>
@@ -22,11 +22,11 @@ const RankingPage = () => {
                     <ImageContainer>
                         {[...Array(additionalImagesCounts[index])].map((_, i) => (
                             <ImageItem key={i}>
-                                <div className="item-box">
-                                    <div className="img"></div> {/* 이미지 들어갈 공간 */}
-                                    <strong className="brand">브랜드명</strong>
-                                    <p className="product-name">상품명</p>
-                                    <p className="price" style={{ marginTop: '2rem' }}>가격</p>
+                                <div className='item-box'>
+                                    <div className='img'></div> {/* 이미지 들어갈 공간 */}
+                                    <strong className='brand'>브랜드명</strong>
+                                    <p className='product-name'>상품명</p>
+                                    <p className='price' style={{ marginTop: '2rem' }}>가격</p>
                                 </div>
                             </ImageItem>
                         ))}
