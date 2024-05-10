@@ -18,7 +18,7 @@ const RankingPage = () => {
             {buttonLabels.map((label, index) => (
                 <div key={index}>
                     <h3 style={{ margin: '3rem 0 0.5rem 0' }}>{label}</h3>
-                    <p style={{ marginBottom: 20, color: 'gray' }}>조회, 관심, 거래 급상승(최근 3일)</p>
+                    <p style={{ marginBottom: '2rem', color: 'gray' }}>조회, 관심, 거래 급상승(최근 3일)</p>
                     <ImageContainer>
                         {[...Array(additionalImagesCounts[index])].map((_, i) => (
                             <ImageItem key={i}>
@@ -26,12 +26,12 @@ const RankingPage = () => {
                                     <div className="img"></div> {/* 이미지 들어갈 공간 */}
                                     <strong className="brand">브랜드명</strong>
                                     <p className="product-name">상품명</p>
-                                    <p className="price" style={{ marginTop: 20 }}>가격</p>
+                                    <p className="price" style={{ marginTop: '2rem' }}>가격</p>
                                 </div>
                             </ImageItem>
                         ))}
                     </ImageContainer>
-                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 30 }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
                         <Button type="button" buttonColor="light" size="medium" onClick={() => handleShowMoreImages(index)}>더보기</Button>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ const ImageItem = styled.div`
 
     .img {
         border-radius: 1rem;
-        width: 200;
+        width: '20rem';
         height: 0;
         margin-bottom: 1rem;
         padding-top: 100%;
