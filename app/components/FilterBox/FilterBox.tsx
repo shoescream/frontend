@@ -14,9 +14,8 @@ const FilterBox = ({ data, currentClickedItem, onClick }: FilterBoxProps) => {
       {data.map((item) => (
         <FilterItem
           key={item}
-          clicked={currentClickedItem === item ? 'true' : 'false'}
+          $clicked={currentClickedItem === item}
           onClick={() => onClick(item)}
-          length={data.length}
         >
           {item}
         </FilterItem>
@@ -35,7 +34,7 @@ const Filter = styled.ul`
   width: 100%;
 `;
 
-const FilterItem = styled.li<{ clicked?: 'false' | 'true'; length: number }>`
+const FilterItem = styled.li<{ $clicked: boolean }>`
   width: 100%;
   height: 3.2rem;
   margin: 0.2rem;
@@ -45,9 +44,9 @@ const FilterItem = styled.li<{ clicked?: 'false' | 'true'; length: number }>`
   cursor: pointer;
   text-align: center;
   color: ${(props) =>
-    props.clicked ? theme.colors.main : theme.colors.text.primary};
-  background-color: ${(props) => (props.clicked ? 'white' : '#f4f4f4')};
-  font-weight: ${(props) => (props.clicked ? 600 : 300)};
+    props.$clicked ? theme.colors.main : theme.colors.text.primary};
+  background-color: ${(props) => (props.$clicked ? 'white' : '#f4f4f4')};
+  font-weight: ${(props) => (props.$clicked ? 600 : 300)};
   box-shadow: ${(props) =>
-    props.clicked ? 'inset 0 0 0 .5px #ebebeb' : 'none'};
+    props.$clicked ? 'inset 0 0 0 .5px #ebebeb' : 'none'};
 `;
