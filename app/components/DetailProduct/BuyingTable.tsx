@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../common/Button';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import useAddComma from '@/hooks/useAddComma';
 
 interface BuyingTableItem {
   size: string;
@@ -14,6 +15,8 @@ interface BuyingTableProps {
 }
 
 const BuyingTable = ({ data }: BuyingTableProps) => {
+  const addComma = useAddComma();
+
   return (
     <TableWrapper>
       <div style={{ paddingBottom: '1rem' }}>
@@ -36,7 +39,7 @@ const BuyingTable = ({ data }: BuyingTableProps) => {
             {data.map((item) => (
               <tr key={item.size}>
                 <SizeData>{item.size}</SizeData>
-                <RightSizeData>{item.price}</RightSizeData>
+                <RightSizeData>{addComma(item.price)}</RightSizeData>
                 <LastSizeData>{item.date}</LastSizeData>
               </tr>
             ))}
@@ -47,7 +50,7 @@ const BuyingTable = ({ data }: BuyingTableProps) => {
         size="full"
         buttonColor="light"
         styles={{
-          border: '0.1rem solid #d3d3d3',
+          border: `0.1rem solid ${theme.colors.border}`,
           color: theme.colors.text.primary,
           fontSize: '1.4rem',
           fontWeight: '300',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Line,
   LineChart,
@@ -10,7 +10,6 @@ import {
 } from 'recharts';
 import {
   NameType,
-  Payload,
   ValueType,
 } from 'recharts/types/component/DefaultTooltipContent';
 import styled from 'styled-components';
@@ -58,11 +57,6 @@ const CustomTooltip = ({
 };
 
 const Chart: React.FC = () => {
-  const [activeCoordinates, setActiveCoordinates] = useState({
-    x: 0,
-    y: 0,
-  });
-
   return (
     <ResponsiveContainer width="100%" height={200}>
       <LineChart data={data} margin={{ top: 20 }}>

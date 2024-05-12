@@ -2,8 +2,11 @@ import theme from '@/styles/theme';
 import React from 'react';
 import styled from 'styled-components';
 import { PiPackage } from 'react-icons/pi';
+import useAddComma from '@/hooks/useAddComma';
 
 const Options = () => {
+  const addComma = useAddComma();
+
   return (
     <>
       <OptionBox>
@@ -36,7 +39,7 @@ const Options = () => {
               <PiPackage size={30} />
             </Point>
             <div>
-              <PointDetail>일반배송 3000원</PointDetail>
+              <PointDetail>일반배송 {addComma(3000)}원</PointDetail>
               <br />
               <PointDetail
                 style={{
