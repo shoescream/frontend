@@ -203,7 +203,7 @@ const DetailProduct = () => {
                 </Blur>
               )}
               <DetailTitleBox>
-                <DetailTitle>시세!</DetailTitle>
+                <DetailTitle>시세</DetailTitle>
               </DetailTitleBox>
               <div style={{ position: 'relative' }}>
                 <FilterBox
