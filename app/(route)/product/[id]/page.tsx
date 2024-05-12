@@ -20,33 +20,64 @@ import Toggle from '@/components/common/Toggle';
 import BuyingTable from '@/components/DetailProduct/BuyingTable';
 import LineChart from '@/components/DetailProduct/LineChart';
 import { usePathname, useRouter } from 'next/navigation';
-import SizeModal from '@/components/common/Modal/SizeModal';
 import useAddComma from '@/hooks/useAddComma';
+import BySizeModal from '@/components/DetailProduct/BySizeModal';
+import SellOrBuySizeModal from '@/components/DetailProduct/SellOrBuySizeModal';
 
 const sizeData = [
   {
-    size: '275',
-    price: 124000,
+    size: '220(US W5 M3.5)',
+    price: 104000,
     date: '240510',
   },
   {
-    size: '270',
-    price: 126000,
+    size: '225(US W5.5 M4)',
+    price: 100000,
     date: '240510',
   },
   {
-    size: '240(US 6)',
-    price: 155000,
+    size: '230(US W6 M4.5)',
+    price: 107000,
+    date: '240510',
+  },
+  {
+    size: '235(US W6.5 M5)',
+    price: 107000,
+    date: '240510',
+  },
+  {
+    size: '240(US W7 M5.5)',
+    price: 128000,
+    date: '240510',
+  },
+  {
+    size: '245',
+    price: 130000,
+    date: '240510',
+  },
+  {
+    size: '250',
+    price: 134000,
+    date: '240510',
+  },
+  {
+    size: '255',
+    price: 135000,
+    date: '240510',
+  },
+  {
+    size: '260',
+    price: 143000,
     date: '240510',
   },
   {
     size: '265',
-    price: 1000,
+    price: 139000,
     date: '240510',
   },
   {
-    size: '240',
-    price: 1000,
+    size: '270',
+    price: 139000,
     date: '240510',
   },
 ];
@@ -74,12 +105,16 @@ const DetailProduct = () => {
   const [saveShop, setSaveShop] = useState(false);
   const [currentChartFilter, setCurrentChartFilter] = useState('전체');
   const [currentFilterBySize, setCurrentFilterBySize] = useState('체결 거래');
+  const [currentSizeItem, setCurrentSizeItem] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [isSellingModalOpen, setIsSellingModalOpen] = useState<
+    'none' | 'sell' | 'buy'
+  >('none');
   const brand = 'nike';
   const id = pathname.replace('/product/', '');
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen || isSellingModalOpen !== 'none') {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
@@ -88,14 +123,23 @@ const DetailProduct = () => {
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [isOpen]);
+  }, [isOpen, isSellingModalOpen]);
 
   return (
     <>
       {isOpen && (
-        <SizeModal
+        <BySizeModal
           onClose={() => setIsOpen(false)}
           data={sizeData.map(({ date, ...rest }) => rest)}
+          currentItem={currentSizeItem}
+          onSetCurrentItem={setCurrentSizeItem}
+        />
+      )}
+      {isSellingModalOpen !== 'none' && (
+        <SellOrBuySizeModal
+          onClose={() => setIsSellingModalOpen('none')}
+          data={sizeData.map(({ date, ...rest }) => rest)}
+          type={isSellingModalOpen}
         />
       )}
       <Container>
@@ -130,7 +174,9 @@ const DetailProduct = () => {
               </NameBox>
               <SizeButtonBox onClick={() => setIsOpen(true)}>
                 <SizeButton>
-                  모든 사이즈
+                  {currentSizeItem > 0 && !isOpen
+                    ? sizeData[currentSizeItem].size
+                    : '모든 사이즈'}
                   <FaCaretDown />
                 </SizeButton>
               </SizeButtonBox>
@@ -138,7 +184,11 @@ const DetailProduct = () => {
                 <Button
                   buttonColor="buying"
                   styles={{ height: '6rem' }}
-                  onClick={() => router.push('/login')}
+                  onClick={() =>
+                    isLoggedIn
+                      ? setIsSellingModalOpen('buy')
+                      : router.push('/login')
+                  }
                 >
                   <ButtonTextBox>
                     <ButtonSubtitle>즉시 구매가</ButtonSubtitle>
@@ -149,7 +199,11 @@ const DetailProduct = () => {
                 <Button
                   buttonColor="selling"
                   styles={{ height: '6rem' }}
-                  onClick={() => router.push('/login')}
+                  onClick={() =>
+                    isLoggedIn
+                      ? setIsSellingModalOpen('sell')
+                      : router.push('/login')
+                  }
                 >
                   <ButtonTextBox>
                     <ButtonSubtitle>즉시 판매가</ButtonSubtitle>
@@ -406,4 +460,11 @@ const BlurBoxText = styled.span`
 
 const ButtonText = styled.span`
   font-size: 1.4rem;
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.6rem;
 `;
