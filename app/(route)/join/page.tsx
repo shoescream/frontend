@@ -6,7 +6,7 @@ import Timer from '@/components/common/Timer';
 import CustomToast from '@/components/common/Toast';
 import useCheckAuthCode from '@/hooks/queries/useCheckAuthcode';
 import useMailNumber from '@/hooks/queries/useGetAuthcode';
-import useJoin from '@/hooks/queries/useJoin';
+import { useJoin } from '@/hooks/queries/useAuth';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
