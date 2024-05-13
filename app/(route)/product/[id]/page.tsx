@@ -24,6 +24,7 @@ import useAddComma from '@/hooks/useAddComma';
 import BySizeModal from '@/components/DetailProduct/BySizeModal';
 import SellOrBuySizeModal from '@/components/DetailProduct/SellOrBuySizeModal';
 import Review from '@/components/DetailProduct/Review';
+import { useDetailProduct } from '@/hooks/queries/useProduct';
 
 const sizeData = [
   {
@@ -113,6 +114,9 @@ const DetailProduct = () => {
   >('none');
   const brand = 'nike';
   const id = pathname.replace('/product/', '');
+  const { data, isLoading } = useDetailProduct(id);
+
+  console.log(data);
 
   useEffect(() => {
     if (isOpen || isSellingModalOpen !== 'none') {
@@ -125,6 +129,10 @@ const DetailProduct = () => {
       document.body.style.overflow = 'auto';
     };
   }, [isOpen, isSellingModalOpen]);
+
+  if (isLoading) {
+    return <Container>noting</Container>;
+  }
 
   return (
     <>
@@ -147,7 +155,12 @@ const DetailProduct = () => {
         <LeftBox>
           <LeftInnerBox>
             <CarouselWrapper>
-              <Carousel data={carouselData} />
+              <Carousel
+                data={
+                  data?.productResponse.productImageResponse
+                    .productImage as string[]
+                }
+              />
             </CarouselWrapper>
           </LeftInnerBox>
         </LeftBox>
@@ -168,10 +181,8 @@ const DetailProduct = () => {
                 />
               </FavoriteWrapper>
               <NameBox>
-                <EngName>Nike V2K Run Pure Platinum Light Iron Ore</EngName>
-                <KorName>
-                  나이키 V2K 런 퓨어 플래티넘 라이트 아이언 오어
-                </KorName>
+                <EngName>{data?.productResponse.productName}</EngName>
+                <KorName>{data?.productResponse.productSubName}</KorName>
               </NameBox>
               <SizeButtonBox onClick={() => setIsOpen(true)}>
                 <SizeButton>
@@ -227,7 +238,7 @@ const DetailProduct = () => {
                   />
                   <div style={{ marginLeft: '1rem' }}>
                     <ShopText>
-                      Nike <MdChevronRight />
+                      {data?.productResponse.brandName} <MdChevronRight />
                     </ShopText>
                   </div>
                 </ShopBox>

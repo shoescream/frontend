@@ -1,17 +1,14 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import SwiperCore from 'swiper';
 
 interface CarouselProps {
-  data: {
-    name: string;
-    imageUrl: string;
-  }[];
+  data: string[];
 }
 
 const Carousel = ({ data }: CarouselProps) => {
@@ -31,20 +28,36 @@ const Carousel = ({ data }: CarouselProps) => {
         onSwiper={setSwiper}
         onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex as number)}
       >
-        {data.map((item) => (
-          <SwiperSlide key={item.name}>
-            <img
-              src={item.imageUrl}
-              alt={item.name}
-              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-            />
-          </SwiperSlide>
-        ))}
+        {data.map((url, index) => {
+          console.log(url);
+          return (
+            <SwiperSlide key={`${url}-${index}`}>
+              <img
+                src={url}
+                alt={'swiper' + index}
+                style={{
+                  objectFit: 'cover',
+                  width: '100%',
+                  height: '100%',
+                }}
+                referrerPolicy="no-referrer"
+              />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
       <Thumbnails>
         {data.map((item, index) => (
-          <ThumbnailItem key={item.name} onClick={() => swiper?.slideTo(index)}>
-            <StyledImg src={item.imageUrl} alt={item.name} />
+          <ThumbnailItem
+            key={`${index}-${item}`}
+            onClick={() => swiper?.slideTo(index)}
+            style={{
+              border:
+                currentIndex === index ? '0.1rem solid #22222260' : 'none',
+              backgroundColor: '#ebf0f4',
+            }}
+          >
+            <StyledImg src={item} alt={'thumbnail' + index} />
           </ThumbnailItem>
         ))}
       </Thumbnails>
