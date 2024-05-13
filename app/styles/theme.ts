@@ -9,8 +9,8 @@ const colors = {
     600: '#646a76',
   },
   border: '#d3d3d3',
-  selling: '#f15746',
-  buying: '#31b46e',
+  selling: '#31b46e',
+  buying: '#f15746',
   background: '#fafafa',
   text: {
     primary: 'rgba(34,34,34,.8)',
@@ -39,15 +39,15 @@ const fontSize = {
 
 const button = {
   size: {
-    full: '400px',
+    full: '100%',
     xlarge: '300px',
     large: '150px',
     medium: '100px',
     small: '60px',
   },
   color: {
-    selling: '#f15746',
-    buying: '#31b46e',
+    selling: '#31b46e',
+    buying: '#f15746',
     dark: '#000000',
     light: '#ffffff',
   },

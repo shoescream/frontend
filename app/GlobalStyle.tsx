@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     font-size: 1.6rem;
+    font-weight: 400;
   }
   h1,
   h2,
