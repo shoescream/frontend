@@ -33,6 +33,12 @@ const Login = () => {
     });
   };
 
+  const handleKakaoLogin = () => {
+    const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_RETURN_URL}&response_type=code`;
+
+    window.location.href = KAKAO_AUTH_URI;
+  };
+
   return (
     <LoginContainer>
       <Content>
@@ -96,6 +102,7 @@ const Login = () => {
           type="button"
           styles={{ marginTop: '4rem' }}
           buttonColor={'none'}
+          onClick={handleKakaoLogin}
         >
           <SocialLoginButtonWrapper>
             <KakaoLogin />

@@ -18,6 +18,10 @@ const colors = {
   },
 };
 
+const fonts = {
+  pretendard: 'Pretendard, sans-serif',
+};
+
 const fontSize = {
   headline1: '3.6rem',
   headline2: '2.4rem',
@@ -50,6 +54,7 @@ const button = {
 };
 const theme = {
   colors,
+  fonts,
   fontSize,
   button,
 };

@@ -1,5 +1,3 @@
-/** @format */
-
 'use client';
 
 import { ReactQueryClientProvider } from './hooks/ReactQueryClientProvider';
@@ -31,18 +29,10 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
             <GlobalStyle />
             <Container>
               <Content>
-                <div
-                  style={{
-                    position: 'fixed',
-                    top: 0,
-                    backgroundColor: 'white',
-                    width: '120rem',
-                    zIndex: 3,
-                  }}
-                >
+                <HeaderWrapper>
                   <Header />
-                </div>
-                <div style={{ paddingTop: '13rem' }}>{children}</div>
+                </HeaderWrapper>
+                <ContentWrapper>{children}</ContentWrapper>
                 <Footer />
               </Content>
             </Container>
@@ -66,3 +56,15 @@ const Content = styled.div`
   margin: 0 auto;
   padding: 0 4rem;
 `;
+
+const HeaderWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  background-color: white;
+  width: 120rem;
+  z-index: 3;
+`;
+
+const ContentWrapper = styled.div`
+  padding-top: 13rem;
+`
