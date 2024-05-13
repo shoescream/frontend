@@ -65,7 +65,6 @@ const ImageItem = styled.div`
 
     .img {
         border-radius: 1rem;
-        width: '20rem';
         height: 0;
         margin-bottom: 1rem;
         padding-top: 100%;

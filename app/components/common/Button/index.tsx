@@ -32,11 +32,11 @@ const Button = ({
   return (
     <Container
       type={type}
-      buttonColor={buttonColorValue}
+      $buttonColor={buttonColorValue}
       onClick={onClick}
       disabled={disabled}
-      fontSize={fontSize}
-      size={sizeValue}
+      $fontSize={fontSize}
+      $size={sizeValue}
       style={{
         ...styles,
         width: sizeValue,
@@ -50,23 +50,23 @@ const Button = ({
 };
 
 const Container = styled.button<{
-  buttonColor: string;
-  size: string;
-  fontSize: string;
+  $buttonColor: string;
+  $size: string;
+  $fontSize: string;
   disabled: boolean;
 }>`
   height: 48px;
   border-radius: 10px;
   border: solid 1px ${theme.colors.border};
-  font-size: ${(props) => props.fontSize};
+  font-size: ${(props) => props.$fontSize};
   color: ${(props) =>
-    props.buttonColor === '#ffffff' ? '#000000' : '#ffffff'};
+    props.$buttonColor === '#ffffff' ? '#000000' : '#ffffff'};
   font-weight: bold;
   margin-top: 1rem;
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
   &:active {
     background-color: ${(props) =>
-      props.buttonColor === '#000000' ? '#333333' : ''};
+      props.$buttonColor === '#000000' ? '#333333' : ''};
   }
   .price {
     font-size: ${theme.fontSize.caption1};

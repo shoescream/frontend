@@ -32,7 +32,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
                 <HeaderWrapper>
                   <Header />
                 </HeaderWrapper>
-                <div>{children}</div>
+                <ContentWrapper>{children}</ContentWrapper>
                 <Footer />
               </Content>
             </Container>
@@ -47,7 +47,7 @@ export default RootLayout;
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
 `;
 
 const Content = styled.div`
@@ -58,9 +58,13 @@ const Content = styled.div`
 `;
 
 const HeaderWrapper = styled.div`
-  position: sticky;
+  position: fixed;
   top: 0;
   background-color: white;
   width: 120rem;
   z-index: 3;
 `;
+
+const ContentWrapper = styled.div`
+  padding-top: 13rem;
+`
