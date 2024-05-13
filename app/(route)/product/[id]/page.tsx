@@ -23,6 +23,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import useAddComma from '@/hooks/useAddComma';
 import BySizeModal from '@/components/DetailProduct/BySizeModal';
 import SellOrBuySizeModal from '@/components/DetailProduct/SellOrBuySizeModal';
+import Review from '@/components/DetailProduct/Review';
 
 const sizeData = [
   {
@@ -281,6 +282,7 @@ const DetailProduct = () => {
           </RightBox>
         </div>
       </Container>
+      <Review></Review>
     </>
   );
 };
