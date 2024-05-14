@@ -8,6 +8,7 @@ interface DetailProduct {
     productName: string;
     productSubName: string;
     brandName: string;
+    price: number;
     productImageResponse: {
       productImage: string[];
     };

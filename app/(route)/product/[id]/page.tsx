@@ -116,8 +116,6 @@ const DetailProduct = () => {
   const id = pathname.replace('/product/', '');
   const { data, isLoading } = useDetailProduct(id);
 
-  console.log(data);
-
   useEffect(() => {
     if (isOpen || isSellingModalOpen !== 'none') {
       document.body.style.overflow = 'hidden';
@@ -169,7 +167,7 @@ const DetailProduct = () => {
             <div>
               <div>
                 <PriceLabel>즉시 구매가</PriceLabel>
-                <Price>{addComma(125000)}원</Price>
+                <Price>{addComma(data?.productResponse.price!)}원</Price>
               </div>
               <FavoriteWrapper>
                 <Toggle
@@ -181,7 +179,10 @@ const DetailProduct = () => {
                 />
               </FavoriteWrapper>
               <NameBox>
-                <EngName>{data?.productResponse.productName}</EngName>
+                <EngName>
+                  {`${data?.productResponse.productName} ${data?.productResponse
+                    .productCode!}`}
+                </EngName>
                 <KorName>{data?.productResponse.productSubName}</KorName>
               </NameBox>
               <SizeButtonBox onClick={() => setIsOpen(true)}>
