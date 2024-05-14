@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ItemBox from '../../components/ShopPage/Itembox';
+import ItemBoxWithLike from '@/components/ShopPage/ItemboxWithLike';
 import Sidebar from '@/components/ShopPage/Sidebar';
 
 const ShopPage = () => {
@@ -15,11 +15,11 @@ const ShopPage = () => {
                 <ProductCount>검색된 상품 개수 n개</ProductCount>
                 {/* 메인 콘텐츠 영역 */}
                 <ItemContainer>
-                    <ItemBox/>
-                    <ItemBox/>
-                    <ItemBox/>
-                    <ItemBox/>
-                    <ItemBox/>
+                    <ItemBoxWithLike/>
+                    <ItemBoxWithLike/>
+                    <ItemBoxWithLike/>
+                    <ItemBoxWithLike/>
+                    <ItemBoxWithLike/>
                 </ItemContainer>
             </MainContent>
         </Container>
@@ -46,5 +46,5 @@ const ItemContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 0 2rem; /* 좌우 여백 조정 */
+    padding: 0 2rem; 
 `;
