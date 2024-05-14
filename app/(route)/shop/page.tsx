@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ItemBoxWithLike from '@/components/ShopPage/ItemboxWithLike';
+import ItemBoxWithLike from '@/components/ShopPage/ItemBoxWithLike';
 import Sidebar from '@/components/ShopPage/Sidebar';
 
 const ShopPage = () => {
