@@ -55,9 +55,9 @@ const Container = styled.button<{
   $fontSize: string;
   disabled: boolean;
 }>`
-  height: 48px;
-  border-radius: 10px;
-  border: solid 1px ${theme.colors.border};
+  height: 4.8rem;
+  border-radius: 1rem;
+  border: solid 0.1rem ${theme.colors.border};
   font-size: ${(props) => props.$fontSize};
   color: ${(props) =>
     props.$buttonColor === '#ffffff' ? '#000000' : '#ffffff'};
@@ -70,7 +70,7 @@ const Container = styled.button<{
   }
   .price {
     font-size: ${theme.fontSize.caption1};
-    margin-top: 3px;
+    margin-top: 0.3rem;
   }
 `;
 
