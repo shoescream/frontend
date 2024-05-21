@@ -200,10 +200,9 @@ const MyHistory = (props: any) => {
               </Button>
             ))}
             {datePickerValues.map((date, idx) => (
-              <DateItem>
+              <DateItem key={idx}>
                 <DatePicker
                   showDaysOutsideCurrentMonth
-                  key={idx}
                   value={date.value}
                   className="date-picker"
                   format="YYYY-MM-DD"
