@@ -30,6 +30,7 @@ const buttonProps = [
 
 const MyHistory = (props: any) => {
   const [selectState, setSelectState] = useState([1, 0, 0]);
+  const [selectEasyPick, setSelectEasyPick] = useState([1, 0, 0, 0]);
   const day = dayjs();
   const [endDate, setEndDate] = useState(day);
   const [startDate, setStartDate] = useState(day.add(-2, 'month'));
@@ -45,6 +46,9 @@ const MyHistory = (props: any) => {
   const dateHandler = (month: number) => {
     setEndDate(day);
     setStartDate(day.add(-month, 'month'));
+    let updateEasyPick = [0, 0, 0, 0];
+    updateEasyPick[month / 2] = 1;
+    setSelectEasyPick(updateEasyPick);
   };
 
   const stateHandler = (idx: number) => {
@@ -126,7 +130,7 @@ const MyHistory = (props: any) => {
             >
               {data.count}
             </h3>
-            <h3>{title + ' ' + data.title}</h3>
+            <h4>{title + ' ' + data.title}</h4>
           </State>
         ))}
       </StateWrapper>
@@ -142,6 +146,10 @@ const MyHistory = (props: any) => {
                   marginTop: '1rem',
                   marginRight: '1rem',
                   fontSize: theme.fontSize.caption2,
+                  color:
+                    selectEasyPick[data.month / 2] === 1
+                      ? 'black'
+                      : theme.colors.gray[200],
                 }}
                 key={idx}
                 onClick={() => dateHandler(data.month)}
@@ -240,10 +248,10 @@ const State = styled.div<{ select: number; type: string }>`
   width: 30rem;
   height: 5rem;
   text-align: center;
+  margin-top: 2.5rem;
   border-bottom: ${(props) => (props.select === 0 ? '0.1rem' : '0.3rem')} solid
-    black;
+    ${(props) => (props.select === 0 ? theme.colors.gray[200] : 'black')};
   cursor: pointer;
-
   #history_count_select {
     color: ${(props) =>
       props.type === 'selling' ? theme.colors.buying : theme.colors.selling};
@@ -251,7 +259,7 @@ const State = styled.div<{ select: number; type: string }>`
   #history_count {
     color: black;
   }
-  h3 {
+  h4 {
     color: ${(props) =>
       props.select === 0 ? theme.colors.gray[200] : 'black'};
   }
@@ -263,6 +271,7 @@ const SelectDateWrapper = styled.div`
   background-color: ${theme.colors.gray[100]};
   margin: auto;
   padding-top: 3rem;
+  border-bottom: 0.1rem solid ${theme.colors.gray[200]};
 `;
 
 const DateWrapper = styled.div`
