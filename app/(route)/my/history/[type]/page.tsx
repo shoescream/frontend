@@ -28,9 +28,48 @@ const buttonProps = [
   { children: '6개월', month: 6 },
 ];
 
+const slotStyleProps: any = {
+  textField: {
+    size: 'small',
+    sx: {
+      '& .MuiInputBase-input': {
+        height: '2rem',
+        fontSize: theme.fontSize.body1,
+        fontWeight: 700,
+        padding: '0.5rem',
+      },
+      '& .MuiButtonBase-root': {
+        color: 'black',
+      },
+    },
+  },
+  popper: {
+    sx: {
+      '& .MuiPickersDay-root': {
+        fontSize: theme.fontSize.caption1,
+        fontWeight: 'bold',
+      },
+      '& .MuiTypography-caption ': {
+        fontSize: theme.fontSize.caption1,
+        color: 'black',
+        fontWeight: 'bold',
+        '&:first-child': {
+          color: 'red',
+        },
+        '&:last-child': {
+          color: 'blue',
+        },
+      },
+      '& .MuiPickersCalendarHeader-labelContainer': {
+        fontSize: theme.fontSize.subtitle3,
+      },
+    },
+  },
+};
+
 const MyHistory = (props: any) => {
   const [selectState, setSelectState] = useState([1, 0, 0]);
-  const [selectEasyPick, setSelectEasyPick] = useState([1, 0, 0, 0]);
+  const [selectEasyPick, setSelectEasyPick] = useState([0, 1, 0, 0]);
   const day = dayjs();
   const [endDate, setEndDate] = useState(day);
   const [startDate, setStartDate] = useState(day.add(-2, 'month'));
@@ -165,44 +204,7 @@ const MyHistory = (props: any) => {
                   value={date}
                   className="date-picker"
                   format="YYYY-MM-DD"
-                  slotProps={{
-                    textField: {
-                      size: 'small',
-                      sx: {
-                        '& .MuiInputBase-input': {
-                          height: '2rem',
-                          fontSize: theme.fontSize.body1,
-                          fontWeight: 700,
-                          padding: '0.5rem',
-                        },
-                        '& .MuiButtonBase-root': {
-                          color: 'black',
-                        },
-                      },
-                    },
-                    popper: {
-                      sx: {
-                        '& .MuiPickersDay-root': {
-                          fontSize: theme.fontSize.caption1,
-                          fontWeight: 'bold',
-                        },
-                        '& .MuiTypography-caption ': {
-                          fontSize: theme.fontSize.caption1,
-                          color: 'black',
-                          fontWeight: 'bold',
-                          '&:first-child': {
-                            color: 'red',
-                          },
-                          '&:last-child': {
-                            color: 'blue',
-                          },
-                        },
-                        '& .MuiPickersCalendarHeader-labelContainer': {
-                          fontSize: theme.fontSize.subtitle3,
-                        },
-                      },
-                    },
-                  }}
+                  slotProps={slotStyleProps}
                 />
               </DateItem>
             ))}
@@ -346,6 +348,7 @@ const ItemOption = styled.div`
 `;
 
 const ProductNameOption = styled.div`
+  padding: 1rem 0 0 1rem;
   #product_name {
     font-weight: bold;
     margin-bottom: 0.5rem;
