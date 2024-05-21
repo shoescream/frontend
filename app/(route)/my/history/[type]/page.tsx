@@ -69,7 +69,7 @@ const slotStyleProps: any = {
 
 const MyHistory = (props: any) => {
   const [selectState, setSelectState] = useState([1, 0, 0]);
-  const [selectEasyPick, setSelectEasyPick] = useState([0, 1, 0, 0]);
+  const [selectEasyPick, setSelectEasyPick] = useState([1, 0, 0]);
   const day = dayjs();
   const [endDate, setEndDate] = useState(day);
   const [startDate, setStartDate] = useState(day.add(-2, 'month'));
@@ -81,12 +81,15 @@ const MyHistory = (props: any) => {
 
   const router = useRouter();
 
-  const datePickerValues = [startDate, endDate];
+  const datePickerValues = [
+    { value: startDate, setValue: setStartDate },
+    { value: endDate, setValue: setEndDate },
+  ];
   const dateHandler = (month: number) => {
     setEndDate(day);
     setStartDate(day.add(-month, 'month'));
-    let updateEasyPick = [0, 0, 0, 0];
-    updateEasyPick[month / 2] = 1;
+    let updateEasyPick = [0, 0, 0];
+    updateEasyPick[month / 2 - 1] = 1;
     setSelectEasyPick(updateEasyPick);
   };
 
@@ -186,7 +189,7 @@ const MyHistory = (props: any) => {
                   marginRight: '1rem',
                   fontSize: theme.fontSize.caption2,
                   color:
-                    selectEasyPick[data.month / 2] === 1
+                    selectEasyPick[data.month / 2 - 1] === 1
                       ? 'black'
                       : theme.colors.gray[200],
                 }}
@@ -201,10 +204,14 @@ const MyHistory = (props: any) => {
                 <DatePicker
                   showDaysOutsideCurrentMonth
                   key={idx}
-                  value={date}
+                  value={date.value}
                   className="date-picker"
                   format="YYYY-MM-DD"
                   slotProps={slotStyleProps}
+                  onChange={(newValue) => {
+                    date.setValue(dayjs(newValue));
+                    setSelectEasyPick([0, 0, 0]);
+                  }}
                 />
               </DateItem>
             ))}
