@@ -41,6 +41,7 @@ const MyHistory = (props: any) => {
 
   const router = useRouter();
 
+  const datePickerValues = [startDate, endDate];
   const dateHandler = (month: number) => {
     setEndDate(day);
     setStartDate(day.add(-month, 'month'));
@@ -140,35 +141,63 @@ const MyHistory = (props: any) => {
                   height: '3rem',
                   marginTop: '1rem',
                   marginRight: '1rem',
+                  fontSize: theme.fontSize.caption2,
                 }}
+                key={idx}
                 onClick={() => dateHandler(data.month)}
               >
                 {data.children}
               </Button>
             ))}
-            <DateItem>
-              <DatePicker
-                sx={{ backgroundColor: '#fff' }}
-                value={startDate}
-                className="date-picker"
-                slotProps={{
-                  textField: {
-                    size: 'small',
-                  },
-                }}
-              />
-            </DateItem>
-            <DateItem>
-              <DatePicker
-                value={endDate}
-                className="date-picker"
-                slotProps={{
-                  textField: {
-                    size: 'small',
-                  },
-                }}
-              />
-            </DateItem>
+            {datePickerValues.map((date, idx) => (
+              <DateItem>
+                <DatePicker
+                  showDaysOutsideCurrentMonth
+                  key={idx}
+                  value={date}
+                  className="date-picker"
+                  format="YYYY-MM-DD"
+                  slotProps={{
+                    textField: {
+                      size: 'small',
+                      sx: {
+                        '& .MuiInputBase-input': {
+                          height: '2rem',
+                          fontSize: theme.fontSize.body1,
+                          fontWeight: 700,
+                          padding: '0.5rem',
+                        },
+                        '& .MuiButtonBase-root': {
+                          color: 'black',
+                        },
+                      },
+                    },
+                    popper: {
+                      sx: {
+                        '& .MuiPickersDay-root': {
+                          fontSize: theme.fontSize.caption1,
+                          fontWeight: 'bold',
+                        },
+                        '& .MuiTypography-caption ': {
+                          fontSize: theme.fontSize.caption1,
+                          color: 'black',
+                          fontWeight: 'bold',
+                          '&:first-child': {
+                            color: 'red',
+                          },
+                          '&:last-child': {
+                            color: 'blue',
+                          },
+                        },
+                        '& .MuiPickersCalendarHeader-labelContainer': {
+                          fontSize: theme.fontSize.subtitle3,
+                        },
+                      },
+                    },
+                  }}
+                />
+              </DateItem>
+            ))}
             <Button
               size="small"
               styles={{
@@ -244,17 +273,11 @@ const DateWrapper = styled.div`
 const DateItem = styled.div`
   width: 15rem;
   margin: 1rem;
-  line-height: 5rem;
-  * {
-    font-size: ${theme.fontSize.caption1}
-    font-weight: bold;
-  }
-  .date-picker{
-    background-color:#fff;
-    border-radius:0.4rem;
-    div{
-        top:0.25rem;
-       
+  .date-picker {
+    background-color: #fff;
+    border-radius: 0.4rem;
+    div {
+      top: 0.25rem;
     }
   }
 `;
