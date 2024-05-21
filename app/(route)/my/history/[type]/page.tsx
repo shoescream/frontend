@@ -75,7 +75,7 @@ const MyHistory = (props: any) => {
   const [startDate, setStartDate] = useState(day.add(-2, 'month'));
   const type = props.params.type;
 
-  const title = type === 'selling' ? '구매' : '판매';
+  const title = type === 'selling' ? '판매' : '구매';
 
   const historyData = type === 'selling' ? data.selling : data.buying;
 
@@ -256,7 +256,7 @@ const State = styled.div<{ select: number; type: string }>`
   cursor: pointer;
   #history_count_select {
     color: ${(props) =>
-      props.type === 'selling' ? theme.colors.buying : theme.colors.selling};
+      props.type === 'selling' ? theme.colors.selling : theme.colors.buying};
   }
   #history_count {
     color: black;
