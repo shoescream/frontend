@@ -1,6 +1,6 @@
 'use client';
 import theme from '@/styles/theme';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -20,6 +20,12 @@ const data = {
     { count: 1, title: '완료' },
   ],
 };
+
+const buttonProps = [
+  { children: '최근 2개월', month: 2 },
+  { children: '4개월', month: 4 },
+  { children: '6개월', month: 6 },
+];
 
 const MyHistory = (props: any) => {
   const [selectState, setSelectState] = useState([1, 0, 0]);
@@ -116,42 +122,20 @@ const MyHistory = (props: any) => {
       <SelectDateWrapper>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateWrapper>
-            <Button
-              size="small"
-              buttonColor="light"
-              styles={{
-                height: '3rem',
-                marginTop: '1rem',
-                marginRight: '1rem',
-              }}
-              onClick={() => dateHandler(2)}
-            >
-              최근 2개월
-            </Button>
-            <Button
-              size="small"
-              buttonColor="light"
-              styles={{
-                height: '3rem',
-                marginTop: '1rem',
-                marginRight: '1rem',
-              }}
-              onClick={() => dateHandler(4)}
-            >
-              4개월
-            </Button>
-            <Button
-              size="small"
-              buttonColor="light"
-              styles={{
-                height: '3rem',
-                marginTop: '1rem',
-                marginRight: '1rem',
-              }}
-              onClick={() => dateHandler(6)}
-            >
-              6개월
-            </Button>
+            {buttonProps.map((data, idx) => (
+              <Button
+                size="small"
+                buttonColor="light"
+                styles={{
+                  height: '3rem',
+                  marginTop: '1rem',
+                  marginRight: '1rem',
+                }}
+                onClick={() => dateHandler(data.month)}
+              >
+                {data.children}
+              </Button>
+            ))}
             <DateItem>
               <DatePicker
                 sx={{ backgroundColor: '#fff' }}
