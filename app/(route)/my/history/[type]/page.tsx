@@ -7,6 +7,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@/components/common/Button';
+import { useRouter } from 'next/navigation';
 
 const data = {
   selling: [
@@ -37,6 +38,8 @@ const MyHistory = (props: any) => {
   const title = type === 'selling' ? '구매' : '판매';
 
   const historyData = type === 'selling' ? data.selling : data.buying;
+
+  const router = useRouter();
 
   const dateHandler = (month: number) => {
     setEndDate(day);
@@ -99,6 +102,13 @@ const MyHistory = (props: any) => {
       );
     }
   };
+
+  useEffect(() => {
+    if (type !== 'selling' && type !== 'buying') {
+      alert('로그인 후 이용 가능합니다');
+      router.push('/login');
+    }
+  }, []);
   return (
     <>
       <h2>{title}내역</h2>
