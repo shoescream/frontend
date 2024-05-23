@@ -5,12 +5,12 @@ import styled from 'styled-components';
 
 interface PriceGridProps {
   data: {
-    size: string;
-    price: number;
-  }[];
+    [key: string]: number;
+  };
   clickedItem: number;
   onSetClickedItem: (index: number) => void;
   isForLookingSizes?: boolean;
+  isTypeSell?: boolean;
 }
 
 const PriceGrid = ({
@@ -18,12 +18,14 @@ const PriceGrid = ({
   clickedItem,
   onSetClickedItem,
   isForLookingSizes = false,
+  isTypeSell,
 }: PriceGridProps) => {
   const addComma = useAddComma();
+  console.log(data);
 
   return (
     <Grid>
-      {data.map((item, index) => (
+      {Object.keys(data).map((key, index) => (
         <GridItem
           key={index}
           $clicked={clickedItem === index}
@@ -33,17 +35,18 @@ const PriceGrid = ({
             {index === 0 && isForLookingSizes ? (
               <strong>모든 사이즈</strong>
             ) : (
-              item.size
+              key
             )}
           </GridItemTitle>
           <GridItemPrice
+            $isTypeSell={isTypeSell!}
             $isFirstItem={index === 0 && isForLookingSizes}
             $clicked={clickedItem === index}
           >
             {isForLookingSizes && index === 0 ? (
               <strong>구매입찰</strong>
             ) : (
-              addComma(item.price) + '원'
+              addComma(data[key as string]) + '원'
             )}
           </GridItemPrice>
         </GridItem>
@@ -81,10 +84,18 @@ const GridItemTitle = styled.p<{ $clicked: boolean }>`
   font-weight: ${(props) => (props.$clicked ? 600 : 400)};
 `;
 
-const GridItemPrice = styled.p<{ $isFirstItem: boolean; $clicked: boolean }>`
+const GridItemPrice = styled.p<{
+  $isFirstItem: boolean;
+  $clicked: boolean;
+  $isTypeSell: boolean;
+}>`
   font-size: 1.2rem;
   margin-top: 0.2rem;
   font-weight: ${(props) => (props.$clicked ? 600 : 400)};
-  color: ${({ $isFirstItem }) =>
-    $isFirstItem ? theme.colors.main : theme.colors.buying};
+  color: ${({ $isFirstItem, $isTypeSell }) =>
+    $isFirstItem
+      ? theme.colors.main
+      : $isTypeSell
+      ? theme.colors.selling
+      : theme.colors.buying};
 `;

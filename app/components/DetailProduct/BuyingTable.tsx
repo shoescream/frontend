@@ -4,14 +4,13 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 import useAddComma from '@/hooks/useAddComma';
 
-interface BuyingTableItem {
-  size: string;
-  price: number;
-  date: string;
-}
-
 interface BuyingTableProps {
-  data: BuyingTableItem[];
+  data: {
+    productCode: string;
+    size: string;
+    price: number;
+    quantity: number;
+  }[];
 }
 
 const BuyingTable = ({ data }: BuyingTableProps) => {
@@ -40,7 +39,7 @@ const BuyingTable = ({ data }: BuyingTableProps) => {
               <tr key={item.size}>
                 <SizeData>{item.size}</SizeData>
                 <RightSizeData>{addComma(item.price)}</RightSizeData>
-                <LastSizeData>{item.date}</LastSizeData>
+                <LastSizeData>{item.quantity}</LastSizeData>
               </tr>
             ))}
           </tbody>

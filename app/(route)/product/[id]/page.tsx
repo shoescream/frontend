@@ -25,6 +25,7 @@ import BySizeModal from '@/components/DetailProduct/BySizeModal';
 import SellOrBuySizeModal from '@/components/DetailProduct/SellOrBuySizeModal';
 import Review from '@/components/DetailProduct/Review';
 import { useDetailProduct } from '@/hooks/queries/useProduct';
+import Image from 'next/image';
 
 const sizeData = [
   {
@@ -84,19 +85,6 @@ const sizeData = [
   },
 ];
 
-const carouselData = [
-  {
-    name: '1',
-    imageUrl:
-      'https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    name: '2',
-    imageUrl:
-      'https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-];
-
 const DetailProduct = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -112,9 +100,10 @@ const DetailProduct = () => {
   const [isSellingModalOpen, setIsSellingModalOpen] = useState<
     'none' | 'sell' | 'buy'
   >('none');
-  const brand = 'nike';
   const id = pathname.replace('/product/', '');
   const { data, isLoading } = useDetailProduct(id);
+
+  console.log(data);
 
   useEffect(() => {
     if (isOpen || isSellingModalOpen !== 'none') {
@@ -137,7 +126,7 @@ const DetailProduct = () => {
       {isOpen && (
         <BySizeModal
           onClose={() => setIsOpen(false)}
-          data={sizeData.map(({ date, ...rest }) => rest)}
+          data={data!.productOptionResponse.sizeAndPriceBuyInfo!}
           currentItem={currentSizeItem}
           onSetCurrentItem={setCurrentSizeItem}
         />
@@ -145,7 +134,11 @@ const DetailProduct = () => {
       {isSellingModalOpen !== 'none' && (
         <SellOrBuySizeModal
           onClose={() => setIsSellingModalOpen('none')}
-          data={sizeData.map(({ date, ...rest }) => rest)}
+          data={
+            isSellingModalOpen === 'buy'
+              ? data?.productOptionResponse.sizeAndPriceBuyInfo!
+              : data?.productOptionResponse.sizeAndPriceSellInfo!
+          }
           type={isSellingModalOpen}
         />
       )}
@@ -205,7 +198,9 @@ const DetailProduct = () => {
                 >
                   <ButtonTextBox>
                     <ButtonSubtitle>즉시 구매가</ButtonSubtitle>
-                    <ButtonPrice>{addComma(96000)}원</ButtonPrice>
+                    <ButtonPrice>
+                      {addComma(data?.productOptionResponse.minBuyInfo!)}원
+                    </ButtonPrice>
                     <ButtonSubtitle style={{ width: '4rem' }} />
                   </ButtonTextBox>
                 </Button>
@@ -220,7 +215,9 @@ const DetailProduct = () => {
                 >
                   <ButtonTextBox>
                     <ButtonSubtitle>즉시 판매가</ButtonSubtitle>
-                    <ButtonPrice>{addComma(96000)}원</ButtonPrice>
+                    <ButtonPrice>
+                      {addComma(data?.productOptionResponse.maxSellInfo!)}원
+                    </ButtonPrice>
                     <ButtonSubtitle style={{ width: '4rem' }} />
                   </ButtonTextBox>
                 </Button>
@@ -229,9 +226,15 @@ const DetailProduct = () => {
             <Options />
             <ShopWrapper>
               <Flex>
-                <ShopBox onClick={() => router.push('/brands/' + brand)}>
-                  <img
-                    src="https://c4.wallpaperflare.com/wallpaper/504/487/806/logos-nike-famous-sports-brand-dark-background-wallpaper-preview.jpg"
+                <ShopBox
+                  onClick={() =>
+                    router.push(
+                      '/brands/' + data?.productResponse.brandName.toLowerCase()
+                    )
+                  }
+                >
+                  <Image
+                    src={data?.productResponse.brandImage!}
                     alt="logo"
                     width={44}
                     height={44}
@@ -274,22 +277,34 @@ const DetailProduct = () => {
               </DetailTitleBox>
               <div style={{ position: 'relative' }}>
                 <FilterBox
-                  data={['1개월', '3개월', '6개월', '1년', '전체']}
+                  data={['1개월', '3개월', '6개월', '1년']}
                   onClick={(item) => setCurrentChartFilter(item)}
                   currentClickedItem={currentChartFilter}
-                />
-                <ChartBox>
-                  <LineChart />
-                </ChartBox>
+                >
+                  <ChartBox>
+                    <LineChart />
+                  </ChartBox>
+                </FilterBox>
               </div>
-              <div style={{ marginTop: '2rem' }}>
-                <FilterBox
-                  data={['체결 거래', '판매 입찰', '구매 입찰']}
-                  onClick={(item) => setCurrentFilterBySize(item)}
-                  currentClickedItem={currentFilterBySize}
-                />
-                <BuyingTable data={sizeData} />
-              </div>
+              {!data?.sellingBidResponse && !data?.buyingBidResponse && (
+                <div style={{ marginTop: '2rem' }}>
+                  <FilterBox
+                    data={['체결 거래', '판매 입찰', '구매 입찰']}
+                    onClick={(item) => setCurrentFilterBySize(item)}
+                    currentClickedItem={currentFilterBySize}
+                  >
+                    <BuyingTable
+                      data={
+                        currentFilterBySize === '판매 입찰'
+                          ? data?.sellingBidResponse!
+                          : currentFilterBySize === '구매 입찰'
+                          ? data?.buyingBidResponse!
+                          : data?.buyingBidResponse!
+                      }
+                    />
+                  </FilterBox>
+                </div>
+              )}
             </div>
           </RightBox>
         </div>

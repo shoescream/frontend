@@ -9,6 +9,7 @@ interface DetailProduct {
     productSubName: string;
     brandName: string;
     price: number;
+    brandImage: string;
     productImageResponse: {
       productImage: string[];
     };
@@ -16,8 +17,32 @@ interface DetailProduct {
     views: number;
   };
   productOptionResponse: {
-    size: string;
+    sizeAndPriceBuyInfo: {
+      [key: string]: number;
+    };
+    sizeAndPriceSellInfo: {
+      [key: string]: number;
+    };
+    maxSellInfo: number;
+    minBuyInfo: number;
   };
+  dealResponse: {
+    size: string;
+    price: number;
+    tradedAt: string;
+  }[];
+  sellingBidResponse: {
+    productCode: string;
+    size: string;
+    price: number;
+    quantity: number;
+  }[];
+  buyingBidResponse: {
+    productCode: string;
+    size: string;
+    price: number;
+    quantity: number;
+  }[];
 }
 
 const useDetailProduct = (productNumber: string) => {
