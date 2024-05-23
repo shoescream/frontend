@@ -1,9 +1,11 @@
+// Sidebar.tsx
+
 import React from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import SidebarItem from './SidebarItem';
 
-const Sidebar = () => {
+const Sidebar = ({ selectedOptions, setSelectedOptions }: { selectedOptions: string, setSelectedOptions: Function }) => {
   const categories = [
     { title: '카테고리', items: ['상의', '신발', '아우터', '하의', '가방'] },
     { title: '브랜드', items: ['Adidas', 'Nike', 'Asics', 'New Balance'] },
@@ -16,12 +18,20 @@ const Sidebar = () => {
       <FilterContainer> 
         <span className='filter'>필터</span>
         {categories.map((category, index) => (
-          <SidebarItem key={index} category={category} index={index} />
+          <SidebarItem 
+            key={index} 
+            category={category} 
+            index={index} 
+            selectedOptions={selectedOptions} // 선택된 옵션의 상태를 전달
+            setSelectedOptions={setSelectedOptions} // 선택된 옵션의 상태를 업데이트하는 함수를 전달
+          />
         ))}
       </FilterContainer> 
     </Aside>
   );
 };
+
+export default Sidebar;
 
 const Aside = styled.aside`
   // SidebarItem에 작성
@@ -36,6 +46,3 @@ const FilterContainer = styled.div`
   padding: 1rem 0; 
   overflow: hidden;
 `;
-
-
-export default Sidebar;

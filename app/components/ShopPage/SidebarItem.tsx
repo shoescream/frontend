@@ -1,4 +1,4 @@
-// shop 페이지 사이드바 내용에 들어가는 컴포넌트
+// SidebarItem.tsx
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -12,13 +12,18 @@ interface CategoryItem {
 interface SidebarItemProps {
     category: CategoryItem;
     index: number;
+    selectedOptions: string;
+    setSelectedOptions: Function;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ category, index }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ category, index, selectedOptions, setSelectedOptions }) => {
     const [expanded, setExpanded] = useState(false);
 
     const toggleItem = () => {
         setExpanded(prevExpanded => !prevExpanded);
+
+        // 선택된 카테고리를 업데이트
+        setSelectedOptions((prevState: string) => prevState === category.title ? '' : category.title);
     };
 
     return (

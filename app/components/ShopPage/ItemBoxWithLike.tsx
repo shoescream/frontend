@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import { ShopProductType } from 'app/(route)/shop/shopProduct';
 
+interface ItemBoxWithLikeProps {
+    product: ShopProductType; // ProductType에 해당하는 속성
+}
 
-const ItemBoxWithLike = () => {
+const ItemBoxWithLike: React.FC<ItemBoxWithLikeProps> = ({ product }) => {
     // 좋아요 상태 관리
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
