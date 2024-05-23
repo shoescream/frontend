@@ -1,5 +1,11 @@
 export interface ShopProductType {
-    name: string;
-    category: string;
-    // 필요한 다른 속성들을 추가로 정의
+    id: number;
+    brandName: string;
+    productCode: string;
+    productName: string;
+    productSubName: string;
+    price: number;
+    productImageResponse: {
+        productImage: string[];
+    };
 }
