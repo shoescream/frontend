@@ -24,19 +24,22 @@ const ShopPage = () => {
     // 필터링 로직
     const filterProducts = (products: ShopProductType[]) => {
         return products.filter(product => {
-            return selectedOptions.every(option => {
-                // 브랜드 필터링
-                if (option === '브랜드') {
-                    return product.brandName === option;
-                }
-                // 성별 필터링
-                else if (option === '남성') {
+            // 성별 필터링
+            const genderOptions = selectedOptions.filter(option => option === '남성' || option === '여성');
+            const genderMatch = genderOptions.length === 0 || genderOptions.some(option => {
+                if (option === '남성') {
                     return product.productCode.charAt(0) !== 'W';
                 } else if (option === '여성') {
                     return product.productCode.charAt(0) === 'W';
                 }
                 return false;
             });
+
+            // 브랜드 필터링
+            const brandOptions = selectedOptions.filter(option => !['남성', '여성'].includes(option));
+            const brandMatch = brandOptions.length === 0 || brandOptions.includes(product.brandName);
+
+            return genderMatch && brandMatch;
         });
     };
 

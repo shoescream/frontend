@@ -3,55 +3,55 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 
 interface CategoryItem {
-    title: string;
-    items: string[];
+  title: string;
+  items: string[];
 }
 
 interface SidebarItemProps {
-    category: CategoryItem;
-    index: number;
-    selectedOptions: string[];
-    setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
+  category: CategoryItem;
+  index: number;
+  selectedOptions: string[];
+  setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const SidebarItem: React.FC<SidebarItemProps> = ({ category, index, selectedOptions, setSelectedOptions }) => {
-    const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
-    const toggleItem = () => {
-        setExpanded(prevExpanded => !prevExpanded);
-    };
+  const toggleItem = () => {
+    setExpanded(prevExpanded => !prevExpanded);
+  };
 
-    const handleOptionChange = (option: string) => {
-        setSelectedOptions(prevSelected => {
-            if (prevSelected.includes(option)) {
-                return prevSelected.filter(item => item !== option);
-            } else {
-                return [...prevSelected, option];
-            }
-        });
-    };
+  const handleOptionChange = (option: string) => {
+    setSelectedOptions(prevSelected => {
+      if (prevSelected.includes(option)) {
+        return prevSelected.filter(item => item !== option);
+      } else {
+        return [...prevSelected, option];
+      }
+    });
+  };
 
-    return (
-        <Wrapper>
-            <Categories onClick={toggleItem}>
-                <ItemTitle>{category.title}</ItemTitle>
-                <ToggleIcon src={expanded ? '/sidebarminus.png' : '/sidebarplus.png'} alt="Toggle Icon" />
-            </Categories>
-            <ItemList className={expanded ? 'expanded' : ''}>
-                {category.items.map((item, idx) => (
-                    <ItemOption key={idx}>
-                        <input 
-                            type="checkbox" 
-                            id={`item-${index}-${idx}`} 
-                            checked={selectedOptions.includes(item)}
-                            onChange={() => handleOptionChange(item)}
-                        />
-                        <StyledLabel htmlFor={`item-${index}-${idx}`}>{item}</StyledLabel>
-                    </ItemOption>
-                ))}
-            </ItemList>
-        </Wrapper>
-    );
+  return (
+    <Wrapper>
+      <Categories onClick={toggleItem}>
+        <ItemTitle>{category.title}</ItemTitle>
+        <ToggleIcon src={expanded ? '/sidebarminus.png' : '/sidebarplus.png'} alt="Toggle Icon" />
+      </Categories>
+      <ItemList className={expanded ? 'expanded' : ''}>
+        {category.items.map((item, idx) => (
+          <ItemOption key={idx}>
+            <input
+              type="checkbox"
+              id={`item-${index}-${idx}`}
+              checked={selectedOptions.includes(item)}
+              onChange={() => handleOptionChange(item)}
+            />
+            <StyledLabel htmlFor={`item-${index}-${idx}`}>{item}</StyledLabel>
+          </ItemOption>
+        ))}
+      </ItemList>
+    </Wrapper>
+  );
 };
 
 export default SidebarItem;

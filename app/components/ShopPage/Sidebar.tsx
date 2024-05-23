@@ -5,43 +5,43 @@ import SidebarItem from './SidebarItem';
 import { ShopProductType } from 'app/(route)/shop/shopProduct';
 
 interface SidebarProps {
-    selectedOptions: string[];
-    setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
-    products: ShopProductType[];
+  selectedOptions: string[];
+  setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
+  products: ShopProductType[];
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ selectedOptions, setSelectedOptions, products }) => {
-    const [brands, setBrands] = useState<string[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
 
-    useEffect(() => {
-        const uniqueBrands = Array.from(new Set(products.map(product => product.brandName))); // 중복 제거
-        console.log('브랜드 데이터:', uniqueBrands);
-        setBrands(uniqueBrands);
-    }, [products]);
+  useEffect(() => {
+    const uniqueBrands = Array.from(new Set(products.map(product => product.brandName))); // 중복 제거
+    console.log('브랜드 데이터:', uniqueBrands);
+    setBrands(uniqueBrands);
+  }, [products]);
 
-    const categories = [
-        { title: '카테고리', items: ['상의', '신발', '아우터', '하의', '가방'] },
-        { title: '브랜드', items: brands },
-        { title: '사이즈', items: ['230', '240', '250', '260', '270'] },
-        { title: '성별', items: ['남성', '여성'] }
-    ];
+  const categories = [
+    { title: '카테고리', items: ['상의', '신발', '아우터', '하의', '가방'] },
+    { title: '브랜드', items: brands },
+    { title: '사이즈', items: ['230', '240', '250', '260', '270'] },
+    { title: '성별', items: ['남성', '여성'] }
+  ];
 
-    return (
-        <Aside>
-            <FilterContainer>
-                <span className='filter'>필터</span>
-                {categories.map((category, index) => (
-                    <SidebarItem
-                        key={index}
-                        category={category}
-                        index={index}
-                        selectedOptions={selectedOptions}
-                        setSelectedOptions={setSelectedOptions}
-                    />
-                ))}
-            </FilterContainer>
-        </Aside>
-    );
+  return (
+    <Aside>
+      <FilterContainer>
+        <span className='filter'>필터</span>
+        {categories.map((category, index) => (
+          <SidebarItem
+            key={index}
+            category={category}
+            index={index}
+            selectedOptions={selectedOptions}
+            setSelectedOptions={setSelectedOptions}
+          />
+        ))}
+      </FilterContainer>
+    </Aside>
+  );
 };
 
 export default Sidebar;

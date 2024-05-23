@@ -28,16 +28,16 @@ const RankingPage: React.FC = () => {
                 { gender: 'F', detail: 'SNK', productType: '01' },
                 { gender: 'M', detail: 'SND', productType: '01' }
             ];
-    
+
             const responseArray = await Promise.all(rankingParamsArray.map(params => axios.get('http://3.35.24.20:8080/ranking', { params })));
             const data = responseArray.map(response => response.data.result);
-            
+
             console.log('Fetched ranking data:', data);
             setRankingData(data);
         };
         fetchData();
-    }, []);    
-    
+    }, []);
+
     const handleShowMoreImages = (index: number) => {
         setAdditionalImagesCounts(prev => prev.map((value, i) => (i === index ? value + 5 : value)));
     };
