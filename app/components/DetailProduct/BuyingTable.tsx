@@ -35,7 +35,7 @@ const BuyingTable = ({ data }: BuyingTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {data?.map((item) => (
               <tr key={item.size}>
                 <SizeData>{item.size}</SizeData>
                 <RightSizeData>{addComma(item.price)}</RightSizeData>

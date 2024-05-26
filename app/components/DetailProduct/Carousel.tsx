@@ -28,7 +28,7 @@ const Carousel = ({ data }: CarouselProps) => {
         onSwiper={setSwiper}
         onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex as number)}
       >
-        {data.map((url, index) => {
+        {data?.map((url, index) => {
           console.log(url);
           return (
             <SwiperSlide key={`${url}-${index}`}>
@@ -47,7 +47,7 @@ const Carousel = ({ data }: CarouselProps) => {
         })}
       </Swiper>
       <Thumbnails>
-        {data.map((item, index) => (
+        {data?.map((item, index) => (
           <ThumbnailItem
             key={`${index}-${item}`}
             onClick={() => swiper?.slideTo(index)}
