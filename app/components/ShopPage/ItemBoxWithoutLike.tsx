@@ -4,19 +4,19 @@ import theme from '@/styles/theme';
 
 interface RankingProps {
     productImage: string;
-    branName: string;
+    brandName: string;
     productName: string;
     price: string;
 }
 
-const ItemBoxWithoutLike: React.FC<RankingProps> = ({ productImage, branName, productName, price }) => {
+const ItemBoxWithoutLike: React.FC<RankingProps> = ({ productImage, brandName, productName, price }) => {
     return (
         <ImageItemContainer>
             <ItemBox>
                 <Image referrerPolicy="no-referrer" src={productImage} alt={productName}></Image>
-                <Brand className='brand'>{branName}</Brand>
+                <Brand className='brand'>{brandName}</Brand>
                 <ProductName className='product-name'>{productName}</ProductName>
-                {/* <Price className='price' style={{ marginTop: '2rem' }}>{price}</Price> */}
+                <Price className='price' style={{ marginTop: '2rem' }}>{price}</Price>
             </ItemBox>
         </ImageItemContainer>
     );

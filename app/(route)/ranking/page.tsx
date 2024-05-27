@@ -5,21 +5,24 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import ItemBoxWithoutLike from '@/components/ShopPage/ItemBoxWithoutLike';
 import axios from 'axios';
+import useAddComma from '@/hooks/useAddComma';
 
 interface RankingProduct {
     id: number;
     productCode: string;
+    brandName: string;
     productName: string;
-    productSubName: string;
     price: string;
     productImageResponse: {
         productImage: string[];
     };
 }
 
-const RankingPage: React.FC = () => {
+const RankingPage = () => {
     const [additionalImagesCounts, setAdditionalImagesCounts] = useState([5, 5, 5]);
     const [rankingData, setRankingData] = useState<RankingProduct[][]>([]);
+
+    const addComma = useAddComma();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -53,9 +56,9 @@ const RankingPage: React.FC = () => {
                             return (
                                 <ItemBoxWithoutLike
                                     key={i}
-                                    branName={item.productName}
-                                    productName={item.productSubName}
-                                    price={item.price}
+                                    brandName={item.brandName}
+                                    productName={item.productName}
+                                    price={addComma(parseInt(item.price))}
                                     productImage={item.productImageResponse.productImage[0]}
                                 />
                             );
