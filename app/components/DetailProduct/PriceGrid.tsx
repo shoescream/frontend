@@ -21,36 +21,37 @@ const PriceGrid = ({
   isTypeSell,
 }: PriceGridProps) => {
   const addComma = useAddComma();
-  console.log(data);
 
   return (
     <Grid>
-      {Object.keys(data).map((key, index) => (
-        <GridItem
-          key={index}
-          $clicked={clickedItem === index}
-          onClick={() => onSetClickedItem(index)}
-        >
-          <GridItemTitle $clicked={clickedItem === index}>
-            {index === 0 && isForLookingSizes ? (
-              <strong>모든 사이즈</strong>
-            ) : (
-              key
-            )}
-          </GridItemTitle>
-          <GridItemPrice
-            $isTypeSell={isTypeSell!}
-            $isFirstItem={index === 0 && isForLookingSizes}
-            $clicked={clickedItem === index}
+      {Object.keys(data).map((key, index) => {
+        return (
+          <GridItem
+            key={key}
+            $clicked={clickedItem === Number(key)}
+            onClick={() => onSetClickedItem(Number(key))}
           >
-            {isForLookingSizes && index === 0 ? (
-              <strong>구매입찰</strong>
-            ) : (
-              addComma(data[key as string]) + '원'
-            )}
-          </GridItemPrice>
-        </GridItem>
-      ))}
+            <GridItemTitle $clicked={clickedItem === Number(key)}>
+              {index === 0 && isForLookingSizes ? (
+                <strong>모든 사이즈</strong>
+              ) : (
+                key
+              )}
+            </GridItemTitle>
+            <GridItemPrice
+              $isTypeSell={isTypeSell!}
+              $isFirstItem={index === 0 && isForLookingSizes}
+              $clicked={clickedItem === Number(key)}
+            >
+              {isForLookingSizes && index === 0 ? (
+                <strong>구매입찰</strong>
+              ) : (
+                addComma(data[key as string]) + '원'
+              )}
+            </GridItemPrice>
+          </GridItem>
+        );
+      })}
     </Grid>
   );
 };

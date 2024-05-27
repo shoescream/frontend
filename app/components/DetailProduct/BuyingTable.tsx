@@ -3,7 +3,10 @@ import Button from '../common/Button';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import useAddComma from '@/hooks/useAddComma';
-import { ProductBidsItem } from '@/hooks/queries/useProduct';
+import {
+  ProductBidsItem,
+  ProductTransactionsItem,
+} from '@/hooks/queries/useProduct';
 
 interface BuyingTableProps {
   data: ProductBidsItem[];
@@ -11,6 +14,10 @@ interface BuyingTableProps {
 
 const BuyingTable = ({ data }: BuyingTableProps) => {
   const addComma = useAddComma();
+
+  const convertDate = (date: string) => {
+    return date.split('T')[0].slice(2).replaceAll('-', '/');
+  };
 
   return (
     <TableWrapper>
@@ -34,8 +41,12 @@ const BuyingTable = ({ data }: BuyingTableProps) => {
             {data?.map((item) => (
               <tr key={item.size}>
                 <SizeData>{item.size}</SizeData>
-                <RightSizeData>{addComma(item.price)}</RightSizeData>
-                <LastSizeData>{item.quantity}</LastSizeData>
+                <RightSizeData>{addComma(item.price)}원</RightSizeData>
+                <LastSizeData>
+                  {isNaN(item.quantity)
+                    ? convertDate(item.createdAt)
+                    : item.quantity}
+                </LastSizeData>
               </tr>
             ))}
           </tbody>

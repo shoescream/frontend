@@ -41,12 +41,14 @@ const useDetailProduct = (productNumber: string) => {
   });
 };
 
+export interface ProductTransactionsItem {
+  size: string;
+  price: number;
+  tradedAt: string;
+}
+
 interface ProductTransactions {
-  dealResponse: {
-    size: string;
-    price: number;
-    tradedAt: string;
-  }[];
+  dealResponse: ProductTransactionsItem[];
 }
 
 const useGetTransactions = ({
@@ -109,4 +111,35 @@ const useGetBid = ({
   });
 };
 
-export { useDetailProduct, useGetTransactions, useGetBid };
+interface ProductQuotes {
+  [key: string]: number;
+}
+
+const useGetQuote = ({
+  productNumber,
+  size,
+  period,
+}: {
+  productNumber: string;
+  size: string;
+  period: number;
+}) => {
+  return useQuery<ProductQuotes>({
+    queryKey: ['quote', productNumber, size, period],
+    enabled: !!productNumber && !!size && !!period,
+    retry: false,
+    queryFn: async () => {
+      const response = await Instance.get('/quote', {
+        params: {
+          productNumber,
+          size,
+          period,
+        },
+      });
+
+      return response.data.result.quote;
+    },
+  });
+};
+
+export { useDetailProduct, useGetTransactions, useGetBid, useGetQuote };

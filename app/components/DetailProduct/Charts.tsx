@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import FilterBox from '../FilterBox/FilterBox';
 import styled from 'styled-components';
-import { LineChart } from 'recharts';
-import { useGetBid } from '@/hooks/queries/useProduct';
+import Chart from './LineChart';
 
 interface ChartsProps {
   productNumber: string;
@@ -11,7 +10,6 @@ interface ChartsProps {
 
 const Charts = ({ productNumber, size }: ChartsProps) => {
   const [currentChartFilter, setCurrentChartFilter] = useState('1개월');
-  const { data } = useGetBid({ productNumber, size: String(size) });
 
   return (
     <div style={{ position: 'relative' }}>
@@ -21,7 +19,13 @@ const Charts = ({ productNumber, size }: ChartsProps) => {
         currentClickedItem={currentChartFilter}
       >
         <ChartBox>
-          <LineChart />
+          <Chart
+            productNumber={productNumber}
+            size={size ? String(size) : 'allSize'}
+            period={
+              currentChartFilter === '1년' ? 12 : Number(currentChartFilter[0])
+            }
+          />
         </ChartBox>
       </FilterBox>
     </div>

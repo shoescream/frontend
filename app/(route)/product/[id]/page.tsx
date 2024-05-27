@@ -29,64 +29,6 @@ import Image from 'next/image';
 import Bids from '@/components/DetailProduct/Bids';
 import Charts from '@/components/DetailProduct/Charts';
 
-const sizeData = [
-  {
-    size: '220(US W5 M3.5)',
-    price: 104000,
-    date: '240510',
-  },
-  {
-    size: '225(US W5.5 M4)',
-    price: 100000,
-    date: '240510',
-  },
-  {
-    size: '230(US W6 M4.5)',
-    price: 107000,
-    date: '240510',
-  },
-  {
-    size: '235(US W6.5 M5)',
-    price: 107000,
-    date: '240510',
-  },
-  {
-    size: '240(US W7 M5.5)',
-    price: 128000,
-    date: '240510',
-  },
-  {
-    size: '245',
-    price: 130000,
-    date: '240510',
-  },
-  {
-    size: '250',
-    price: 134000,
-    date: '240510',
-  },
-  {
-    size: '255',
-    price: 135000,
-    date: '240510',
-  },
-  {
-    size: '260',
-    price: 143000,
-    date: '240510',
-  },
-  {
-    size: '265',
-    price: 139000,
-    date: '240510',
-  },
-  {
-    size: '270',
-    price: 139000,
-    date: '240510',
-  },
-];
-
 const DetailProduct = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -103,8 +45,6 @@ const DetailProduct = () => {
   >('none');
   const id = pathname.replace('/product/', '');
   const { data, isLoading } = useDetailProduct(id);
-
-  console.log(data);
 
   useEffect(() => {
     if (isOpen || isSellingModalOpen !== 'none') {
@@ -181,9 +121,7 @@ const DetailProduct = () => {
               </NameBox>
               <SizeButtonBox onClick={() => setIsOpen(true)}>
                 <SizeButton>
-                  {currentSizeItem > 0 && !isOpen
-                    ? sizeData[currentSizeItem].size
-                    : '모든 사이즈'}
+                  {currentSizeItem && !isOpen ? currentSizeItem : '모든 사이즈'}
                   <FaCaretDown />
                 </SizeButton>
               </SizeButtonBox>

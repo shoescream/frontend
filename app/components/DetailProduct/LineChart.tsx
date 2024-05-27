@@ -1,4 +1,5 @@
-import React from 'react';
+import { useGetQuote } from '@/hooks/queries/useProduct';
+import React, { useEffect, useState } from 'react';
 import {
   Line,
   LineChart,
@@ -13,21 +14,6 @@ import {
   ValueType,
 } from 'recharts/types/component/DefaultTooltipContent';
 import styled from 'styled-components';
-
-type ChartData = {
-  name: string;
-  value: number;
-};
-
-const data: ChartData[] = [
-  { name: '2024/04/10', value: 1000 },
-  { name: '2024/04/11', value: 4000 },
-  { name: '2024/04/13', value: 5500 },
-  { name: '2024/04/12', value: 1500 },
-  { name: '2024/04/14', value: 2000 },
-  { name: '2024/04/15', value: 8000 },
-  { name: '2024/04/16', value: 5800 },
-];
 
 const CustomTooltip = ({
   active,
@@ -56,18 +42,52 @@ const CustomTooltip = ({
   return null;
 };
 
-const Chart: React.FC = () => {
+interface ChartProps {
+  productNumber: string;
+  size: string;
+  period: number;
+}
+
+const Chart = ({ productNumber, size, period }: ChartProps) => {
+  const [newData, setNewData] = useState<{ name: string; value: number }[]>([]);
+  const { data, isLoading } = useGetQuote({
+    productNumber,
+    size,
+    period,
+  });
+
+  useEffect(() => {
+    if (data && !isLoading) {
+      const updatedData = Object.keys(data).map((key) => ({
+        name: key,
+        value: data[key],
+      }));
+      setNewData(updatedData);
+    }
+  }, [data, isLoading]);
+
+  const values = newData.map((d) => d.value);
+  const minVal = Math.min(...values);
+  const maxVal = Math.max(...values);
+
+  const getTicks = (min: number, max: number, numTicks: number) => {
+    const step = (max - min) / (numTicks - 1);
+    return Array.from({ length: numTicks }, (_, i) => min + i * step);
+  };
+
+  const ticks = getTicks(minVal, maxVal, 5);
+
   return (
     <ResponsiveContainer width="100%" height={200}>
-      <LineChart data={data} margin={{ top: 20 }}>
+      <LineChart data={newData} margin={{ top: 20 }}>
         <XAxis dataKey="name" hide={true} />
         <YAxis
-          domain={[0, 'dataMax']}
+          domain={[0, maxVal]}
           orientation="right"
           axisLine={false}
           tickLine={false}
           tick={{ fontSize: 13 }}
-          ticks={[0, 2000, 4000, 6000, 8000]}
+          ticks={[0, ...ticks]}
         />
         <Tooltip cursor={false} content={<CustomTooltip />} />
         <Line
