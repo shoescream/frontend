@@ -58,6 +58,7 @@ const RankingPage = () => {
                                     key={i}
                                     brandName={item.brandName}
                                     productName={item.productName}
+                                    productCode={item.productCode}
                                     price={addComma(parseInt(item.price))}
                                     productImage={item.productImageResponse.productImage[0]}
                                 />
