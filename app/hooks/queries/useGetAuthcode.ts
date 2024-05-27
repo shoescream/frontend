@@ -22,14 +22,12 @@ const useMailNumber = ({
       const response: Response<MailProps> = await Instance.post(
         '/mail?' + `mail=${mail}`
       );
-      console.log(response);
       return response;
     },
     onSuccess: (data) => {
       onToast(true, '입력하신 이메일로 인증 코드가 전송되었습니다.');
       onClickAuthNumber(true);
       setTimer(5);
-      console.log(data.result);
     },
     onError: (error) => {
       console.error(error);
