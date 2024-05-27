@@ -52,20 +52,6 @@ const BuyingTable = ({ data }: BuyingTableProps) => {
           </tbody>
         </table>
       </div>
-      <Button
-        size="full"
-        buttonColor="light"
-        styles={{
-          border: `0.1rem solid ${theme.colors.border}`,
-          color: theme.colors.text.primary,
-          fontSize: '1.4rem',
-          fontWeight: '300',
-          height: '4rem',
-          borderRadius: '1.2rem',
-        }}
-      >
-        체결 내역 더보기
-      </Button>
     </TableWrapper>
   );
 };
