@@ -21,13 +21,11 @@ const useCheckAuthCode = ({
       const response: Response<AuthCodeProps> = await Instance.get(
         '/mail-check?' + `mail=${mail}&authNumber=${authNumber}`
       );
-      console.log(response);
       return response;
     },
     onSuccess: (data) => {
       onToast(true, '이메일 인증이 완료 되었습니다.');
       onClickAuthNumber(false);
-      console.log(data.result);
     },
     onError: (error) => {
       console.error(error);
@@ -57,14 +55,12 @@ const useMailNumber = ({
       const response: Response<MailProps> = await Instance.post(
         '/mail?' + `mail=${mail}`
       );
-      console.log(response);
       return response;
     },
     onSuccess: (data) => {
       onToast(true, '입력하신 이메일로 인증 코드가 전송되었습니다.');
       onClickAuthNumber(true);
       setTimer(5);
-      console.log(data.result);
     },
     onError: (error) => {
       console.error(error);
