@@ -18,8 +18,18 @@ const ShopPage = () => {
             console.log('Fetched shop data:', response.data.result);
         };
 
-        fetchProducts()
+        fetchProducts();
     }, []);
+
+    const onSetSelectedOptions = (option: string) => {
+        setSelectedOptions(prev => {
+            if (prev.includes(option)) {
+                return prev.filter(item => item !== option);
+            } else {
+                return [...prev, option];
+            }
+        });
+    };
 
     // 필터링 로직
     const filterProducts = (products: ShopProductType[]) => {
@@ -49,7 +59,7 @@ const ShopPage = () => {
         <Container>
             <Sidebar
                 selectedOptions={selectedOptions}
-                setSelectedOptions={setSelectedOptions}
+                onSetSelectedOptions={onSetSelectedOptions}
                 products={products}
             />
             <MainContent>

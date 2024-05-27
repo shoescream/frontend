@@ -6,11 +6,11 @@ import { ShopProductType } from 'app/(route)/shop/shopProduct';
 
 interface SidebarProps {
   selectedOptions: string[];
-  setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
+  onSetSelectedOptions: (option: string) => void; 
   products: ShopProductType[];
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ selectedOptions, setSelectedOptions, products }) => {
+const Sidebar: React.FC<SidebarProps> = ({ selectedOptions, onSetSelectedOptions, products }) => {
   const [brands, setBrands] = useState<string[]>([]);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedOptions, setSelectedOptions, 
             category={category}
             index={index}
             selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
+            onSetSelectedOptions={onSetSelectedOptions} 
           />
         ))}
       </FilterContainer>

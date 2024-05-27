@@ -11,10 +11,10 @@ interface SidebarItemProps {
   category: CategoryItem;
   index: number;
   selectedOptions: string[];
-  setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
+  onSetSelectedOptions: (option: string) => void; 
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ category, index, selectedOptions, setSelectedOptions }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ category, index, selectedOptions, onSetSelectedOptions }) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleItem = () => {
@@ -22,13 +22,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ category, index, selectedOpti
   };
 
   const handleOptionChange = (option: string) => {
-    setSelectedOptions(prevSelected => {
-      if (prevSelected.includes(option)) {
-        return prevSelected.filter(item => item !== option);
-      } else {
-        return [...prevSelected, option];
-      }
-    });
+    onSetSelectedOptions(option);
   };
 
   return (

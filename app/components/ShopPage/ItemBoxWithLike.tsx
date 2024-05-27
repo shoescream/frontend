@@ -1,21 +1,17 @@
-// ItemBoxWithLike.tsx
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { ShopProductType } from 'app/(route)/shop/shopProduct';
+import useAddComma from '@/hooks/useAddComma';
 
 interface ItemBoxWithLikeProps {
     product: ShopProductType; // ProductType에 해당하는 속성
 }
 
-const numberToPriceString = (price: number): string => {
-    return price.toLocaleString('ko-KR') + '원';
-};
-
 const ItemBoxWithLike: React.FC<ItemBoxWithLikeProps> = ({ product }) => {
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
+    const addComma = useAddComma();
 
     const handleLikeClick = () => {
         setLiked(!liked);
@@ -28,7 +24,7 @@ const ItemBoxWithLike: React.FC<ItemBoxWithLikeProps> = ({ product }) => {
                 <Image referrerPolicy="no-referrer" src={product.productImageResponse.productImage[0]} alt={product.productName}></Image>
                 <Text className='brand' style={{ fontWeight: 'bold' }}>{product.brandName}</Text>
                 <Text className='product-name'>{product.productSubName}</Text>
-                <Text className='price' style={{ fontWeight: 'bold', marginTop: '2rem' }}>{numberToPriceString(product.price)}</Text>
+                <Text className='price' style={{ fontWeight: 'bold', marginTop: '2rem' }}>{addComma(product.price)}</Text>
                 <LikeArea>
                     <LikeButton onClick={handleLikeClick}>{liked ? '🖤' : '🤍'}</LikeButton>
                     <LikeCount>{likeCount}</LikeCount>
