@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { ShopProductType } from 'app/(route)/shop/shopProduct';
 import useAddComma from '@/hooks/useAddComma';
+import { useRouter } from 'next/navigation';
 
 interface ItemBoxWithLikeProps {
     product: ShopProductType; // ProductType에 해당하는 속성
@@ -18,8 +19,15 @@ const ItemBoxWithLike: React.FC<ItemBoxWithLikeProps> = ({ product }) => {
         setLikeCount((prevCount) => (liked ? prevCount - 1 : prevCount + 1)); // 좋아요 개수 증감
     };
 
+    const router = useRouter();
+
+    const handleClick = () => {
+        router.push(`/product/${product.productCode}`);
+        console.log('Clicked Product:', product);
+    };
+
     return (
-        <ImageItemContainer>
+        <ImageItemContainer onClick={handleClick}>
             <ItemBoxWrapper>
                 <Image referrerPolicy="no-referrer" src={product.productImageResponse.productImage[0]} alt={product.productName}></Image>
                 <Text className='brand' style={{ fontWeight: 'bold' }}>{product.brandName}</Text>
@@ -64,6 +72,7 @@ const ItemBoxWrapper = styled.div`
     position: relative;
     overflow: hidden;
     background-color: white;
+    cursor: pointer;
 `;
 
 // 이미지 스타일
