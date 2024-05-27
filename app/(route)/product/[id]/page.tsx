@@ -26,6 +26,8 @@ import SellOrBuySizeModal from '@/components/DetailProduct/SellOrBuySizeModal';
 import Review from '@/components/DetailProduct/Review';
 import { useDetailProduct } from '@/hooks/queries/useProduct';
 import Image from 'next/image';
+import Bids from '@/components/DetailProduct/Bids';
+import Charts from '@/components/DetailProduct/Charts';
 
 const sizeData = [
   {
@@ -93,7 +95,6 @@ const DetailProduct = () => {
   const isLoggedIn = true;
   const [favorite, setFavorite] = useState(false);
   const [saveShop, setSaveShop] = useState(false);
-  const [currentChartFilter, setCurrentChartFilter] = useState('전체');
   const [currentFilterBySize, setCurrentFilterBySize] = useState('체결 거래');
   const [currentSizeItem, setCurrentSizeItem] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -275,36 +276,13 @@ const DetailProduct = () => {
               <DetailTitleBox>
                 <DetailTitle>시세</DetailTitle>
               </DetailTitleBox>
-              <div style={{ position: 'relative' }}>
-                <FilterBox
-                  data={['1개월', '3개월', '6개월', '1년']}
-                  onClick={(item) => setCurrentChartFilter(item)}
-                  currentClickedItem={currentChartFilter}
-                >
-                  <ChartBox>
-                    <LineChart />
-                  </ChartBox>
-                </FilterBox>
-              </div>
-              {!data?.sellingBidResponse && !data?.buyingBidResponse && (
-                <div style={{ marginTop: '2rem' }}>
-                  <FilterBox
-                    data={['체결 거래', '판매 입찰', '구매 입찰']}
-                    onClick={(item) => setCurrentFilterBySize(item)}
-                    currentClickedItem={currentFilterBySize}
-                  >
-                    <BuyingTable
-                      data={
-                        currentFilterBySize === '판매 입찰'
-                          ? data?.sellingBidResponse!
-                          : currentFilterBySize === '구매 입찰'
-                          ? data?.buyingBidResponse!
-                          : data?.buyingBidResponse!
-                      }
-                    />
-                  </FilterBox>
-                </div>
-              )}
+              <Charts productNumber={id} size={currentSizeItem} />
+              <Bids
+                productNumber={id}
+                size={currentSizeItem}
+                currentFilterBySize={currentFilterBySize}
+                onSetCurrentFilterBySize={setCurrentFilterBySize}
+              />
             </div>
           </RightBox>
         </div>
@@ -447,11 +425,6 @@ const DetailTitleBox = styled.div`
 const DetailTitle = styled.p`
   font-size: 1.8rem;
   font-weight: 600;
-`;
-
-const ChartBox = styled.div`
-  width: 100%;
-  height: 20rem;
 `;
 
 const Blur = styled.div`

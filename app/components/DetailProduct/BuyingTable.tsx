@@ -3,14 +3,10 @@ import Button from '../common/Button';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import useAddComma from '@/hooks/useAddComma';
+import { ProductBidsItem } from '@/hooks/queries/useProduct';
 
 interface BuyingTableProps {
-  data: {
-    productCode: string;
-    size: string;
-    price: number;
-    quantity: number;
-  }[];
+  data: ProductBidsItem[];
 }
 
 const BuyingTable = ({ data }: BuyingTableProps) => {

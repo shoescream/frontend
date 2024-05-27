@@ -26,23 +26,6 @@ interface DetailProduct {
     maxSellInfo: number;
     minBuyInfo: number;
   };
-  dealResponse: {
-    size: string;
-    price: number;
-    tradedAt: string;
-  }[];
-  sellingBidResponse: {
-    productCode: string;
-    size: string;
-    price: number;
-    quantity: number;
-  }[];
-  buyingBidResponse: {
-    productCode: string;
-    size: string;
-    price: number;
-    quantity: number;
-  }[];
 }
 
 const useDetailProduct = (productNumber: string) => {
@@ -58,4 +41,72 @@ const useDetailProduct = (productNumber: string) => {
   });
 };
 
-export { useDetailProduct };
+interface ProductTransactions {
+  dealResponse: {
+    size: string;
+    price: number;
+    tradedAt: string;
+  }[];
+}
+
+const useGetTransactions = ({
+  productNumber,
+  size,
+}: {
+  productNumber: string;
+  size: string;
+}) => {
+  return useQuery<ProductTransactions>({
+    queryKey: ['transactions', productNumber, size],
+    enabled: !!productNumber && !!size,
+    retry: false,
+    queryFn: async () => {
+      const response = await Instance.get('/deal-history', {
+        params: {
+          productNumber,
+          size,
+        },
+      });
+
+      return response.data.result;
+    },
+  });
+};
+
+export interface ProductBidsItem {
+  createdAt: string;
+  size: string;
+  price: number;
+  quantity: number;
+}
+
+interface ProductBids {
+  sellingBidResponse: ProductBidsItem[];
+  buyingBidResponse: ProductBidsItem[];
+}
+
+const useGetBid = ({
+  productNumber,
+  size,
+}: {
+  productNumber: string;
+  size: string;
+}) => {
+  return useQuery<ProductBids>({
+    queryKey: ['bids', productNumber, size],
+    enabled: !!productNumber && !!size,
+    retry: false,
+    queryFn: async () => {
+      const response = await Instance.get('/bid-history', {
+        params: {
+          productNumber,
+          size,
+        },
+      });
+
+      return response.data.result;
+    },
+  });
+};
+
+export { useDetailProduct, useGetTransactions, useGetBid };
