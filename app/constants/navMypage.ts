@@ -1,11 +1,11 @@
 export const MYPAGE_NAV = [
   {
     name: '구매 내역',
-    path: '/my/buying',
+    path: '/my/history/buying',
   },
   {
     name: '판매 내역',
-    path: '/my/selling',
+    path: '/my/history/selling',
   },
   {
     name: '관심 상품',
