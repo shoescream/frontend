@@ -11,14 +11,10 @@ import { FaCaretDown } from 'react-icons/fa';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5';
 import { MdChevronRight } from 'react-icons/md';
-
 import Button from '@/components/common/Button';
-import FilterBox from '@/components/FilterBox/FilterBox';
 import Carousel from '@/components/DetailProduct/Carousel';
 import Options from '@/components/DetailProduct/Options';
 import Toggle from '@/components/common/Toggle';
-import BuyingTable from '@/components/DetailProduct/BuyingTable';
-import LineChart from '@/components/DetailProduct/LineChart';
 import { usePathname, useRouter } from 'next/navigation';
 import useAddComma from '@/hooks/useAddComma';
 import BySizeModal from '@/components/DetailProduct/BySizeModal';
@@ -227,6 +223,62 @@ const DetailProduct = () => {
         </div>
       </Container>
       <GlobalSizes />
+      {/* 같은 브랜드의 상품 목록 (4개정도) */}
+      {/* 삭제될 수 있음. start */}
+      <div
+        style={{
+          marginTop: '6rem',
+          paddingBottom: '3.5rem',
+          borderBottom: `0.1rem solid ${theme.colors.gray[100]}`,
+          cursor: 'pointer',
+        }}
+      >
+        <p
+          style={{
+            fontSize: '2rem',
+            fontWeight: '600',
+            marginBottom: '1.7rem',
+          }}
+        >
+          이 브랜드의 다른 상품
+        </p>
+        <div style={{ height: '30.88rem' }}>
+          <div
+            style={{
+              width: '22.08rem',
+              height: '22.08rem',
+              borderRadius: '0.8rem',
+              backgroundColor: '#ebf0f4',
+            }}
+          />
+          <div style={{ padding: '0.8rem 0.4rem 0' }}>
+            <strong style={{ fontSize: '1.3rem' }}>
+              {data?.productResponse.brandName}
+            </strong>
+            <p style={{ fontSize: '1.3rem' }}>상품 영어</p>
+            <p
+              style={{ fontSize: '1.1rem', color: theme.colors.text.secondary }}
+            >
+              상품 한글
+            </p>
+            <p
+              style={{ fontSize: '1.4rem', fontWeight: 700, marginTop: '1rem' }}
+            >
+              {addComma(99000)}원
+            </p>
+            <p
+              style={{
+                fontSize: '1.1rem',
+                marginTop: '0.2rem',
+                color: theme.colors.text.secondary,
+              }}
+            >
+              즉시 구매가
+            </p>
+          </div>
+        </div>
+      </div>
+      {/* 삭제될 수 있음. end */}
       <Review />
     </>
   );
