@@ -1,25 +1,25 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ItemBoxWithLike from '@/components/ShopPage/ItemBoxWithLike';
 import Sidebar from '@/components/ShopPage/Sidebar';
 import axios from 'axios';
 import { ShopProductType } from './shopProduct';
+import { useQuery } from '@tanstack/react-query';
+
+const fetchProducts = async (): Promise<ShopProductType[]> => {
+    const response = await axios.get('http://3.35.24.20:8080/products');
+    return response.data.result;
+};
 
 const ShopPage = () => {
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-    const [products, setProducts] = useState<ShopProductType[]>([]);
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const response = await axios.get('http://3.35.24.20:8080/products');
-            setProducts(response.data.result);
-            console.log('Fetched shop data:', response.data.result);
-        };
-
-        fetchProducts();
-    }, []);
+    const { data: products = [] } = useQuery<ShopProductType[]>({
+        queryKey: ['products'],
+        queryFn: fetchProducts
+    });
 
     const onSetSelectedOptions = (option: string) => {
         setSelectedOptions(prev => {
