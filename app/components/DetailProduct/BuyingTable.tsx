@@ -22,14 +22,7 @@ const BuyingTable = ({ data }: BuyingTableProps) => {
   return (
     <TableWrapper>
       <div style={{ paddingBottom: '1rem' }}>
-        <table
-          style={{
-            display: 'initial',
-            tableLayout: 'auto',
-            border: '0',
-            borderCollapse: 'collapse',
-          }}
-        >
+        <Table>
           <thead>
             <tr>
               <Title>옵션</Title>
@@ -50,7 +43,7 @@ const BuyingTable = ({ data }: BuyingTableProps) => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
     </TableWrapper>
   );
@@ -61,6 +54,7 @@ export default BuyingTable;
 const TableWrapper = styled.div`
   display: block;
   padding-top: 2.5rem;
+  height: 20rem;
 `;
 
 const Title = styled.th`
@@ -75,6 +69,13 @@ const Title = styled.th`
   padding-bottom: 0.9rem;
   height: 1.4rem;
   text-align: left;
+`;
+
+const Table = styled.table`
+  display: initial;
+  table-layout: auto;
+  border: 0;
+  border-collapse: collapse;
 `;
 
 const RightTitle = styled.th`
