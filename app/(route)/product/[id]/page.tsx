@@ -28,6 +28,7 @@ import { useDetailProduct } from '@/hooks/queries/useProduct';
 import Image from 'next/image';
 import Bids from '@/components/DetailProduct/Bids';
 import Charts from '@/components/DetailProduct/Charts';
+import GlobalSizes from '@/components/DetailProduct/GlobalSizes';
 
 const DetailProduct = () => {
   const router = useRouter();
@@ -225,7 +226,8 @@ const DetailProduct = () => {
           </RightBox>
         </div>
       </Container>
-      <Review></Review>
+      <GlobalSizes />
+      <Review />
     </>
   );
 };
@@ -238,7 +240,6 @@ const Container = styled.div`
   display: flex;
   margin-bottom: 10rem;
   position: relative;
-  border-bottom: 0.1rem solid ${theme.colors.gray[100]};
 `;
 
 const LeftBox = styled.div``;
