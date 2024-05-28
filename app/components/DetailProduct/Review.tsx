@@ -165,9 +165,9 @@ const UserNameRank = styled.div`
 `;
 
 const Title = styled.h2`
-  border-bottom: 0.1rem solid ${theme.colors.gray[200]};
+  /* border-bottom: 0.1rem solid ${theme.colors.gray[200]}; */
   padding: 1rem;
-  margin-top: 3rem;
+  margin-top: 4rem;
 `;
 
 const StarsWrapper = styled.div`
