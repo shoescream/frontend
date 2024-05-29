@@ -1,16 +1,15 @@
 import useAddComma from '@/hooks/useAddComma';
 import theme from '@/styles/theme';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
-interface PriceGridProps {
-  data: {
-    size: string;
-    price: number;
-  }[];
+interface PriceGridProps<T> {
+  data: T[];
   clickedItem: number;
   onSetClickedItem: (index: number) => void;
   isForLookingSizes?: boolean;
+  customGridTemplate?: string;
+  itemStyle?: CSSProperties;
 }
 
 const PriceGrid = ({
@@ -18,16 +17,19 @@ const PriceGrid = ({
   clickedItem,
   onSetClickedItem,
   isForLookingSizes = false,
-}: PriceGridProps) => {
+  customGridTemplate,
+  itemStyle,
+}: PriceGridProps<{ size: string; price?: number }>) => {
   const addComma = useAddComma();
 
   return (
-    <Grid>
+    <Grid style={{ gridTemplateColumns: customGridTemplate || '1fr 1fr' }}>
       {data.map((item, index) => (
         <GridItem
           key={index}
           $clicked={clickedItem === index}
           onClick={() => onSetClickedItem(index)}
+          style={itemStyle}
         >
           <GridItemTitle $clicked={clickedItem === index}>
             {index === 0 && isForLookingSizes ? (
@@ -36,16 +38,18 @@ const PriceGrid = ({
               item.size
             )}
           </GridItemTitle>
-          <GridItemPrice
-            $isFirstItem={index === 0 && isForLookingSizes}
-            $clicked={clickedItem === index}
-          >
-            {isForLookingSizes && index === 0 ? (
-              <strong>구매입찰</strong>
-            ) : (
-              addComma(item.price) + '원'
-            )}
-          </GridItemPrice>
+          {item.price && (
+            <GridItemPrice
+              $isFirstItem={index === 0 && isForLookingSizes}
+              $clicked={clickedItem === index}
+            >
+              {isForLookingSizes && index === 0 ? (
+                <strong>구매입찰</strong>
+              ) : (
+                addComma(item.price) + '원'
+              )}
+            </GridItemPrice>
+          )}
         </GridItem>
       ))}
     </Grid>
@@ -56,7 +60,6 @@ export default PriceGrid;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   column-gap: 0.8rem;
   row-gap: 0.8rem;
   margin-top: 1rem;

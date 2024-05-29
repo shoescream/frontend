@@ -1,15 +1,19 @@
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import { MouseEvent, PropsWithChildren } from 'react';
 
 interface SizeModalProps {
   onClose: () => void;
   height?: string;
+  style?: CSSProperties;
+  title?: string;
 }
 
 const SizeModal = ({
   children,
   onClose,
   height,
+  title,
+  style,
 }: PropsWithChildren<SizeModalProps>) => {
   const handleContentClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -19,9 +23,16 @@ const SizeModal = ({
 
   return (
     <Blur onClick={onClose}>
-      <Content onClick={handleContentClick} $height={height}>
-        {children}
-      </Content>
+      <div>
+        <Content onClick={handleContentClick} $height={height} style={style}>
+          {title && (
+            <ModalHeader>
+              <h1 style={{ fontSize: '2rem' }}>{title}</h1>
+            </ModalHeader>
+          )}
+          {children}
+        </Content>
+      </div>
     </Blur>
   );
 };
@@ -50,5 +61,19 @@ const Content = styled.div<{ $height?: string }>`
   transform: translate(50%, -50%);
   z-index: 2;
   background-color: white;
-  overflow: scroll;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+  height: 5.8rem;
 `;
