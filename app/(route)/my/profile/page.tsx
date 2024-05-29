@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import SizeListModal from '@/components/common/Modal/SizeListModal';
 import ProfileBox from '@/components/Profile/ProfileBox';
 import FormSection from '@/components/Profile/FormSection';
+import { useRouter } from 'next/navigation';
 
 export interface FormData {
   id: string;
@@ -21,6 +22,7 @@ export interface FormData {
 }
 
 const Profile = () => {
+  const router = useRouter();
   const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState(NaN);
   const methods = useForm<FormData>();
@@ -99,7 +101,9 @@ const Profile = () => {
               ]}
             />
           </FormWrapper>
-          <WithDrawal>탈퇴하기</WithDrawal>
+          <WithDrawal onClick={() => router.push('/my/withdrawal')}>
+            탈퇴하기
+          </WithDrawal>
         </Section>
       </Container>
     </FormProvider>
