@@ -78,7 +78,7 @@ const ShopPage = () => {
                             brandName={product.brandName} 
                             productName={product.productName}
                             productCode={product.productCode}
-                            price={addComma(product.price) + '원'} // 가격에 useAddComma 훅 적용
+                            price={addComma(product.price) + '원'} 
                         />
                     ))}
                 </ItemContainer>
