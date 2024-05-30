@@ -7,6 +7,11 @@ import { useRouter } from 'next/navigation';
 
 interface ItemBoxWithLikeProps {
     product: ShopProductType; // ProductType에 해당하는 속성
+    productImage: string;
+    brandName: string;
+    productName: string;
+    productCode: string;
+    price: string;
 }
 
 const ItemBoxWithLike: React.FC<ItemBoxWithLikeProps> = ({ product }) => {

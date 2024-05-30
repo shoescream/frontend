@@ -2,11 +2,12 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ItemBoxWithLike from '@/components/ShopPage/ItemBoxWithLike';
 import Sidebar from '@/components/ShopPage/Sidebar';
 import axios from 'axios';
 import { ShopProductType } from './shopProduct';
 import { useQuery } from '@tanstack/react-query';
+import ItemBox from '@/components/ShopPage/ItemBoxWithLike';
+import useAddComma from '@/hooks/useAddComma';
 
 const fetchProducts = async (): Promise<ShopProductType[]> => {
     const response = await axios.get('http://3.35.24.20:8080/products');
@@ -15,6 +16,7 @@ const fetchProducts = async (): Promise<ShopProductType[]> => {
 
 const ShopPage = () => {
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+    const addComma = useAddComma();
 
     const { data: products = [] } = useQuery<ShopProductType[]>({
         queryKey: ['products'],
@@ -30,6 +32,9 @@ const ShopPage = () => {
             }
         });
     };
+
+    console.log('Fetched shop data:', products);
+
 
     // 필터링 로직
     const filterProducts = (products: ShopProductType[]) => {
@@ -66,7 +71,15 @@ const ShopPage = () => {
                 <ProductCount>검색된 상품 개수 {filteredProducts.length}개</ProductCount>
                 <ItemContainer>
                     {filteredProducts.map((product, index) => (
-                        <ItemBoxWithLike key={index} product={product} />
+                        <ItemBox
+                            key={index}
+                            product={product}
+                            productImage={''}
+                            brandName={product.brandName} 
+                            productName={product.productName}
+                            productCode={product.productCode}
+                            price={addComma(product.price) + '원'} // 가격에 useAddComma 훅 적용
+                        />
                     ))}
                 </ItemContainer>
             </MainContent>
@@ -75,7 +88,6 @@ const ShopPage = () => {
 };
 
 export default ShopPage;
-
 const Container = styled.div`
     display: flex;
     justify-content: space-between;
