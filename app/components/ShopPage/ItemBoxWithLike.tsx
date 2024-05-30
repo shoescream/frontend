@@ -32,7 +32,7 @@ const ItemBoxWithLike: React.FC<ItemBoxWithLikeProps> = ({ product }) => {
                 <Image referrerPolicy="no-referrer" src={product.productImageResponse.productImage[0]} alt={product.productName}></Image>
                 <Text className='brand' style={{ fontWeight: 'bold' }}>{product.brandName}</Text>
                 <Text className='product-name'>{product.productSubName}</Text>
-                <Text className='price' style={{ fontWeight: 'bold', marginTop: '2rem' }}>{addComma(product.price)}</Text>
+                <Text className='price' style={{ fontWeight: 'bold', marginTop: '2rem' }}>{addComma(product.price) + '원'}</Text>
                 <LikeArea>
                     <LikeButton onClick={handleLikeClick}>{liked ? '🖤' : '🤍'}</LikeButton>
                     <LikeCount>{likeCount}</LikeCount>
