@@ -11,90 +11,20 @@ import { FaCaretDown } from 'react-icons/fa';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5';
 import { MdChevronRight } from 'react-icons/md';
-
 import Button from '@/components/common/Button';
-import FilterBox from '@/components/FilterBox/FilterBox';
 import Carousel from '@/components/DetailProduct/Carousel';
 import Options from '@/components/DetailProduct/Options';
 import Toggle from '@/components/common/Toggle';
-import BuyingTable from '@/components/DetailProduct/BuyingTable';
-import LineChart from '@/components/DetailProduct/LineChart';
 import { usePathname, useRouter } from 'next/navigation';
 import useAddComma from '@/hooks/useAddComma';
 import BySizeModal from '@/components/DetailProduct/BySizeModal';
 import SellOrBuySizeModal from '@/components/DetailProduct/SellOrBuySizeModal';
 import Review from '@/components/DetailProduct/Review';
-
-const sizeData = [
-  {
-    size: '220(US W5 M3.5)',
-    price: 104000,
-    date: '240510',
-  },
-  {
-    size: '225(US W5.5 M4)',
-    price: 100000,
-    date: '240510',
-  },
-  {
-    size: '230(US W6 M4.5)',
-    price: 107000,
-    date: '240510',
-  },
-  {
-    size: '235(US W6.5 M5)',
-    price: 107000,
-    date: '240510',
-  },
-  {
-    size: '240(US W7 M5.5)',
-    price: 128000,
-    date: '240510',
-  },
-  {
-    size: '245',
-    price: 130000,
-    date: '240510',
-  },
-  {
-    size: '250',
-    price: 134000,
-    date: '240510',
-  },
-  {
-    size: '255',
-    price: 135000,
-    date: '240510',
-  },
-  {
-    size: '260',
-    price: 143000,
-    date: '240510',
-  },
-  {
-    size: '265',
-    price: 139000,
-    date: '240510',
-  },
-  {
-    size: '270',
-    price: 139000,
-    date: '240510',
-  },
-];
-
-const carouselData = [
-  {
-    name: '1',
-    imageUrl:
-      'https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    name: '2',
-    imageUrl:
-      'https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-];
+import { useDetailProduct } from '@/hooks/queries/useProduct';
+import Image from 'next/image';
+import Bids from '@/components/DetailProduct/Bids';
+import Charts from '@/components/DetailProduct/Charts';
+import GlobalSizes from '@/components/DetailProduct/GlobalSizes';
 
 const DetailProduct = () => {
   const router = useRouter();
@@ -104,15 +34,14 @@ const DetailProduct = () => {
   const isLoggedIn = true;
   const [favorite, setFavorite] = useState(false);
   const [saveShop, setSaveShop] = useState(false);
-  const [currentChartFilter, setCurrentChartFilter] = useState('전체');
   const [currentFilterBySize, setCurrentFilterBySize] = useState('체결 거래');
   const [currentSizeItem, setCurrentSizeItem] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [isSellingModalOpen, setIsSellingModalOpen] = useState<
     'none' | 'sell' | 'buy'
   >('none');
-  const brand = 'nike';
   const id = pathname.replace('/product/', '');
+  const { data, isLoading } = useDetailProduct(id);
 
   useEffect(() => {
     if (isOpen || isSellingModalOpen !== 'none') {
@@ -126,12 +55,16 @@ const DetailProduct = () => {
     };
   }, [isOpen, isSellingModalOpen]);
 
+  if (isLoading) {
+    return <Container>noting</Container>;
+  }
+
   return (
     <>
       {isOpen && (
         <BySizeModal
           onClose={() => setIsOpen(false)}
-          data={sizeData.map(({ date, ...rest }) => rest)}
+          data={data!.productOptionResponse.sizeAndPriceBuyInfo!}
           currentItem={currentSizeItem}
           onSetCurrentItem={setCurrentSizeItem}
         />
@@ -139,7 +72,11 @@ const DetailProduct = () => {
       {isSellingModalOpen !== 'none' && (
         <SellOrBuySizeModal
           onClose={() => setIsSellingModalOpen('none')}
-          data={sizeData.map(({ date, ...rest }) => rest)}
+          data={
+            isSellingModalOpen === 'buy'
+              ? data?.productOptionResponse.sizeAndPriceBuyInfo!
+              : data?.productOptionResponse.sizeAndPriceSellInfo!
+          }
           type={isSellingModalOpen}
         />
       )}
@@ -147,7 +84,12 @@ const DetailProduct = () => {
         <LeftBox>
           <LeftInnerBox>
             <CarouselWrapper>
-              <Carousel data={carouselData} />
+              <Carousel
+                data={
+                  data?.productResponse.productImageResponse
+                    .productImage as string[]
+                }
+              />
             </CarouselWrapper>
           </LeftInnerBox>
         </LeftBox>
@@ -156,7 +98,7 @@ const DetailProduct = () => {
             <div>
               <div>
                 <PriceLabel>즉시 구매가</PriceLabel>
-                <Price>{addComma(125000)}원</Price>
+                <Price>{addComma(data?.productResponse.price!)}원</Price>
               </div>
               <FavoriteWrapper>
                 <Toggle
@@ -168,16 +110,15 @@ const DetailProduct = () => {
                 />
               </FavoriteWrapper>
               <NameBox>
-                <EngName>Nike V2K Run Pure Platinum Light Iron Ore</EngName>
-                <KorName>
-                  나이키 V2K 런 퓨어 플래티넘 라이트 아이언 오어
-                </KorName>
+                <EngName>
+                  {`${data?.productResponse.productName} ${data?.productResponse
+                    .productCode!}`}
+                </EngName>
+                <KorName>{data?.productResponse.productSubName}</KorName>
               </NameBox>
               <SizeButtonBox onClick={() => setIsOpen(true)}>
                 <SizeButton>
-                  {currentSizeItem > 0 && !isOpen
-                    ? sizeData[currentSizeItem].size
-                    : '모든 사이즈'}
+                  {currentSizeItem && !isOpen ? currentSizeItem : '모든 사이즈'}
                   <FaCaretDown />
                 </SizeButton>
               </SizeButtonBox>
@@ -193,7 +134,9 @@ const DetailProduct = () => {
                 >
                   <ButtonTextBox>
                     <ButtonSubtitle>즉시 구매가</ButtonSubtitle>
-                    <ButtonPrice>{addComma(96000)}원</ButtonPrice>
+                    <ButtonPrice>
+                      {addComma(data?.productOptionResponse.minBuyInfo!)}원
+                    </ButtonPrice>
                     <ButtonSubtitle style={{ width: '4rem' }} />
                   </ButtonTextBox>
                 </Button>
@@ -208,7 +151,9 @@ const DetailProduct = () => {
                 >
                   <ButtonTextBox>
                     <ButtonSubtitle>즉시 판매가</ButtonSubtitle>
-                    <ButtonPrice>{addComma(96000)}원</ButtonPrice>
+                    <ButtonPrice>
+                      {addComma(data?.productOptionResponse.maxSellInfo!)}원
+                    </ButtonPrice>
                     <ButtonSubtitle style={{ width: '4rem' }} />
                   </ButtonTextBox>
                 </Button>
@@ -217,9 +162,15 @@ const DetailProduct = () => {
             <Options />
             <ShopWrapper>
               <Flex>
-                <ShopBox onClick={() => router.push('/brands/' + brand)}>
-                  <img
-                    src="https://c4.wallpaperflare.com/wallpaper/504/487/806/logos-nike-famous-sports-brand-dark-background-wallpaper-preview.jpg"
+                <ShopBox
+                  onClick={() =>
+                    router.push(
+                      '/brands/' + data?.productResponse.brandName.toLowerCase()
+                    )
+                  }
+                >
+                  <Image
+                    src={data?.productResponse.brandImage!}
                     alt="logo"
                     width={44}
                     height={44}
@@ -227,7 +178,7 @@ const DetailProduct = () => {
                   />
                   <div style={{ marginLeft: '1rem' }}>
                     <ShopText>
-                      Nike <MdChevronRight />
+                      {data?.productResponse.brandName} <MdChevronRight />
                     </ShopText>
                   </div>
                 </ShopBox>
@@ -260,29 +211,75 @@ const DetailProduct = () => {
               <DetailTitleBox>
                 <DetailTitle>시세</DetailTitle>
               </DetailTitleBox>
-              <div style={{ position: 'relative' }}>
-                <FilterBox
-                  data={['1개월', '3개월', '6개월', '1년', '전체']}
-                  onClick={(item) => setCurrentChartFilter(item)}
-                  currentClickedItem={currentChartFilter}
-                />
-                <ChartBox>
-                  <LineChart />
-                </ChartBox>
-              </div>
-              <div style={{ marginTop: '2rem' }}>
-                <FilterBox
-                  data={['체결 거래', '판매 입찰', '구매 입찰']}
-                  onClick={(item) => setCurrentFilterBySize(item)}
-                  currentClickedItem={currentFilterBySize}
-                />
-                <BuyingTable data={sizeData} />
-              </div>
+              <Charts productNumber={id} size={currentSizeItem} />
+              <Bids
+                productNumber={id}
+                size={currentSizeItem}
+                currentFilterBySize={currentFilterBySize}
+                onSetCurrentFilterBySize={setCurrentFilterBySize}
+              />
             </div>
           </RightBox>
         </div>
       </Container>
-      <Review></Review>
+      <GlobalSizes />
+      {/* 같은 브랜드의 상품 목록 (4개정도) */}
+      {/* 삭제될 수 있음. start */}
+      <div
+        style={{
+          marginTop: '6rem',
+          paddingBottom: '3.5rem',
+          borderBottom: `0.1rem solid ${theme.colors.gray[100]}`,
+          cursor: 'pointer',
+        }}
+      >
+        <p
+          style={{
+            fontSize: '2rem',
+            fontWeight: '600',
+            marginBottom: '1.7rem',
+          }}
+        >
+          이 브랜드의 다른 상품
+        </p>
+        <div style={{ height: '30.88rem' }}>
+          <div
+            style={{
+              width: '22.08rem',
+              height: '22.08rem',
+              borderRadius: '0.8rem',
+              backgroundColor: '#ebf0f4',
+            }}
+          />
+          <div style={{ padding: '0.8rem 0.4rem 0' }}>
+            <strong style={{ fontSize: '1.3rem' }}>
+              {data?.productResponse.brandName}
+            </strong>
+            <p style={{ fontSize: '1.3rem' }}>상품 영어</p>
+            <p
+              style={{ fontSize: '1.1rem', color: theme.colors.text.secondary }}
+            >
+              상품 한글
+            </p>
+            <p
+              style={{ fontSize: '1.4rem', fontWeight: 700, marginTop: '1rem' }}
+            >
+              {addComma(99000)}원
+            </p>
+            <p
+              style={{
+                fontSize: '1.1rem',
+                marginTop: '0.2rem',
+                color: theme.colors.text.secondary,
+              }}
+            >
+              즉시 구매가
+            </p>
+          </div>
+        </div>
+      </div>
+      {/* 삭제될 수 있음. end */}
+      <Review />
     </>
   );
 };
@@ -295,7 +292,6 @@ const Container = styled.div`
   display: flex;
   margin-bottom: 10rem;
   position: relative;
-  border-bottom: 0.1rem solid ${theme.colors.gray[100]};
 `;
 
 const LeftBox = styled.div``;
@@ -420,11 +416,6 @@ const DetailTitleBox = styled.div`
 const DetailTitle = styled.p`
   font-size: 1.8rem;
   font-weight: 600;
-`;
-
-const ChartBox = styled.div`
-  width: 100%;
-  height: 20rem;
 `;
 
 const Blur = styled.div`
