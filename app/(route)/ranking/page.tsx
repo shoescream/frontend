@@ -8,7 +8,6 @@ import axios from 'axios';
 import useAddComma from '@/hooks/useAddComma';
 import { useQuery } from '@tanstack/react-query';
 
-// RankingProduct 타입 정의
 interface RankingProduct {
     id: number;
     productCode: string;
@@ -20,7 +19,6 @@ interface RankingProduct {
     };
 }
 
-// fetchRankingData 함수 정의
 const fetchRankingData = async () => {
     const rankingParamsArray = [
         { gender: 'M', detail: 'SNK', productType: '01' },

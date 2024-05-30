@@ -13,7 +13,7 @@ interface RankingProps {
 }
 
 interface ItemBoxWithLikeProps {
-    product?: ShopProductType; // ProductType에 해당하는 속성
+    product?: ShopProductType;
 }
 
 const ItemBox: React.FC<RankingProps & ItemBoxWithLikeProps> = ({
