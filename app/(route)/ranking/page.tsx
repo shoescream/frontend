@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
-import ItemBoxWithoutLike from '@/components/ShopPage/ItemBoxWithoutLike';
+import ItemBoxWithoutLike from '@/components/ShopPage/ItemBox';
 import axios from 'axios';
 import useAddComma from '@/hooks/useAddComma';
 import { useQuery } from '@tanstack/react-query';
@@ -60,7 +60,7 @@ const RankingPage = () => {
                                 brandName={item.brandName}
                                 productName={item.productName}
                                 productCode={item.productCode}
-                                price={addComma(parseInt(item.price))}
+                                price={addComma(parseInt(item.price))+ '원'}
                                 productImage={item.productImageResponse.productImage[0]}
                             />
                         ))}
