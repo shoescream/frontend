@@ -1,5 +1,5 @@
 import theme from '@/styles/theme';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 interface FilterBoxProps {
@@ -8,19 +8,27 @@ interface FilterBoxProps {
   onClick: (item: string) => void;
 }
 
-const FilterBox = ({ data, currentClickedItem, onClick }: FilterBoxProps) => {
+const FilterBox = ({
+  data,
+  currentClickedItem,
+  onClick,
+  children,
+}: PropsWithChildren<FilterBoxProps>) => {
   return (
-    <Filter>
-      {data.map((item) => (
-        <FilterItem
-          key={item}
-          $clicked={currentClickedItem === item}
-          onClick={() => onClick(item)}
-        >
-          {item}
-        </FilterItem>
-      ))}
-    </Filter>
+    <>
+      <Filter>
+        {data.map((item) => (
+          <FilterItem
+            key={item}
+            $clicked={currentClickedItem === item}
+            onClick={() => onClick(item)}
+          >
+            {item}
+          </FilterItem>
+        ))}
+      </Filter>
+      <div>{children}</div>
+    </>
   );
 };
 

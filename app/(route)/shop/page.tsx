@@ -3,25 +3,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Sidebar from '@/components/ShopPage/Sidebar';
-import axios from 'axios';
-import { ShopProductType } from './shopProduct';
-import { useQuery } from '@tanstack/react-query';
 import ItemBox from '@/components/ShopPage/ItemBoxWithLike';
 import useAddComma from '@/hooks/useAddComma';
-
-const fetchProducts = async (): Promise<ShopProductType[]> => {
-    const response = await axios.get('http://3.35.24.20:8080/products');
-    return response.data.result;
-};
+import { useShopProducts, ShopProductType } from '@/hooks/queries/useShopProducts';
 
 const ShopPage = () => {
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
     const addComma = useAddComma();
 
-    const { data: products = [] } = useQuery<ShopProductType[]>({
-        queryKey: ['products'],
-        queryFn: fetchProducts
-    });
+    const { data: products = [] } = useShopProducts();
 
     const onSetSelectedOptions = (option: string) => {
         setSelectedOptions(prev => {

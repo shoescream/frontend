@@ -19,7 +19,6 @@ const useFind = ({ onToast, onSuccess, type }: FindProps) => {
         type === 'id'
           ? await Instance.get('/signin/find-id?' + `email=${mail}`)
           : await Instance.post('/signin/find-password', { email: mail });
-      console.log(response);
       return response;
     },
     onSuccess: (data) => {

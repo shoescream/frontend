@@ -1,6 +1,6 @@
 const useAddComma = () => {
   const addComma = (price: number) => {
-    return price.toLocaleString();
+    return price?.toLocaleString();
   };
 
   return addComma;
