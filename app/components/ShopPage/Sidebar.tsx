@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import SidebarItem from './SidebarItem';
-import { ShopProductType } from 'app/(route)/shop/shopProduct';
+import { ShopProductType } from '@/hooks/queries/useShopProducts';
 
 interface SidebarProps {
   selectedOptions: string[];

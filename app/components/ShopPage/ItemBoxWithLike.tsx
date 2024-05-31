@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import { ShopProductType } from 'app/(route)/shop/shopProduct';
 import useAddComma from '@/hooks/useAddComma';
 import { useRouter } from 'next/navigation';
+import { ShopProductType } from '@/hooks/queries/useShopProducts';
 
 interface ItemBoxWithLikeProps {
     product: ShopProductType; // ProductType에 해당하는 속성
