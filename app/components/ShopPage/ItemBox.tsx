@@ -2,27 +2,21 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { useRouter } from 'next/navigation';
+import { RankingProduct } from '@/hooks/queries/useRankingProducts';
 import { ShopProductType } from 'app/(route)/shop/shopProduct';
-
-interface RankingProps {
-    productImage: string;
-    brandName: string;
-    productName: string;
-    productCode: string;
-    price: string;
-}
 
 interface ItemBoxWithLikeProps {
     product?: ShopProductType;
 }
 
-const ItemBox: React.FC<RankingProps & ItemBoxWithLikeProps> = ({
+const ItemBox: React.FC<RankingProduct & ItemBoxWithLikeProps> = ({
+    productImageResponse,
     productImage,
     brandName,
     productName,
     productCode,
     price,
-    product
+    product,
 }) => {
     const router = useRouter();
     const [liked, setLiked] = useState(false);
@@ -40,7 +34,7 @@ const ItemBox: React.FC<RankingProps & ItemBoxWithLikeProps> = ({
     return (
         <ImageItemContainer onClick={handleClick}>
             <ItemBoxWrapper>
-                <Image referrerPolicy="no-referrer" src={product ? product.productImageResponse.productImage[0] : productImage} alt={product ? product.productName : productName} />
+                <Image referrerPolicy="no-referrer" src={product ? product.productImageResponse.productImage[0] : productImageResponse.productImage[0]} alt={product ? product.productName : productName} />
                 <Brand className='brand'>{brandName}</Brand>
                 <ProductName className='product-name'>{product ? product.productName : productName}</ProductName>
                 <Price className='price' style={{ marginTop: '2rem' }}>{product ? price : price}</Price>

@@ -4,40 +4,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import ItemBoxWithoutLike from '@/components/ShopPage/ItemBox';
-import axios from 'axios';
 import useAddComma from '@/hooks/useAddComma';
-import { useQuery } from '@tanstack/react-query';
-
-interface RankingProduct {
-    id: number;
-    productCode: string;
-    brandName: string;
-    productName: string;
-    price: string;
-    productImageResponse: {
-        productImage: string[];
-    };
-}
-
-const fetchRankingData = async () => {
-    const rankingParamsArray = [
-        { gender: 'M', detail: 'SNK', productType: '01' },
-        { gender: 'F', detail: 'SNK', productType: '01' },
-        { gender: 'M', detail: 'SND', productType: '01' }
-    ];
-
-    const responseArray = await Promise.all(rankingParamsArray.map(params => axios.get('http://3.35.24.20:8080/ranking', { params })));
-    return responseArray.map(response => response.data.result);
-};
+import useRankingProducts from '@/hooks/queries/useRankingProducts';
 
 const RankingPage = () => {
     const [additionalImagesCounts, setAdditionalImagesCounts] = useState([5, 5, 5]);
     const addComma = useAddComma();
 
-    const { data: rankingData = [] } = useQuery<RankingProduct[][]>({
-        queryKey: ['rankingData'],
-        queryFn: fetchRankingData,
-    });
+    const { data: rankingData = [] } = useRankingProducts();
 
     const handleShowMoreImages = (index: number) => {
         setAdditionalImagesCounts(prev => prev.map((value, i) => (i === index ? value + 5 : value)));
@@ -58,9 +32,10 @@ const RankingPage = () => {
                                 brandName={item.brandName}
                                 productName={item.productName}
                                 productCode={item.productCode}
-                                price={addComma(parseInt(item.price))+ '원'}
-                                productImage={item.productImageResponse.productImage[0]}
-                            />
+                                price={addComma(parseInt(item.price)) + '원'}
+                                productImage={item.productImageResponse.productImage[0]} id={0} productImageResponse={{
+                                    productImage: []
+                                }}                            />
                         ))}
                     </ImageContainer>
                     {additionalImagesCounts[index] < 30 && (
