@@ -5,6 +5,15 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'kream-phinf.pstatic.net',
+      },
+    ],
+  },
   experimental: {
     appDir: true,
   },

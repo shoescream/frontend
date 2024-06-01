@@ -3,13 +3,14 @@ import theme from '@/styles/theme';
 import React from 'react';
 import styled, { CSSProperties } from 'styled-components';
 
-interface PriceGridProps<T> {
-  data: T[];
+interface PriceGridProps {
+  data: {
+    [key: string]: number;
+  };
   clickedItem: number;
   onSetClickedItem: (index: number) => void;
   isForLookingSizes?: boolean;
-  customGridTemplate?: string;
-  itemStyle?: CSSProperties;
+  isTypeSell?: boolean;
 }
 
 const PriceGrid = ({
@@ -17,41 +18,40 @@ const PriceGrid = ({
   clickedItem,
   onSetClickedItem,
   isForLookingSizes = false,
-  customGridTemplate,
-  itemStyle,
-}: PriceGridProps<{ size: string; price?: number }>) => {
+  isTypeSell,
+}: PriceGridProps) => {
   const addComma = useAddComma();
 
   return (
-    <Grid style={{ gridTemplateColumns: customGridTemplate || '1fr 1fr' }}>
-      {data.map((item, index) => (
-        <GridItem
-          key={index}
-          $clicked={clickedItem === index}
-          onClick={() => onSetClickedItem(index)}
-          style={itemStyle}
-        >
-          <GridItemTitle $clicked={clickedItem === index}>
-            {index === 0 && isForLookingSizes ? (
-              <strong>모든 사이즈</strong>
-            ) : (
-              item.size
-            )}
-          </GridItemTitle>
-          {item.price && (
+    <Grid>
+      {Object.keys(data).map((key, index) => {
+        return (
+          <GridItem
+            key={key}
+            $clicked={clickedItem === Number(key)}
+            onClick={() => onSetClickedItem(Number(key))}
+          >
+            <GridItemTitle $clicked={clickedItem === Number(key)}>
+              {index === 0 && isForLookingSizes ? (
+                <strong>모든 사이즈</strong>
+              ) : (
+                key
+              )}
+            </GridItemTitle>
             <GridItemPrice
+              $isTypeSell={isTypeSell!}
               $isFirstItem={index === 0 && isForLookingSizes}
-              $clicked={clickedItem === index}
+              $clicked={clickedItem === Number(key)}
             >
               {isForLookingSizes && index === 0 ? (
                 <strong>구매입찰</strong>
               ) : (
-                addComma(item.price) + '원'
+                addComma(data[key as string]) + '원'
               )}
             </GridItemPrice>
-          )}
-        </GridItem>
-      ))}
+          </GridItem>
+        );
+      })}
     </Grid>
   );
 };
@@ -84,10 +84,18 @@ const GridItemTitle = styled.p<{ $clicked: boolean }>`
   font-weight: ${(props) => (props.$clicked ? 600 : 400)};
 `;
 
-const GridItemPrice = styled.p<{ $isFirstItem: boolean; $clicked: boolean }>`
+const GridItemPrice = styled.p<{
+  $isFirstItem: boolean;
+  $clicked: boolean;
+  $isTypeSell: boolean;
+}>`
   font-size: 1.2rem;
   margin-top: 0.2rem;
   font-weight: ${(props) => (props.$clicked ? 600 : 400)};
-  color: ${({ $isFirstItem }) =>
-    $isFirstItem ? theme.colors.main : theme.colors.buying};
+  color: ${({ $isFirstItem, $isTypeSell }) =>
+    $isFirstItem
+      ? theme.colors.main
+      : $isTypeSell
+      ? theme.colors.selling
+      : theme.colors.buying};
 `;

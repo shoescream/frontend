@@ -9,9 +9,8 @@ import styled from 'styled-components';
 
 interface SellOrBuySizeModalProps {
   data: {
-    size: string;
-    price: number;
-  }[];
+    [key: string]: number;
+  };
   onClose: () => void;
   type: 'buy' | 'sell';
 }
@@ -88,6 +87,7 @@ const SellOrBuySizeModal = ({
           data={data}
           clickedItem={clickedItem}
           onSetClickedItem={setClickedItem}
+          isTypeSell
         />
       </div>
     </SizeModal>

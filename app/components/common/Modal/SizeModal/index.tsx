@@ -19,8 +19,6 @@ const SizeModal = ({
     e.stopPropagation();
   };
 
-  console.log(window.innerWidth);
-
   return (
     <Blur onClick={onClose}>
       <div>
