@@ -1,25 +1,44 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import useAddComma from '@/hooks/useAddComma';
+import { useRouter } from 'next/navigation';
+import { ShopProductType } from '@/hooks/queries/useShopProducts';
 
+interface ItemBoxWithLikeProps {
+    product: ShopProductType; // ProductType에 해당하는 속성
+    productImage: string;
+    brandName: string;
+    productName: string;
+    productCode: string;
+    productNumber: string;
+    price: string;
+}
 
-const ItemBoxWithLike = () => {
-    // 좋아요 상태 관리
+const ItemBoxWithLike: React.FC<ItemBoxWithLikeProps> = ({ product }) => {
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
+    const addComma = useAddComma();
 
     const handleLikeClick = () => {
         setLiked(!liked);
         setLikeCount((prevCount) => (liked ? prevCount - 1 : prevCount + 1)); // 좋아요 개수 증감
     };
 
+    const router = useRouter();
+
+    const handleClick = () => {
+        router.push(`/product/${product.productNumber}`);
+        // console.log('Clicked Product:', product);
+    };
+
     return (
-        <ImageItemContainer>
+        <ImageItemContainer onClick={handleClick}>
             <ItemBoxWrapper>
-                <Image></Image> {/* 이미지 들어갈 공간 */}
-                <Text className='brand' style={{ fontWeight: 'bold' }}>브랜드명</Text>
-                <Text className='product-name'>상품명</Text>
-                <Text className='price' style={{ marginTop: '2rem' }}>가격</Text>
+                <Image referrerPolicy="no-referrer" src={product.productImageResponse.productImage[0]} alt={product.productName}></Image>
+                <Text className='brand' style={{ fontWeight: 'bold' }}>{product.brandName}</Text>
+                <Text className='product-name'>{product.productSubName}</Text>
+                <Text className='price' style={{ fontWeight: 'bold', marginTop: '2rem' }}>{addComma(product.price) + '원'}</Text>
                 <LikeArea>
                     <LikeButton onClick={handleLikeClick}>{liked ? '🖤' : '🤍'}</LikeButton>
                     <LikeCount>{likeCount}</LikeCount>
@@ -51,6 +70,7 @@ const ImageItemContainer = styled.div`
     border-radius: 1rem;
     overflow: hidden;
     margin-bottom: 2rem; 
+    margin-right: 1rem;
 `;
 
 // 이미지 아이템 박스
@@ -58,15 +78,16 @@ const ItemBoxWrapper = styled.div`
     position: relative;
     overflow: hidden;
     background-color: white;
+    cursor: pointer;
 `;
 
 // 이미지 스타일
-const Image = styled.div`
+const Image = styled.img`
     border-radius: 1rem;
-    height: 0;
     margin-bottom: 1rem;
-    padding-top: 100%;
     background-color: ${theme.colors.gray[100]}; 
+    width: 100%; 
+    height: auto;
 `;
 
 // 브랜드명, 상품명, 가격 스타일
