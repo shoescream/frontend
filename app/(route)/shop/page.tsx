@@ -69,6 +69,7 @@ const ShopPage = () => {
                             productName={product.productName}
                             productCode={product.productCode}
                             price={addComma(product.price) + '원'} 
+                            productNumber={product.productNumber}
                         />
                     ))}
                 </ItemContainer>
