@@ -8,19 +8,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
-
-const data = {
-  selling: [
-    { count: 1, title: '입찰' },
-    { count: 0, title: '진행중' },
-    { count: 2, title: '완료' },
-  ],
-  buying: [
-    { count: 2, title: '입찰' },
-    { count: 0, title: '진행중' },
-    { count: 1, title: '완료' },
-  ],
-};
+import { useProductHistory } from '@/hooks/queries/useHistory';
 
 const buttonProps = [
   { children: '최근 2개월', month: 2 },
@@ -77,14 +65,41 @@ const MyHistory = (props: any) => {
 
   const title = type === 'selling' ? '판매' : '구매';
 
-  const historyData = type === 'selling' ? data.selling : data.buying;
-
   const router = useRouter();
+
+  const { data: bidding } = useProductHistory({
+    type,
+    status: 'bidding',
+    startDate: startDate.format('YYYY-DD-MM'),
+    endDate: endDate.format('YYYY-DD-MM'),
+  });
+
+  const { data: pending } = useProductHistory({
+    type,
+    status: 'pending',
+    startDate: startDate.format('YYYY-DD-MM'),
+    endDate: endDate.format('YYYY-DD-MM'),
+  });
+
+  const { data: finished } = useProductHistory({
+    type,
+    status: 'finished',
+    startDate: startDate.format('YYYY-DD-MM'),
+    endDate: endDate.format('YYYY-DD-MM'),
+  });
+  console.log(pending, bidding, finished);
+
+  const data = [
+    { count: bidding?.myBuyResponse.length, title: '입찰' },
+    { count: pending?.myBuyResponse.length, title: '진행중' },
+    { count: finished?.myBuyResponse.length, title: '완료' },
+  ];
 
   const datePickerValues = [
     { value: startDate, setValue: setStartDate },
     { value: endDate, setValue: setEndDate },
   ];
+
   const dateHandler = (month: number) => {
     setEndDate(day);
     setStartDate(day.add(-month, 'month'));
@@ -160,7 +175,7 @@ const MyHistory = (props: any) => {
     <>
       <h2>{title}내역</h2>
       <StateWrapper>
-        {historyData.map((data, idx) => (
+        {data.map((data, idx) => (
           <State
             key={idx}
             onClick={() => stateHandler(idx)}
