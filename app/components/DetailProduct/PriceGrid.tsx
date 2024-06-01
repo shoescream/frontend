@@ -1,7 +1,7 @@
 import useAddComma from '@/hooks/useAddComma';
 import theme from '@/styles/theme';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
 interface PriceGridProps {
   data: {
@@ -60,7 +60,6 @@ export default PriceGrid;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   column-gap: 0.8rem;
   row-gap: 0.8rem;
   margin-top: 1rem;
