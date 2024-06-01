@@ -11,6 +11,7 @@ interface ItemBoxWithLikeProps {
     brandName: string;
     productName: string;
     productCode: string;
+    productNumber: string;
     price: string;
 }
 
@@ -27,7 +28,7 @@ const ItemBoxWithLike: React.FC<ItemBoxWithLikeProps> = ({ product }) => {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push(`/product/${product.productCode}`);
+        router.push(`/product/${product.productNumber}`);
         console.log('Clicked Product:', product);
     };
 

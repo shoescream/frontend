@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-export interface ShopProductType {  
+export interface ShopProductType {
+    productNumber: string;  
     id: number;
     brandName: string;
     productCode: string;
