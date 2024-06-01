@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import PriceGrid from '@/components/DetailProduct/PriceGrid';
 import Button from '../../Button';
 
-const SIZES = new Array(17).fill(0).map((_, i) => {
+const SIZES: { [key: string]: number }[] = new Array(17).fill(0).map((_, i) => {
   return {
-    size: String(220 + i * 5),
+    size: 220 + i * 5,
   };
 });
 
