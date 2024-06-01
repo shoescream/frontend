@@ -1,82 +1,66 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
-import axios from 'axios';
+// import { useQuery } from '@tanstack/react-query';
+// import axios from 'axios';
 
-interface Product {
-    productResponse: {
-        productImageResponse: {
-            productImage: string[];
-        };
-        productName: string;
-        productSubName: string;
-        size: string;
-        sizeAndPriceBuyInfo: string;
-        sizeAndPriceSellInfo: string;
-        id: string;
-        brandImage: string;
-    };
+// interface Product {
+//     productResponse: {
+//         productImageResponse: {
+//             productImage: string[];
+//         };
+//         productName: string;
+//         productSubName: string;
+//         size: string;
+//         sizeAndPriceBuyInfo: string;
+//         sizeAndPriceSellInfo: string;
+//         id: string;
+//         brandImage: string;
+//     };
 
-}
-
-// const fetchProducts = async (): Promise<Product[]> => {
-//     const response = await axios.get('http://3.35.24.20:8080/products/{productId}');
-//     return response.data.result;
-// };
+// }
 
 // const fetchProducts = async (): Promise<Product[]> => {
 //     try {
-//         const response = await axios.get('http://3.35.24.20:8080/products/${productId}');
-//         console.log('서버 응답:', response.data.result); 
-//         return response.data.result;
+//         const response = await axios.get('http://3.35.24.20:8080/products');
+//         const products = response.data.result;
+
+//         // 각 상품 정보 배열에 담기
+//         const productPromises = products.map(async (product: Product) => {
+//             const productResponse = await axios.get(`http://3.35.24.20:8080/products/${product.productResponse.id}`);
+//             const productInfo = productResponse.data.result;
+//             console.log('상품 정보:', productInfo);
+//             return productInfo;
+//         });
+
+//         return Promise.all(productPromises);
 //     } catch (error) {
 //         console.error('서버 응답 오류:', error);
-//         return []; 
+//         return [];
 //     }
 // };
-
-const fetchProducts = async (): Promise<Product[]> => {
-    try {
-        const response = await axios.get('http://3.35.24.20:8080/products');
-        const products = response.data.result;
-
-        // 각 상품 정보 배열에 담기
-        const productPromises = products.map(async (product: Product) => {
-            const productResponse = await axios.get(`http://3.35.24.20:8080/products/${product.productResponse.id}`);
-            const productInfo = productResponse.data.result;
-            console.log('상품 정보:', productInfo);
-            return productInfo;
-        });
-
-        return Promise.all(productPromises);
-    } catch (error) {
-        console.error('서버 응답 오류:', error);
-        return [];
-    }
-};
 
 const SellAndBuyPage = () => {
     const [view, setView] = useState('buy'); // 기본 화면을 'buy'로 설정
 
-    const { data } = useQuery<Product[]>({
-        queryKey: ['products'],
-        queryFn: fetchProducts,
-    });
-    const product = data ? data[0] : null;
-    if (!product) return <div>No product available</div>;
+    // const { data } = useQuery<Product[]>({
+    //     queryKey: ['products'],
+    //     queryFn: fetchProducts,
+    // });
+    // const product = data ? data[0] : null;
+    // if (!product) return <div>No product available</div>;
 
     return (
         <MainContainer>
             <SellAndBuyContainer>
                 <TopSection>
-                    <Image referrerPolicy="no-referrer" src={product.productResponse.productImageResponse.productImage[0]} alt={product.productResponse.productName}></Image>
+                    <Image referrerPolicy="no-referrer">이미지</Image>
                     <ProductInfo>
-                        <EngProductName>{product.productResponse.productName}</EngProductName>
-                        <KorProductName>{product.productResponse.productSubName}</KorProductName>
+                        <EngProductName>상품 영문</EngProductName>
+                        <KorProductName>상품 국문</KorProductName>
                         <Size></Size>
                     </ProductInfo>
                 </TopSection>
@@ -84,12 +68,12 @@ const SellAndBuyPage = () => {
                 <PriceInfo>
                     <PriceContainer>
                         <PriceLabel>즉시 구매가</PriceLabel>
-                        <Price>{product.productResponse.sizeAndPriceBuyInfo}</Price>
+                        <Price>200,000</Price>
                     </PriceContainer>
                     <PriceSeparator />
                     <PriceContainer>
                         <PriceLabel>즉시 판매가</PriceLabel>
-                        <Price>{product.productResponse.sizeAndPriceSellInfo}</Price>
+                        <Price>250,000</Price>
                     </PriceContainer>
                 </PriceInfo>
                 <BottomSection>
