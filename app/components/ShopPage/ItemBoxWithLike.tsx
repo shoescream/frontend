@@ -29,7 +29,7 @@ const ItemBoxWithLike: React.FC<ItemBoxWithLikeProps> = ({ product }) => {
 
     const handleClick = () => {
         router.push(`/product/${product.productNumber}`);
-        console.log('Clicked Product:', product);
+        // console.log('Clicked Product:', product);
     };
 
     return (
