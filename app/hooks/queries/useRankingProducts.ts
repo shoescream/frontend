@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export interface RankingProduct {
     id: number;
+    productNumber: string;
     productCode: string;
     brandName: string;
     productName: string;

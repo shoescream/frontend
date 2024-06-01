@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
-import ItemBoxWithoutLike from '@/components/ShopPage/ItemBox';
+import ItemBox from '@/components/ShopPage/ItemBox';
 import useAddComma from '@/hooks/useAddComma';
 import useRankingProducts from '@/hooks/queries/useRankingProducts';
 
@@ -27,15 +27,14 @@ const RankingPage = () => {
                     <p style={{ marginBottom: '3rem', color: 'gray' }}>조회, 관심, 거래 급상승(최근 3일)</p>
                     <ImageContainer>
                         {categoryData.slice(0, additionalImagesCounts[index]).map((item, i) => (
-                            <ItemBoxWithoutLike
+                            <ItemBox
                                 key={i}
-                                brandName={item.brandName}
-                                productName={item.productName}
-                                productCode={item.productCode}
-                                price={addComma(parseInt(item.price)) + '원'}
-                                productImage={item.productImageResponse.productImage[0]} id={0} productImageResponse={{
-                                    productImage: []
-                                }}                            />
+                                product={{
+                                    ...item,
+                                    price: addComma(parseInt(item.price)) + '원'
+                                }}
+                                showLikeButton={true}
+                            />
                         ))}
                     </ImageContainer>
                     {additionalImagesCounts[index] < 30 && (

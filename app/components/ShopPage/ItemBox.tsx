@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
@@ -5,45 +7,43 @@ import { useRouter } from 'next/navigation';
 import { RankingProduct } from '@/hooks/queries/useRankingProducts';
 import { ShopProductType } from 'app/(route)/shop/shopProduct';
 
-interface ItemBoxWithLikeProps {
-    product?: ShopProductType;
+interface ItemBoxProps {
+    product: RankingProduct | ShopProductType;
+    showLikeButton?: boolean;
 }
 
-const ItemBox: React.FC<RankingProduct & ItemBoxWithLikeProps> = ({
-    productImageResponse,
-    productImage,
-    brandName,
-    productName,
-    productCode,
-    price,
-    product,
-}) => {
+const ItemBox: React.FC<ItemBoxProps> = ({ product, showLikeButton = false }) => {
     const router = useRouter();
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
 
     const handleClick = () => {
-        router.push(`/product/${productCode}`);
+        router.push(`/product/${product.productNumber}`);
     };
 
-    const handleLikeClick = () => {
+    const handleLikeClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
         setLiked(!liked);
-        setLikeCount((prevCount) => (liked ? prevCount - 1 : prevCount + 1)); // 좋아요 개수 증감
+        setLikeCount((prevCount) => (liked ? prevCount - 1 : prevCount + 1));
     };
 
     return (
         <ImageItemContainer onClick={handleClick}>
             <ItemBoxWrapper>
-                <Image referrerPolicy="no-referrer" src={product ? product.productImageResponse.productImage[0] : productImageResponse.productImage[0]} alt={product ? product.productName : productName} />
-                <Brand className='brand'>{brandName}</Brand>
-                <ProductName className='product-name'>{product ? product.productName : productName}</ProductName>
-                <Price className='price' style={{ marginTop: '2rem' }}>{product ? price : price}</Price>
-                {product ? (
+                <Image
+                    referrerPolicy="no-referrer"
+                    src={product.productImageResponse.productImage[0]}
+                    alt={product.productName}
+                />
+                <Brand>{product.brandName}</Brand>
+                <ProductName>{product.productName}</ProductName>
+                <Price>{product.price}</Price>
+                {showLikeButton && (
                     <LikeArea>
                         <LikeButton onClick={handleLikeClick}>{liked ? '🖤' : '🤍'}</LikeButton>
                         <LikeCount>{likeCount}</LikeCount>
                     </LikeArea>
-                ) : null}
+                )}
             </ItemBoxWrapper>
         </ImageItemContainer>
     );
@@ -68,9 +68,9 @@ const ItemBoxWrapper = styled.div`
 const Image = styled.img`
     border-radius: 1rem;
     margin-bottom: 1rem;
-    background-color: ${theme.colors.gray[100]}; 
-    width: 100%; 
-    height: auto; 
+    background-color: ${theme.colors.gray[100]};
+    width: 100%;
+    height: auto;
 `;
 
 const Brand = styled.h4`
@@ -79,7 +79,7 @@ const Brand = styled.h4`
 `;
 
 const ProductName = styled.p`
-    margin: 0.5rem; 
+    margin: 0.5rem;
     margin-bottom: 3rem;
 `;
 
