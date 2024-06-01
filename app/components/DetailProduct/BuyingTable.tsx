@@ -3,31 +3,26 @@ import Button from '../common/Button';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import useAddComma from '@/hooks/useAddComma';
-
-interface BuyingTableItem {
-  size: string;
-  price: number;
-  date: string;
-}
+import {
+  ProductBidsItem,
+  ProductTransactionsItem,
+} from '@/hooks/queries/useProduct';
 
 interface BuyingTableProps {
-  data: BuyingTableItem[];
+  data: ProductBidsItem[];
 }
 
 const BuyingTable = ({ data }: BuyingTableProps) => {
   const addComma = useAddComma();
 
+  const convertDate = (date: string) => {
+    return date.split('T')[0].slice(2).replaceAll('-', '/');
+  };
+
   return (
     <TableWrapper>
       <div style={{ paddingBottom: '1rem' }}>
-        <table
-          style={{
-            display: 'initial',
-            tableLayout: 'auto',
-            border: '0',
-            borderCollapse: 'collapse',
-          }}
-        >
+        <Table>
           <thead>
             <tr>
               <Title>옵션</Title>
@@ -36,30 +31,20 @@ const BuyingTable = ({ data }: BuyingTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {data?.map((item) => (
               <tr key={item.size}>
                 <SizeData>{item.size}</SizeData>
-                <RightSizeData>{addComma(item.price)}</RightSizeData>
-                <LastSizeData>{item.date}</LastSizeData>
+                <RightSizeData>{addComma(item.price)}원</RightSizeData>
+                <LastSizeData>
+                  {isNaN(item.quantity)
+                    ? convertDate(item.createdAt)
+                    : item.quantity}
+                </LastSizeData>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
-      <Button
-        size="full"
-        buttonColor="light"
-        styles={{
-          border: `0.1rem solid ${theme.colors.border}`,
-          color: theme.colors.text.primary,
-          fontSize: '1.4rem',
-          fontWeight: '300',
-          height: '4rem',
-          borderRadius: '1.2rem',
-        }}
-      >
-        체결 내역 더보기
-      </Button>
     </TableWrapper>
   );
 };
@@ -69,6 +54,7 @@ export default BuyingTable;
 const TableWrapper = styled.div`
   display: block;
   padding-top: 2.5rem;
+  height: 20rem;
 `;
 
 const Title = styled.th`
@@ -83,6 +69,13 @@ const Title = styled.th`
   padding-bottom: 0.9rem;
   height: 1.4rem;
   text-align: left;
+`;
+
+const Table = styled.table`
+  display: initial;
+  table-layout: auto;
+  border: 0;
+  border-collapse: collapse;
 `;
 
 const RightTitle = styled.th`

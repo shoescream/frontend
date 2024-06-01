@@ -15,8 +15,6 @@ const SizeModal = ({
     e.stopPropagation();
   };
 
-  console.log(window.innerWidth);
-
   return (
     <Blur onClick={onClose}>
       <Content onClick={handleContentClick} $height={height}>
