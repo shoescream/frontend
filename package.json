@@ -12,8 +12,7 @@
 		"@emotion/react": "^11.11.4",
 		"@emotion/styled": "^11.11.5",
 		"@mui/x-date-pickers": "^7.5.0",
-		"@svgr/webpack": "^8.1.0",
-		"@tanstack/react-query": "^5.36.0",
+		"@tanstack/react-query": "^5.32.0",
 		"axios": "^1.6.8",
 		"dayjs": "^1.11.11",
 		"mui": "^0.0.1",
@@ -28,6 +27,7 @@
 		"zustand": "^4.5.2"
 	},
 	"devDependencies": {
+		"@svgr/webpack": "^8.1.0",
 		"@types/node": "^20.12.7",
 		"@types/react": "^18.3.1",
 		"@types/react-dom": "^18",

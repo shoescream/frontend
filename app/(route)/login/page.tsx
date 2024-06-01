@@ -48,6 +48,7 @@ const Login = () => {
         </Logo>
         <Form onSubmit={handleSubmit(submitHandler)}>
           <Input
+            type="text"
             name={'id'}
             register={register}
             errormessage={errors.id?.message as string}
