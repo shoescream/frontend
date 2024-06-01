@@ -87,12 +87,11 @@ const MyHistory = (props: any) => {
     startDate: startDate.format('YYYY-DD-MM'),
     endDate: endDate.format('YYYY-DD-MM'),
   });
-  console.log(pending, bidding, finished);
 
   const data = [
-    { count: bidding?.myBuyResponse.length, title: '입찰' },
-    { count: pending?.myBuyResponse.length, title: '진행중' },
-    { count: finished?.myBuyResponse.length, title: '완료' },
+    { count: bidding?.response.length, title: '입찰' },
+    { count: pending?.response.length, title: '진행중' },
+    { count: finished?.response.length, title: '완료' },
   ];
 
   const datePickerValues = [
@@ -165,6 +164,67 @@ const MyHistory = (props: any) => {
     }
   };
 
+  const setHistoryList = () => {
+    if (selectState[0] === 1) {
+      return (
+        <>
+          {bidding?.response.map((data, idx) => (
+            <>
+              <ProductInfo key={idx}>
+                <img />
+                <ProductNameOption>
+                  <p id="product_name">{data.productName}</p>
+                  <p id="product_option">{data.size}</p>
+                </ProductNameOption>
+              </ProductInfo>
+              <ItemOption>
+                <p>{data.price}</p>
+                <p>{data.deadLine}</p>
+              </ItemOption>
+            </>
+          ))}
+        </>
+      );
+    } else if (selectState[1] === 1) {
+      return (
+        <>
+          {pending?.response.map((data, idx) => (
+            <>
+              <ProductInfo key={idx}>
+                <img />
+                <ProductNameOption>
+                  <p id="product_name">{data.productName}</p>
+                  <p id="product_option">{data.size}</p>
+                </ProductNameOption>
+              </ProductInfo>
+              <ItemOption>
+                <p>{data.status}</p>
+              </ItemOption>
+            </>
+          ))}
+        </>
+      );
+    } else if (selectState[2] === 1) {
+      return (
+        <>
+          {finished?.response.map((data, idx) => (
+            <>
+              <ProductInfo key={idx}>
+                <img />
+                <ProductNameOption>
+                  <p id="product_name">{data.productName}</p>
+                  <p id="product_option">{data.size}</p>
+                </ProductNameOption>
+              </ProductInfo>
+              <ItemOption>
+                <p>{data.status}</p>
+              </ItemOption>
+            </>
+          ))}
+        </>
+      );
+    }
+  };
   useEffect(() => {
     if (type !== 'selling' && type !== 'buying') {
       alert('로그인 후 이용 가능합니다');
@@ -246,16 +306,7 @@ const MyHistory = (props: any) => {
         <SortOption>{setOption()}</SortOption>
         <OptionTitle>{setTitle()}</OptionTitle>
       </StateOptionBox>
-      <ItemBox>
-        <ProductInfo>
-          <img />
-          <ProductNameOption>
-            <p id="product_name">상품 명</p>
-            <p id="product_option">상품 옵션</p>
-          </ProductNameOption>
-        </ProductInfo>
-        <ItemOption>{setTitle()}</ItemOption>
-      </ItemBox>
+      <ItemBox>{setHistoryList()}</ItemBox>
     </>
   );
 };

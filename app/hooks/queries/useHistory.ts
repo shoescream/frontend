@@ -1,33 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { Instance } from 'app/api';
-import { Dayjs } from 'dayjs';
 
 interface ProductHistory {
-  myBuyResponse: [
+  response: [
     {
-      productResponse: {
-        id: number;
-        productCode: string;
-        productName: string;
-        productSubName: string;
-        brandName: string;
-        price: number;
-        brandImage: string;
-        productImageResponse: {
-          productImage: string[];
-        };
-        createdAt: string;
-        views: number;
-      };
-      buyingBidResponse: {
-        size: number;
-        bidPrice: number;
-        quantity: number;
-        createdAt: string;
-        buyBidDeadline: string;
-        bidStatus: string;
-        bidType: string;
-      };
+      productName: string;
+      productImage: string;
+      price: number;
+      size: number;
+      createdAt: string;
+      deadLine: null;
+      tradedAt: string;
+      type: string;
+      status: string;
     }
   ];
 }
