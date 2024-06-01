@@ -19,10 +19,10 @@ interface DetailProduct {
   productOptionResponse: {
     sizeAndPriceBuyInfo: {
       [key: string]: number;
-    };
+    }[];
     sizeAndPriceSellInfo: {
       [key: string]: number;
-    };
+    }[];
     maxSellInfo: number;
     minBuyInfo: number;
   };

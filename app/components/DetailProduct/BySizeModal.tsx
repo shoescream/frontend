@@ -9,7 +9,7 @@ interface BySizeModalProps {
   onClose: () => void;
   data: {
     [key: string]: number;
-  };
+  }[];
   currentItem: number;
   onSetCurrentItem: (value: number) => void;
 }
