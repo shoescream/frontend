@@ -33,7 +33,8 @@ const RankingPage = () => {
                                     ...item,
                                     price: addComma(parseInt(item.price)) + '원'
                                 }}
-                                showLikeButton={true} pageType={'ranking'}                            />
+                                showLikeButton={true} pageType={'ranking'}
+                            />
                         ))}
                     </ImageContainer>
                     {additionalImagesCounts[index] < 30 && (
