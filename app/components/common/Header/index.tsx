@@ -1,33 +1,61 @@
+'use client';
+
 import styled from 'styled-components';
 import theme from '../../../styles/theme';
 import MultiNavBar from './NavBar';
 import { NAV_DATA } from './navProps';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import LocalStorage from '@/utils/localStorage';
+import Button from '../Button';
 
 const Header = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const token = LocalStorage.getItem('@token');
+  const name = pathname.slice(1, -2);
+
+  const Logo = () => {
+    return (
+      <div id="header__logo" onClick={() => router.push('/')}>
+        KREAM
+      </div>
+    );
+  };
 
   return (
     <HeaderWrapper>
       <HeaderTop>
         <MultiNavBar type="top" data={NAV_DATA.TOP_NAV_DATA(token!)} />
       </HeaderTop>
-      <HeaderInner>
-        <div id="header__logo" onClick={() => router.push('/')}>
-          KREAM
-        </div>
-        <MultiNavBar type="main" data={NAV_DATA.MAIN_NAV_DATA} />
-        <SearchContainer>
-          <InputStyled type="text" placeholder="Search in site"></InputStyled>
-          <ImageStyled
-            src="/search.png"
-            alt="돋보기 이미지"
-            onClick={() => null}
-          ></ImageStyled>
-        </SearchContainer>
-      </HeaderInner>
+
+      {pathname.startsWith('/sell') || pathname.startsWith('/buy') ? (
+        <HeaderInner
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Logo />
+          <h1 style={{ fontSize: '2.4rem', fontWeight: 600 }}>
+            {name === 'buy' ? '주문/결제' : '주문/정산'}
+          </h1>
+          <div style={{ width: '8.125rem', height: '3.7rem' }} />
+        </HeaderInner>
+      ) : (
+        <HeaderInner>
+          <Logo />
+          <MultiNavBar type="main" data={NAV_DATA.MAIN_NAV_DATA} />
+          <SearchContainer>
+            <InputStyled type="text" placeholder="Search in site"></InputStyled>
+            <ImageStyled
+              src="/search.png"
+              alt="돋보기 이미지"
+              onClick={() => null}
+            />
+          </SearchContainer>
+        </HeaderInner>
+      )}
     </HeaderWrapper>
   );
 };

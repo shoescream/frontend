@@ -57,7 +57,7 @@ const DetailProduct = () => {
   }, [isOpen, isSellingModalOpen]);
 
   if (isLoading) {
-    return <Container>noting</Container>;
+    return <Container>Loading...</Container>;
   }
 
   return (
@@ -235,6 +235,7 @@ const DetailProduct = () => {
           paddingBottom: '3.5rem',
           borderBottom: `0.1rem solid ${theme.colors.gray[100]}`,
           cursor: 'pointer',
+          width: '128rem',
         }}
       >
         <p
@@ -291,11 +292,15 @@ const DetailProduct = () => {
 export default DetailProduct;
 
 const Container = styled.div`
+  width: 128rem;
   padding: 4rem;
   height: auto;
   display: flex;
+  justify-content: center;
   margin-bottom: 10rem;
   position: relative;
+  background-color: blue;
+  margin: 0 auto;
 `;
 
 const LeftBox = styled.div``;

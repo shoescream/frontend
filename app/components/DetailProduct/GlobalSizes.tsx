@@ -73,8 +73,10 @@ const GlobalSizes = () => {
 export default GlobalSizes;
 
 const Box = styled.div`
+  width: 128rem;
   padding-bottom: 4rem;
   border-bottom: 0.1rem solid ${theme.colors.gray[100]};
+  margin: 0 auto;
 `;
 
 const TableContainer = styled.div`

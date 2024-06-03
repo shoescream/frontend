@@ -11,6 +11,7 @@ interface InputProps extends Pick<HTMLInputElement, 'type' | 'name'> {
   errormessage: string;
   placeholder?: string;
   styles?: CSSProperties;
+  inputStyle?: CSSProperties;
   readonly?: boolean;
   isFromMypage?: boolean;
 }
@@ -26,6 +27,7 @@ const Input = ({
   styles,
   readonly = false,
   isFromMypage = false,
+  inputStyle,
 }: InputProps) => {
   const labelColor = () => {
     if (errormessage) {
@@ -47,6 +49,7 @@ const Input = ({
         errormessage={errormessage}
         placeholder={placeholder}
         readOnly={readonly}
+        style={inputStyle}
       />
       {errormessage && <ErrorText>{errormessage}</ErrorText>}
     </InputWrapper>
