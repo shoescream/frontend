@@ -6,7 +6,7 @@ import styled, { CSSProperties } from 'styled-components';
 interface PriceGridProps {
   data: {
     [key: string]: number;
-  }[];
+  };
   clickedItem: number;
   onSetClickedItem: (index: number) => void;
   isForLookingSizes?: boolean;
@@ -24,9 +24,11 @@ const PriceGrid = ({
 }: PriceGridProps) => {
   const addComma = useAddComma();
 
+  console.log(data);
+
   return (
     <Grid>
-      {data.map((item, index) => {
+      {/* {data?.map((item, index) => {
         return (
           <GridItem
             key={index}
@@ -53,7 +55,7 @@ const PriceGrid = ({
             </GridItemPrice>
           </GridItem>
         );
-      })}
+      })} */}
     </Grid>
   );
 };

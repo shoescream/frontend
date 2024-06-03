@@ -3,7 +3,7 @@
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import theme from '@/styles/theme';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import KakaoLogin from '/public/kakao-login.svg';
@@ -34,9 +34,10 @@ const Login = () => {
   };
 
   const handleKakaoLogin = () => {
-    const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_RETURN_URL}&response_type=code`;
-
-    window.location.href = KAKAO_AUTH_URI;
+    useEffect(() => {
+      const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_RETURN_URL}&response_type=code`;
+      window.location.href = KAKAO_AUTH_URI;
+    }, []);
   };
 
   return (
@@ -77,7 +78,7 @@ const Login = () => {
               pattern: {
                 value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{9,}$/,
                 message:
-                  '영문, 숫자, 특수문자를 조합해서 9자 이상 입력해주세요. (대소문자 구분)',
+                  '영문, 숫자, ���수문자를 조합해서 9자 이상 입력해주세요. (대소문자 구분)',
               },
               minLength: {
                 value: 9,

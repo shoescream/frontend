@@ -176,6 +176,7 @@ const DetailProduct = () => {
                     width={44}
                     height={44}
                     style={{ borderRadius: 100, objectFit: 'cover' }}
+                    loader={({ src }) => src}
                   />
                   <div style={{ marginLeft: '1rem' }}>
                     <ShopText>
@@ -299,7 +300,7 @@ const Container = styled.div`
   justify-content: center;
   margin-bottom: 10rem;
   position: relative;
-  background-color: blue;
+  background-color: white;
   margin: 0 auto;
 `;
 

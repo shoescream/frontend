@@ -5,7 +5,6 @@ import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
 import { IoIosArrowForward } from 'react-icons/io';
-import Input from '../common/Input';
 import { useForm } from 'react-hook-form';
 
 interface FormData {
@@ -29,6 +28,8 @@ const ProductPayPage = ({ id, size }: ProductPayPage) => {
       point: 0,
     },
   });
+
+  console.log(data);
 
   return (
     <Container

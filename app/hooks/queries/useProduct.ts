@@ -19,10 +19,10 @@ interface DetailProduct {
   productOptionResponse: {
     sizeAndPriceBuyInfo: {
       [key: string]: number;
-    }[];
+    };
     sizeAndPriceSellInfo: {
       [key: string]: number;
-    }[];
+    };
     maxSellInfo: number;
     minBuyInfo: number;
   };
@@ -35,6 +35,8 @@ const useDetailProduct = (productNumber: string) => {
     retry: false,
     queryFn: async () => {
       const response = await Instance.get('/products/' + productNumber);
+
+      console.log(response);
 
       return response.data.result;
     },

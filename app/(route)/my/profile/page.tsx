@@ -9,6 +9,7 @@ import SizeListModal from '@/components/common/Modal/SizeListModal';
 import ProfileBox from '@/components/Profile/ProfileBox';
 import FormSection from '@/components/Profile/FormSection';
 import { useRouter } from 'next/navigation';
+import LocalStorage from '@/utils/localStorage';
 
 export interface FormData {
   id: string;
