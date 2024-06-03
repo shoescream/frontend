@@ -70,22 +70,22 @@ const MyHistory = (props: any) => {
   const { data: bidding } = useProductHistory({
     type,
     status: 'bidding',
-    startDate: startDate.format('YYYY-DD-MM'),
-    endDate: endDate.format('YYYY-DD-MM'),
+    startDate: startDate.format('YYYY-MM-DD'),
+    endDate: endDate.format('YYYY-MM-DD'),
   });
 
   const { data: pending } = useProductHistory({
     type,
     status: 'pending',
-    startDate: startDate.format('YYYY-DD-MM'),
-    endDate: endDate.format('YYYY-DD-MM'),
+    startDate: startDate.format('YYYY-MM-DD'),
+    endDate: endDate.format('YYYY-MM-DD'),
   });
 
   const { data: finished } = useProductHistory({
     type,
     status: 'finished',
-    startDate: startDate.format('YYYY-DD-MM'),
-    endDate: endDate.format('YYYY-DD-MM'),
+    startDate: startDate.format('YYYY-MM-DD'),
+    endDate: endDate.format('YYYY-MM-DD'),
   });
 
   const data = [
@@ -168,59 +168,70 @@ const MyHistory = (props: any) => {
     if (selectState[0] === 1) {
       return (
         <>
-          {bidding?.response.map((data, idx) => (
-            <>
-              <ProductInfo key={idx}>
-                <img />
-                <ProductNameOption>
-                  <p id="product_name">{data.productName}</p>
-                  <p id="product_option">{data.size}</p>
-                </ProductNameOption>
-              </ProductInfo>
-              <ItemOption>
-                <p>{data.price}</p>
-                <p>{data.deadLine}</p>
-              </ItemOption>
-            </>
-          ))}
+          {bidding && (
+            <ItemBox>
+              {bidding.response.map((data, idx) => (
+                <>
+                  <ProductInfo key={idx}>
+                    <img />
+                    <ProductNameOption>
+                      <p id="product_name">{data.productName}</p>
+                      <p id="product_option">{data.size}</p>
+                    </ProductNameOption>
+                  </ProductInfo>
+                  <ItemOption>
+                    <p>{data.status}</p>
+                  </ItemOption>
+                </>
+              ))}
+            </ItemBox>
+          )}
         </>
       );
     } else if (selectState[1] === 1) {
       return (
         <>
-          {pending?.response.map((data, idx) => (
-            <>
-              <ProductInfo key={idx}>
-                <img />
-                <ProductNameOption>
-                  <p id="product_name">{data.productName}</p>
-                  <p id="product_option">{data.size}</p>
-                </ProductNameOption>
-              </ProductInfo>
-              <ItemOption>
-                <p>{data.status}</p>
-              </ItemOption>
-            </>
-          ))}
+          {pending && (
+            <ItemBox>
+              {pending.response.map((data, idx) => (
+                <>
+                  <ProductInfo key={idx}>
+                    <img />
+                    <ProductNameOption>
+                      <p id="product_name">{data.productName}</p>
+                      <p id="product_option">{data.size}</p>
+                    </ProductNameOption>
+                  </ProductInfo>
+                  <ItemOption>
+                    <p>{data.status}</p>
+                  </ItemOption>
+                </>
+              ))}
+            </ItemBox>
+          )}
         </>
       );
     } else if (selectState[2] === 1) {
       return (
         <>
-          {finished?.response.map((data, idx) => (
-            <>
-              <ProductInfo key={idx}>
-                <img />
-                <ProductNameOption>
-                  <p id="product_name">{data.productName}</p>
-                  <p id="product_option">{data.size}</p>
-                </ProductNameOption>
-              </ProductInfo>
-              <ItemOption>
-                <p>{data.status}</p>
-              </ItemOption>
-            </>
-          ))}
+          {finished && (
+            <ItemBox>
+              {finished.response.map((data, idx) => (
+                <>
+                  <ProductInfo key={idx}>
+                    <img />
+                    <ProductNameOption>
+                      <p id="product_name">{data.productName}</p>
+                      <p id="product_option">{data.size}</p>
+                    </ProductNameOption>
+                  </ProductInfo>
+                  <ItemOption>
+                    <p>{data.status}</p>
+                  </ItemOption>
+                </>
+              ))}
+            </ItemBox>
+          )}
         </>
       );
     }
@@ -245,7 +256,7 @@ const MyHistory = (props: any) => {
             <h3
               id={'history_count' + (selectState[idx] === 1 ? '_select' : '')}
             >
-              {data.count}
+              {data.count ? data.count : 0}
             </h3>
             <h4>{title + ' ' + data.title}</h4>
           </State>
@@ -306,7 +317,7 @@ const MyHistory = (props: any) => {
         <SortOption>{setOption()}</SortOption>
         <OptionTitle>{setTitle()}</OptionTitle>
       </StateOptionBox>
-      <ItemBox>{setHistoryList()}</ItemBox>
+      {setHistoryList()}
     </>
   );
 };
