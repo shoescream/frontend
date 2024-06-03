@@ -9,6 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   hasPrice?: string;
   styles?: CSSProperties;
+  customFontSize?: string;
 }
 
 const Button = ({
@@ -20,6 +21,7 @@ const Button = ({
   disabled = false,
   children,
   styles,
+  customFontSize,
 }: ButtonProps) => {
   const sizeValue = theme.button.size[size];
   const buttonColorValue = disabled
@@ -27,7 +29,14 @@ const Button = ({
     : buttonColor === 'none'
     ? 'transparent'
     : theme.button.color[buttonColor];
-  const fontSize = hasPrice ? '0.8rem' : theme.fontSize.caption3;
+  const fontSize = () => {
+    if (hasPrice) {
+      return '0.8rem';
+    } else if (customFontSize) {
+      return customFontSize;
+    }
+    return theme.fontSize.caption3;
+  };
 
   return (
     <Container
@@ -35,12 +44,14 @@ const Button = ({
       $buttonColor={buttonColorValue}
       onClick={onClick}
       disabled={disabled}
-      $fontSize={fontSize}
+      $fontSize={fontSize()}
       $size={sizeValue}
       style={{
         ...styles,
         width: sizeValue,
         backgroundColor: buttonColorValue,
+        color: buttonColor === 'none' ? theme.colors.text.primary : 'white',
+        fontWeight: buttonColor === 'none' ? 400 : 'bold',
       }}
     >
       {children}
@@ -61,7 +72,6 @@ const Container = styled.button<{
   font-size: ${(props) => props.$fontSize};
   color: ${(props) =>
     props.$buttonColor === '#ffffff' ? '#000000' : '#ffffff'};
-  font-weight: bold;
   margin-top: 1rem;
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
   &:active {
