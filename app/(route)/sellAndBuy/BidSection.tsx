@@ -32,14 +32,20 @@ const BidSectionPage = () => {
         <BidSection>
             <InfoRow>
                 <InfoLabel>구매 희망가</InfoLabel>
-                <BidInput
-                    type="text"
-                    placeholder="희망가 입력"
-                    value={bidPrice}
-                    onChange={handleBidPriceChange}
-                    isError={!!bidError}
-                />
-                <span>원</span>
+                <InfoRow>
+                    <BidInputWrapper>
+                        <BidInput
+                            style={{textAlign: 'right', marginRight: '0.2rem'}}
+                            type="text"
+                            placeholder="희망가 입력"
+                            value={bidPrice}
+                            onChange={handleBidPriceChange}
+                            isError={!!bidError}
+                        />
+                        <BidInputUnit>원</BidInputUnit>
+                    </BidInputWrapper>
+                </InfoRow>
+
             </InfoRow>
             {bidError && <ErrorText>{bidError}</ErrorText>}
             <Separator />
@@ -82,7 +88,7 @@ const Separator = styled.div`
 const ButtonContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 `;
 
 const BidSection = styled.div`
@@ -93,7 +99,7 @@ const BidSection = styled.div`
 const InfoRow = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 `;
 
 const InfoLabel = styled.strong`
@@ -149,4 +155,14 @@ const ExpiryText = styled.p`
     font-size: 1.2rem;
     color: black;
     margin-top: 0.5rem;
+`;
+
+const BidInputWrapper = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+
+const BidInputUnit = styled.span`
+    align-self: flex-end; // 텍스트 "원"을 아래 정렬합니다.
 `;

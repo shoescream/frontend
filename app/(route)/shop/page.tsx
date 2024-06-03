@@ -23,7 +23,7 @@ const ShopPage = () => {
         });
     };
 
-    // console.log('Fetched shop data:', products);
+    console.log('Fetched shop data:', products);
 
 
     // 필터링 로직

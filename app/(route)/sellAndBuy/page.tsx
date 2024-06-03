@@ -6,33 +6,45 @@ import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
 import BidSectionPage from './BidSection';
 import BuySectionPage from './BuySection';
+import { useBuyProducts } from '@/hooks/queries/useBuyProducts';
 
 const SellAndBuyPage = () => {
-
     const [view, setView] = useState('buy');
+    const productNumber = 1;
+    const { data: products = [] } = useBuyProducts(productNumber);
+
+    console.log('sell and buy data:', products);
 
     return (
         <MainContainer>
             <SellAndBuyContainer>
                 <TopSection>
-                    <Image src="" alt="Product Image" />
-                    <ProductInfo>
-                        <EngProductName>상품 영문</EngProductName>
-                        <KorProductName>상품 국문</KorProductName>
-                        <Size>사이즈</Size>
-                    </ProductInfo>
+                    {products && products.length > 0 && (
+                        <>
+                            <Image>이미지</Image>
+                            <ProductInfo>
+                                <EngProductName>{products[0].productName}</EngProductName>
+                                <KorProductName>{products[0].productSubName}</KorProductName>
+                                <Size>사이즈</Size>
+                            </ProductInfo>
+                        </>
+                    )}
                 </TopSection>
                 <Separator />
                 <PriceInfo>
-                    <PriceContainer>
-                        <PriceLabel>즉시 구매가</PriceLabel>
-                        <Price>200,000</Price>
-                    </PriceContainer>
-                    <PriceSeparator />
-                    <PriceContainer>
-                        <PriceLabel>즉시 판매가</PriceLabel>
-                        <Price>250,000</Price>
-                    </PriceContainer>
+                    {products && products.length > 0 && (
+                        <>
+                            <PriceContainer>
+                                <PriceLabel>즉시 구매가</PriceLabel>
+                                <Price>{products[0].lowestPrice}</Price>
+                            </PriceContainer>
+                            <PriceSeparator />
+                            <PriceContainer>
+                                <PriceLabel>즉시 판매가</PriceLabel>
+                                <Price>{products[0].highestPrice}</Price>
+                            </PriceContainer>
+                        </>
+                    )}
                 </PriceInfo>
                 <BottomSection>
                     <ButtonContainer>
