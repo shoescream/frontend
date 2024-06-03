@@ -63,7 +63,14 @@ const RankingPage: React.FC = () => {
                     </ImageContainer>
                     {additionalImagesCounts[index] < 30 && (
                         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '5rem' }}>
-                            <Button type='button' buttonColor='light' size='medium' onClick={() => handleShowMoreImages(index)}>더보기</Button>
+                            <Button
+                                type='button'
+                                buttonColor='light'
+                                size='medium'
+                                onClick={() => handleShowMoreImages(index)}
+                            >
+                                더보기
+                            </Button>
                         </div>
                     )}
                 </div>
