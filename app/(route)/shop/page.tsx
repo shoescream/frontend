@@ -2,24 +2,76 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ItemBoxWithLike from '@/components/ShopPage/ItemBoxWithLike';
 import Sidebar from '@/components/ShopPage/Sidebar';
+import ItemBox from '@/components/ShopPage/ItemBoxWithLike';
+import useAddComma from '@/hooks/useAddComma';
+import { useShopProducts, ShopProductType } from '@/hooks/queries/useShopProducts';
 
 const ShopPage = () => {
+    const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+    const addComma = useAddComma();
+
+    const { data: products = [] } = useShopProducts();
+
+    const onSetSelectedOptions = (option: string) => {
+        setSelectedOptions(prev => {
+            if (prev.includes(option)) {
+                return prev.filter(item => item !== option);
+            } else {
+                return [...prev, option];
+            }
+        });
+    };
+
+    // console.log('Fetched shop data:', products);
+
+
+    // 필터링 로직
+    const filterProducts = (products: ShopProductType[]) => {
+        return products.filter(product => {
+            // 성별 필터링
+            const genderOptions = selectedOptions.filter(option => option === '남성' || option === '여성');
+            const genderMatch = genderOptions.length === 0 || genderOptions.some(option => {
+                if (option === '남성') {
+                    return product.productCode.charAt(0) !== 'W';
+                } else if (option === '여성') {
+                    return product.productCode.charAt(0) === 'W';
+                }
+                return false;
+            });
+
+            // 브랜드 필터링
+            const brandOptions = selectedOptions.filter(option => !['남성', '여성'].includes(option));
+            const brandMatch = brandOptions.length === 0 || brandOptions.includes(product.brandName);
+
+            return genderMatch && brandMatch;
+        });
+    };
+
+    const filteredProducts = filterProducts(products);
 
     return (
         <Container>
-            <Sidebar />
+            <Sidebar
+                selectedOptions={selectedOptions}
+                onSetSelectedOptions={onSetSelectedOptions}
+                products={products}
+            />
             <MainContent>
-                {/* 검색된 상품 개수 표시 */}
-                <ProductCount>검색된 상품 개수 n개</ProductCount>
-                {/* 메인 콘텐츠 영역 */}
+                <ProductCount>검색된 상품 개수 {filteredProducts.length}개</ProductCount>
                 <ItemContainer>
-                    <ItemBoxWithLike/>
-                    <ItemBoxWithLike/>
-                    <ItemBoxWithLike/>
-                    <ItemBoxWithLike/>
-                    <ItemBoxWithLike/>
+                    {filteredProducts.map((product, index) => (
+                        <ItemBox
+                            key={index}
+                            product={product}
+                            productImage={''}
+                            brandName={product.brandName} 
+                            productName={product.productName}
+                            productCode={product.productCode}
+                            price={addComma(product.price) + '원'} 
+                            productNumber={product.productNumber}
+                        />
+                    ))}
                 </ItemContainer>
             </MainContent>
         </Container>
@@ -27,7 +79,6 @@ const ShopPage = () => {
 };
 
 export default ShopPage;
-
 const Container = styled.div`
     display: flex;
     justify-content: space-between;
@@ -45,6 +96,6 @@ const ProductCount = styled.div`
 const ItemContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 0 2rem; 
 `;

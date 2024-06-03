@@ -4,16 +4,15 @@ import theme from '@/styles/theme';
 import styled, { CSSProperties } from 'styled-components';
 import { RegisterOptions, UseFormRegister } from 'react-hook-form';
 
-interface InputProps {
+interface InputProps extends Pick<HTMLInputElement, 'type' | 'name'> {
   label?: string;
-  name: string;
   register: UseFormRegister<any>;
   rules?: RegisterOptions;
-  type?: string;
   errormessage: string;
   placeholder?: string;
   styles?: CSSProperties;
   readonly?: boolean;
+  isFromMypage?: boolean;
 }
 
 const Input = ({
@@ -26,10 +25,22 @@ const Input = ({
   placeholder,
   styles,
   readonly = false,
+  isFromMypage = false,
 }: InputProps) => {
+  const labelColor = () => {
+    if (errormessage) {
+      return '#f15746';
+    } else if (isFromMypage) {
+      return theme.colors.text.secondary;
+    }
+    return theme.colors.main;
+  };
+
   return (
     <InputWrapper style={styles}>
-      <Label errormessage={errormessage}>{label}</Label>
+      <Label $color={labelColor()} $fontWeight={isFromMypage ? 400 : 600}>
+        {label}
+      </Label>
       <StyledInput
         type={type}
         {...register(name, rules)}
@@ -53,11 +64,11 @@ const InputWrapper = styled.div`
   margin: 0 auto;
 `;
 
-const Label = styled.label<Pick<InputProps, 'errormessage'>>`
+const Label = styled.label<{ $color: string; $fontWeight: number }>`
   font-size: ${theme.fontSize.body2};
   line-height: 1.8rem;
-  color: ${(props) => (props.errormessage ? '#f15746' : theme.colors.main)};
-  font-weight: 600;
+  color: ${(props) => props.$color};
+  font-weight: ${(props) => props.$fontWeight};
 `;
 
 const StyledInput = styled.input<Pick<InputProps, 'errormessage'>>`
@@ -74,14 +85,19 @@ const StyledInput = styled.input<Pick<InputProps, 'errormessage'>>`
   padding-bottom: 1.4rem;
   padding-top: 1.4rem;
   margin-top: 0.4rem;
+  cursor: ${(props) => (props.readOnly ? 'default' : 'text')};
   &::placeholder {
     color: #bcbcbc;
   }
   &:focus {
-    border-bottom: ${(props) =>
-      props.errormessage
-        ? '0.1rem solid #f15746'
-        : `0.2rem solid ${theme.colors.main}`};
+    border-bottom-width: ${(props) =>
+      props.errormessage || props.readOnly ? '0.1rem' : '0.2rem'};
+    border-bottom-color: ${(props) =>
+      props.readOnly
+        ? theme.colors.border
+        : props.errormessage
+        ? '#f15746'
+        : theme.colors.main};
     &::placeholder {
       color: white;
     }

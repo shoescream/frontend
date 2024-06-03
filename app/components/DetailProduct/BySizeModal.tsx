@@ -8,9 +8,8 @@ import { IoCloseOutline } from 'react-icons/io5';
 interface BySizeModalProps {
   onClose: () => void;
   data: {
-    size: string;
-    price: number;
-  }[];
+    [key: string]: number;
+  };
   currentItem: number;
   onSetCurrentItem: (value: number) => void;
 }

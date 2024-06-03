@@ -1,17 +1,22 @@
-// ranking에 import되는 컴포넌트
-
 import React from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 
-const ItemBoxWithoutLike = () => {
+interface RankingProps {
+    productImage: string;
+    branName: string;
+    productName: string;
+    price: string;
+}
+
+const ItemBoxWithoutLike: React.FC<RankingProps> = ({ productImage, branName, productName, price }) => {
     return (
         <ImageItemContainer>
             <ItemBox>
-                <Image></Image> {/* 이미지 들어갈 공간 */}
-                <Brand className='brand'>브랜드명</Brand>
-                <ProductName className='product-name'>상품명</ProductName>
-                <Price className='price' style={{ marginTop: '2rem' }}>가격</Price>
+                <Image referrerPolicy="no-referrer" src={productImage} alt={productName}></Image>
+                <Brand className='brand'>{branName}</Brand>
+                <ProductName className='product-name'>{productName}</ProductName>
+                {/* <Price className='price' style={{ marginTop: '2rem' }}>{price}</Price> */}
             </ItemBox>
         </ImageItemContainer>
     );
@@ -23,6 +28,7 @@ const ImageItemContainer = styled.div`
     width: calc(20% - 1rem);
     border-radius: 1rem;
     overflow: hidden;
+    margin-bottom: 3rem;
 `;
 
 const ItemBox = styled.div`
@@ -31,15 +37,15 @@ const ItemBox = styled.div`
     background-color: white;
 `;
 
-const Image = styled.div`
+const Image = styled.img`
     border-radius: 1rem;
-    height: 0;
     margin-bottom: 1rem;
-    padding-top: 100%;
     background-color: ${theme.colors.gray[100]}; 
+    width: 100%; 
+    height: auto; 
 `;
 
-const Brand = styled.strong`
+const Brand = styled.h4`
     margin: 0.5rem;
     font-weight: bold;
 `;

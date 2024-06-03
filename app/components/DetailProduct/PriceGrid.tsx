@@ -1,16 +1,18 @@
 import useAddComma from '@/hooks/useAddComma';
 import theme from '@/styles/theme';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
 interface PriceGridProps {
   data: {
-    size: string;
-    price: number;
-  }[];
+    [key: string]: number;
+  };
   clickedItem: number;
   onSetClickedItem: (index: number) => void;
   isForLookingSizes?: boolean;
+  isTypeSell?: boolean;
+  customGridTemplate?: string;
+  itemStyle?: { height: string };
 }
 
 const PriceGrid = ({
@@ -18,36 +20,41 @@ const PriceGrid = ({
   clickedItem,
   onSetClickedItem,
   isForLookingSizes = false,
+  isTypeSell,
+  customGridTemplate,
 }: PriceGridProps) => {
   const addComma = useAddComma();
 
   return (
-    <Grid>
-      {data.map((item, index) => (
-        <GridItem
-          key={index}
-          $clicked={clickedItem === index}
-          onClick={() => onSetClickedItem(index)}
-        >
-          <GridItemTitle $clicked={clickedItem === index}>
-            {index === 0 && isForLookingSizes ? (
-              <strong>모든 사이즈</strong>
-            ) : (
-              item.size
-            )}
-          </GridItemTitle>
-          <GridItemPrice
-            $isFirstItem={index === 0 && isForLookingSizes}
-            $clicked={clickedItem === index}
+    <Grid style={{ gridTemplateColumns: customGridTemplate || '1fr 1fr 1fr' }}>
+      {Object.keys(data).map((size, index) => {
+        return (
+          <GridItem
+            key={index}
+            $clicked={clickedItem === Number(size)}
+            onClick={() => onSetClickedItem(Number(size))}
           >
-            {isForLookingSizes && index === 0 ? (
-              <strong>구매입찰</strong>
-            ) : (
-              addComma(item.price) + '원'
-            )}
-          </GridItemPrice>
-        </GridItem>
-      ))}
+            <GridItemTitle $clicked={clickedItem === Number(size)}>
+              {index === 0 && isForLookingSizes ? (
+                <strong>모든 사이즈</strong>
+              ) : (
+                size
+              )}
+            </GridItemTitle>
+            <GridItemPrice
+              $isTypeSell={isTypeSell!}
+              $isFirstItem={index === 0 && isForLookingSizes}
+              $clicked={clickedItem === Number(index)}
+            >
+              {isForLookingSizes && index === 0 ? (
+                <strong>구매입찰</strong>
+              ) : (
+                addComma(data[size]) + '원'
+              )}
+            </GridItemPrice>
+          </GridItem>
+        );
+      })}
     </Grid>
   );
 };
@@ -56,7 +63,6 @@ export default PriceGrid;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   column-gap: 0.8rem;
   row-gap: 0.8rem;
   margin-top: 1rem;
@@ -81,10 +87,18 @@ const GridItemTitle = styled.p<{ $clicked: boolean }>`
   font-weight: ${(props) => (props.$clicked ? 600 : 400)};
 `;
 
-const GridItemPrice = styled.p<{ $isFirstItem: boolean; $clicked: boolean }>`
+const GridItemPrice = styled.p<{
+  $isFirstItem: boolean;
+  $clicked: boolean;
+  $isTypeSell: boolean;
+}>`
   font-size: 1.2rem;
   margin-top: 0.2rem;
   font-weight: ${(props) => (props.$clicked ? 600 : 400)};
-  color: ${({ $isFirstItem }) =>
-    $isFirstItem ? theme.colors.main : theme.colors.buying};
+  color: ${({ $isFirstItem, $isTypeSell }) =>
+    $isFirstItem
+      ? theme.colors.main
+      : $isTypeSell
+      ? theme.colors.selling
+      : theme.colors.buying};
 `;
