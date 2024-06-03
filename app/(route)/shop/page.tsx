@@ -63,7 +63,9 @@ const ShopPage = () => {
                             product={{
                                 ...product,
                                 price: addComma(parseInt(product.price)) + '원'
-                            }} pageType={'shop'}
+                            }}
+                            showLikeButton={true}
+                            pageType={'shop'}
                         />
                     ))}
                 </ItemContainer>
