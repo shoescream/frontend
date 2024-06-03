@@ -44,6 +44,8 @@ const DetailProduct = () => {
     pathname.replace('/product/', '')
   );
 
+  console.log(pathname.replace('/product/', ''));
+
   useEffect(() => {
     if (isOpen || isSellingModalOpen !== 'none') {
       document.body.style.overflow = 'hidden';
@@ -214,11 +216,11 @@ const DetailProduct = () => {
                 <DetailTitle>시세</DetailTitle>
               </DetailTitleBox>
               <Charts
-                productNumber={String(data?.productResponse.id)}
+                productNumber={String(data?.productResponse.productNumber)}
                 size={currentSizeItem}
               />
               <Bids
-                productNumber={String(data?.productResponse.id)}
+                productNumber={String(data?.productResponse.productNumber)}
                 size={currentSizeItem}
                 currentFilterBySize={currentFilterBySize}
                 onSetCurrentFilterBySize={setCurrentFilterBySize}
