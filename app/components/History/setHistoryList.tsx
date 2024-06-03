@@ -1,6 +1,7 @@
 import { ProductHistory } from '@/hooks/queries/useHistory';
 import theme from '@/styles/theme';
 import moment from 'moment';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 interface SetHistoryListProps {
@@ -16,78 +17,156 @@ const SetHistoryList = ({
   pending,
   finished,
 }: SetHistoryListProps) => {
-  if (selectState[0] === 1) {
-    return (
-      <>
-        {bidding && (
-          <>
-            {bidding.result.map((data, idx) => (
-              <ItemBox key={idx}>
-                <ProductInfo key={idx}>
-                  <img src={data.productImage} alt={data.productImage} />
-                  <ProductNameOption>
-                    <p id="product_name">{data.productName}</p>
-                    <p id="product_option">{data.size}</p>
-                  </ProductNameOption>
-                </ProductInfo>
-                <ItemOption>
-                  <p>{data.price}</p>
-                  <p>{moment(data.deadLine).format('YY-MM-DD')}</p>
-                </ItemOption>
-              </ItemBox>
-            ))}
-          </>
-        )}
-      </>
-    );
-  } else if (selectState[1] === 1) {
-    return (
-      <>
-        {pending && (
-          <>
-            {pending.result.map((data, idx) => (
-              <ItemBox key={idx}>
-                <ProductInfo key={idx}>
-                  <img src={data.productImage} alt={data.productImage} />
-                  <ProductNameOption>
-                    <p id="product_name">{data.productName}</p>
-                    <p id="product_option">{data.size}</p>
-                  </ProductNameOption>
-                </ProductInfo>
-                <ItemOption>
-                  <p>{data.status}</p>
-                </ItemOption>
-              </ItemBox>
-            ))}
-          </>
-        )}
-      </>
-    );
-  } else if (selectState[2] === 1) {
-    return (
-      <>
-        {finished && (
-          <>
-            {finished.result.map((data, idx) => (
-              <ItemBox key={idx}>
-                <ProductInfo key={idx}>
-                  <img />
-                  <ProductNameOption>
-                    <p id="product_name">{data.productName}</p>
-                    <p id="product_option">{data.size}</p>
-                  </ProductNameOption>
-                </ProductInfo>
-                <ItemOption>
-                  <p>{moment(data.tradedAt).format('YY-MM-DD')}</p>
-                  <p>{data.status}</p>
-                </ItemOption>
-              </ItemBox>
-            ))}
-          </>
-        )}
-      </>
-    );
-  }
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
+  const maxPageButtons = 10;
+  const getTotalItems = () => {
+    if (selectState[0] === 1) {
+      return bidding.result.length;
+    } else if (selectState[1] === 1) {
+      return pending.result.length;
+    } else if (selectState[2] === 1) {
+      return finished.result.length;
+    }
+    return 0;
+  };
+  const totalItems = getTotalItems();
+  const totalPages = Math.ceil(totalItems / pageSize);
+  const renderItem = () => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, totalItems);
+    if (selectState[0] === 1) {
+      return (
+        <>
+          {bidding && (
+            <>
+              {bidding.result.slice(startIndex, endIndex).map((data, idx) => (
+                <ItemBox key={idx}>
+                  <ProductInfo key={idx}>
+                    <img src={data.productImage} alt={data.productImage} />
+                    <ProductNameOption>
+                      <p id="product_name">{data.productName}</p>
+                      <p id="product_option">{data.size}</p>
+                    </ProductNameOption>
+                  </ProductInfo>
+                  <ItemOption>
+                    <p>{data.price}</p>
+                    <p>{moment(data.deadLine).format('YY-MM-DD')}</p>
+                  </ItemOption>
+                </ItemBox>
+              ))}
+            </>
+          )}
+        </>
+      );
+    } else if (selectState[1] === 1) {
+      return (
+        <>
+          {pending && (
+            <>
+              {pending.result.slice(startIndex, endIndex).map((data, idx) => (
+                <ItemBox key={idx}>
+                  <ProductInfo key={idx}>
+                    <img src={data.productImage} alt={data.productImage} />
+                    <ProductNameOption>
+                      <p id="product_name">{data.productName}</p>
+                      <p id="product_option">{data.size}</p>
+                    </ProductNameOption>
+                  </ProductInfo>
+                  <ItemOption>
+                    <p>{data.status}</p>
+                  </ItemOption>
+                </ItemBox>
+              ))}
+            </>
+          )}
+        </>
+      );
+    } else if (selectState[2] === 1) {
+      return (
+        <>
+          {finished && (
+            <>
+              {finished.result.slice(startIndex, endIndex).map((data, idx) => (
+                <ItemBox key={idx}>
+                  <ProductInfo key={idx}>
+                    <img />
+                    <ProductNameOption>
+                      <p id="product_name">{data.productName}</p>
+                      <p id="product_option">{data.size}</p>
+                    </ProductNameOption>
+                  </ProductInfo>
+                  <ItemOption>
+                    <p>{moment(data.tradedAt).format('YY-MM-DD')}</p>
+                    <p>{data.status}</p>
+                  </ItemOption>
+                </ItemBox>
+              ))}
+            </>
+          )}
+        </>
+      );
+    }
+  };
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+  const renderPageNumbers = () => {
+    const startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+    const endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+    const pageNumbers = [];
+    if (startPage > 1) {
+      pageNumbers.push(
+        <PageNumber key="first" onClick={() => handlePageChange(1)}>
+          {1}
+        </PageNumber>
+      );
+    }
+
+    if (startPage > 2) {
+      pageNumbers.push(
+        <PageNumber key="firstDot" disabled>
+          ...
+        </PageNumber>
+      );
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <PageNumber
+          key={i}
+          onClick={() => handlePageChange(i)}
+          active={currentPage === i ? 1 : 0}
+        >
+          {i}
+        </PageNumber>
+      );
+    }
+
+    if (endPage < totalPages - 1) {
+      pageNumbers.push(
+        <PageNumber key="lastDot" disabled>
+          ...
+        </PageNumber>
+      );
+    }
+
+    if (endPage < totalPages) {
+      pageNumbers.push(
+        <PageNumber key="last" onClick={() => handlePageChange(totalPages)}>
+          {totalPages}
+        </PageNumber>
+      );
+    }
+    return pageNumbers;
+  };
+
+  return (
+    <>
+      {renderItem()}
+      {totalPages > 1 && <Pagination>{renderPageNumbers()}</Pagination>}
+    </>
+  );
 };
 const ItemBox = styled.div`
   width: 90rem;
@@ -127,5 +206,17 @@ const ProductNameOption = styled.div`
     font-size: ${theme.fontSize.subtitle3};
     color: ${theme.colors.gray[200]};
   }
+`;
+
+const Pagination = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+`;
+
+const PageNumber = styled.span<{ active?: number; disabled?: boolean }>`
+  margin: 0 0.5rem;
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
 `;
 export default SetHistoryList;
