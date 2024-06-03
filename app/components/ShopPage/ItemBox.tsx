@@ -10,9 +10,10 @@ import { ShopProductType } from '@/hooks/queries/useShopProducts';
 interface ItemBoxProps {
     product: RankingProduct | ShopProductType;
     showLikeButton?: boolean;
+    pageType: 'ranking' | 'shop';
 }
 
-const ItemBox: React.FC<ItemBoxProps> = ({ product, showLikeButton = false }) => {
+const ItemBox: React.FC<ItemBoxProps> = ({ product, showLikeButton = false, pageType }) => {
     const router = useRouter();
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
@@ -28,7 +29,7 @@ const ItemBox: React.FC<ItemBoxProps> = ({ product, showLikeButton = false }) =>
     };
 
     return (
-        <ImageItemContainer onClick={handleClick}>
+        <ImageItemContainer className={pageType} onClick={handleClick}>
             <ItemBoxWrapper>
                 <Image
                     referrerPolicy="no-referrer"
@@ -52,10 +53,18 @@ const ItemBox: React.FC<ItemBoxProps> = ({ product, showLikeButton = false }) =>
 export default ItemBox;
 
 const ImageItemContainer = styled.div`
-    width: calc(20% - 1rem);
     border-radius: 1rem;
     overflow: hidden;
     margin-bottom: 5rem;
+    
+    &.ranking {
+        width: calc(20% - 1rem);
+    }
+
+    &.shop {
+        width: calc(25% - 1rem);
+        margin-right: 1rem;
+    }
 `;
 
 const ItemBoxWrapper = styled.div`

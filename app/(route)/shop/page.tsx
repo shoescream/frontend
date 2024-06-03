@@ -20,7 +20,7 @@ const ShopPage = () => {
             } else {
                 return [...prev, option];
             }
-        });
+        }); 
     };
 
     // 필터링 로직
@@ -63,8 +63,7 @@ const ShopPage = () => {
                             product={{
                                 ...product,
                                 price: addComma(parseInt(product.price)) + '원'
-                            }}
-                        />
+                            }} pageType={'shop'}                        />
                     ))}
                 </ItemContainer>
             </MainContent>
