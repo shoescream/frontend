@@ -8,8 +8,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
-import { useProductHistory } from '@/hooks/queries/useHistory';
-
+import { ProductHistory, useProductHistory } from '@/hooks/queries/useHistory';
+import moment from 'moment';
 const buttonProps = [
   { children: '최근 2개월', month: 2 },
   { children: '4개월', month: 4 },
@@ -41,10 +41,10 @@ const slotStyleProps: any = {
         fontSize: theme.fontSize.caption1,
         color: 'black',
         fontWeight: 'bold',
-        '&:first-child': {
+        '&:first-of-type': {
           color: 'red',
         },
-        '&:last-child': {
+        '&:last-of-type': {
           color: 'blue',
         },
       },
@@ -61,27 +61,29 @@ const MyHistory = (props: any) => {
   const day = dayjs();
   const [endDate, setEndDate] = useState(day);
   const [startDate, setStartDate] = useState(day.add(-2, 'month'));
+  // const [bidding, setBidding] = useState<ProductHistory>();
+  // const [pending, setPending] = useState<ProductHistory>();
+  // const [finished, setFinished] = useState<ProductHistory>();
   const type = props.params.type;
 
   const title = type === 'selling' ? '판매' : '구매';
 
   const router = useRouter();
-
-  const { data: bidding } = useProductHistory({
+  const { data: bidding, refetch: bidRe } = useProductHistory({
     type,
     status: 'bidding',
     startDate: startDate.format('YYYY-MM-DD'),
     endDate: endDate.format('YYYY-MM-DD'),
   });
 
-  const { data: pending } = useProductHistory({
+  const { data: pending, refetch: pendRe } = useProductHistory({
     type,
     status: 'pending',
     startDate: startDate.format('YYYY-MM-DD'),
     endDate: endDate.format('YYYY-MM-DD'),
   });
 
-  const { data: finished } = useProductHistory({
+  const { data: finished, refetch: finiRe } = useProductHistory({
     type,
     status: 'finished',
     startDate: startDate.format('YYYY-MM-DD'),
@@ -89,16 +91,20 @@ const MyHistory = (props: any) => {
   });
 
   const data = [
-    { count: bidding?.response.length, title: '입찰' },
-    { count: pending?.response.length, title: '진행중' },
-    { count: finished?.response.length, title: '완료' },
+    { count: bidding ? bidding?.result.length : 0, title: '입찰' },
+    { count: pending ? pending?.result.length : 0, title: '진행중' },
+    { count: finished ? finished?.result.length : 0, title: '완료' },
   ];
-
   const datePickerValues = [
     { value: startDate, setValue: setStartDate },
     { value: endDate, setValue: setEndDate },
   ];
 
+  const reFetchHandler = () => {
+    bidRe();
+    pendRe();
+    finiRe();
+  };
   const dateHandler = (month: number) => {
     setEndDate(day);
     setStartDate(day.add(-month, 'month'));
@@ -169,22 +175,23 @@ const MyHistory = (props: any) => {
       return (
         <>
           {bidding && (
-            <ItemBox>
-              {bidding.response.map((data, idx) => (
-                <>
+            <>
+              {bidding.result.map((data, idx) => (
+                <ItemBox key={idx}>
                   <ProductInfo key={idx}>
-                    <img />
+                    <img src={data.productImage} alt={data.productImage} />
                     <ProductNameOption>
                       <p id="product_name">{data.productName}</p>
                       <p id="product_option">{data.size}</p>
                     </ProductNameOption>
                   </ProductInfo>
                   <ItemOption>
-                    <p>{data.status}</p>
+                    <p>{data.price}</p>
+                    <p>{moment(data.deadLine).format('YY-MM-DD')}</p>
                   </ItemOption>
-                </>
+                </ItemBox>
               ))}
-            </ItemBox>
+            </>
           )}
         </>
       );
@@ -192,9 +199,9 @@ const MyHistory = (props: any) => {
       return (
         <>
           {pending && (
-            <ItemBox>
-              {pending.response.map((data, idx) => (
-                <>
+            <>
+              {pending.result.map((data, idx) => (
+                <ItemBox key={idx}>
                   <ProductInfo key={idx}>
                     <img />
                     <ProductNameOption>
@@ -205,9 +212,9 @@ const MyHistory = (props: any) => {
                   <ItemOption>
                     <p>{data.status}</p>
                   </ItemOption>
-                </>
+                </ItemBox>
               ))}
-            </ItemBox>
+            </>
           )}
         </>
       );
@@ -215,9 +222,9 @@ const MyHistory = (props: any) => {
       return (
         <>
           {finished && (
-            <ItemBox>
-              {finished.response.map((data, idx) => (
-                <>
+            <>
+              {finished.result.map((data, idx) => (
+                <ItemBox key={idx}>
                   <ProductInfo key={idx}>
                     <img />
                     <ProductNameOption>
@@ -228,9 +235,9 @@ const MyHistory = (props: any) => {
                   <ItemOption>
                     <p>{data.status}</p>
                   </ItemOption>
-                </>
+                </ItemBox>
               ))}
-            </ItemBox>
+            </>
           )}
         </>
       );
@@ -242,6 +249,7 @@ const MyHistory = (props: any) => {
       router.push('/login');
     }
   }, []);
+  if (!bidding || !pending || !finished) return <div>loading...</div>;
   return (
     <>
       <h2>{title}내역</h2>
@@ -307,6 +315,7 @@ const MyHistory = (props: any) => {
                 marginTop: '0.55rem',
                 fontSize: theme.fontSize.caption1,
               }}
+              onClick={reFetchHandler}
             >
               조회
             </Button>
