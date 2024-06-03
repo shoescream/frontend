@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { useRouter } from 'next/navigation';
 import { RankingProduct } from '@/hooks/queries/useRankingProducts';
-import { ShopProductType } from 'app/(route)/shop/shopProduct';
+import { ShopProductType } from '@/hooks/queries/useShopProducts';
 
 interface ItemBoxProps {
     product: RankingProduct | ShopProductType;

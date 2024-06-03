@@ -40,8 +40,9 @@ const DetailProduct = () => {
   const [isSellingModalOpen, setIsSellingModalOpen] = useState<
     'none' | 'sell' | 'buy'
   >('none');
-  const id = pathname.replace('/product/', '');
-  const { data, isLoading } = useDetailProduct(id);
+  const { data, isLoading } = useDetailProduct(
+    pathname.replace('/product/', '')
+  );
 
   useEffect(() => {
     if (isOpen || isSellingModalOpen !== 'none') {
@@ -211,9 +212,12 @@ const DetailProduct = () => {
               <DetailTitleBox>
                 <DetailTitle>시세</DetailTitle>
               </DetailTitleBox>
-              <Charts productNumber={id} size={currentSizeItem} />
+              <Charts
+                productNumber={String(data?.productResponse.id)}
+                size={currentSizeItem}
+              />
               <Bids
-                productNumber={id}
+                productNumber={String(data?.productResponse.id)}
                 size={currentSizeItem}
                 currentFilterBySize={currentFilterBySize}
                 onSetCurrentFilterBySize={setCurrentFilterBySize}

@@ -12,12 +12,8 @@ export const MYPAGE_NAV = [
     path: '/my/favorite',
   },
   {
-    name: '로그인 정보',
+    name: '프로필 및 계정 관리',
     path: '/my/profile',
-  },
-  {
-    name: '프로필 관리',
-    path: '/my/profile-edit',
   },
   {
     name: '판매자 등급',

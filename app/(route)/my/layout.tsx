@@ -3,7 +3,7 @@
 import { MYPAGE_NAV } from '@/constants/navMypage';
 import theme from '@/styles/theme';
 import { usePathname } from 'next/navigation';
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 const MyPageLayout = ({ children }: PropsWithChildren) => {
@@ -15,7 +15,7 @@ const MyPageLayout = ({ children }: PropsWithChildren) => {
         <h2 style={{ paddingBottom: '3rem' }}>마이 페이지</h2>
         <h3 style={{ marginBottom: '1.2remz' }}>쇼핑 정보</h3>
         <Column>
-          {MYPAGE_NAV.slice(0, 4).map((item) => (
+          {MYPAGE_NAV.slice(0, 3).map((item) => (
             <ListItem key={item.name}>
               <ListText
                 href={item.path}
@@ -32,9 +32,9 @@ const MyPageLayout = ({ children }: PropsWithChildren) => {
             </ListItem>
           ))}
         </Column>
-        <h3 style={{ marginBottom: '1.2rem', marginTop: '4rem' }}>내 정보</h3>
+        <h3 style={{ marginTop: '4rem' }}>내 정보</h3>
         <Column>
-          {MYPAGE_NAV.slice(4).map((item) => (
+          {MYPAGE_NAV.slice(3).map((item) => (
             <ListItem key={item.name}>
               <ListText
                 href={item.path}
@@ -67,6 +67,7 @@ const Layout = styled.div`
 
 const LeftBox = styled.div`
   width: 18rem;
+  margin-left: 1rem;
 `;
 
 const RightBox = styled.div`

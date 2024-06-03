@@ -1,16 +1,18 @@
 import useAddComma from '@/hooks/useAddComma';
 import theme from '@/styles/theme';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
 interface PriceGridProps {
   data: {
     [key: string]: number;
-  };
+  }[];
   clickedItem: number;
   onSetClickedItem: (index: number) => void;
   isForLookingSizes?: boolean;
   isTypeSell?: boolean;
+  customGridTemplate?: string;
+  itemStyle?: { height: string };
 }
 
 const PriceGrid = ({
@@ -24,29 +26,29 @@ const PriceGrid = ({
 
   return (
     <Grid>
-      {Object.keys(data).map((key, index) => {
+      {data.map((item, index) => {
         return (
           <GridItem
-            key={key}
-            $clicked={clickedItem === Number(key)}
-            onClick={() => onSetClickedItem(Number(key))}
+            key={index}
+            $clicked={clickedItem === index}
+            onClick={() => onSetClickedItem(index)}
           >
-            <GridItemTitle $clicked={clickedItem === Number(key)}>
+            <GridItemTitle $clicked={clickedItem === index}>
               {index === 0 && isForLookingSizes ? (
                 <strong>모든 사이즈</strong>
               ) : (
-                key
+                Object.keys(item)[0]
               )}
             </GridItemTitle>
             <GridItemPrice
               $isTypeSell={isTypeSell!}
               $isFirstItem={index === 0 && isForLookingSizes}
-              $clicked={clickedItem === Number(key)}
+              $clicked={clickedItem === index}
             >
               {isForLookingSizes && index === 0 ? (
                 <strong>구매입찰</strong>
               ) : (
-                addComma(data[key as string]) + '원'
+                addComma(item[Object.keys(item)[0]]) + '원'
               )}
             </GridItemPrice>
           </GridItem>
@@ -60,7 +62,6 @@ export default PriceGrid;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   column-gap: 0.8rem;
   row-gap: 0.8rem;
   margin-top: 1rem;
