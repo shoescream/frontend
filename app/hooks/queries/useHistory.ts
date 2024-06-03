@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { Instance } from 'app/api';
 
-interface ProductHistory {
-  response: [
+export interface ProductHistory {
+  result: [
     {
       productName: string;
       productImage: string;
@@ -23,6 +23,7 @@ interface ProductHistoryProps {
   startDate: string;
   endDate: string;
 }
+
 const useProductHistory = ({
   type,
   status,
@@ -30,7 +31,7 @@ const useProductHistory = ({
   endDate,
 }: ProductHistoryProps) => {
   return useQuery<ProductHistory>({
-    queryKey: ['type', type],
+    queryKey: ['type', type, status],
     enabled: !!type,
     retry: false,
     queryFn: async () => {
@@ -41,7 +42,7 @@ const useProductHistory = ({
           `&startDate=${startDate}` +
           `&endDate=${endDate}`
       );
-      return response.data.result;
+      return response.data;
     },
   });
 };
