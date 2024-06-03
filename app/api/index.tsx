@@ -6,7 +6,7 @@ const Instance = axios.create({
   headers: {
     Accept: 'application/json',
   },
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 // TODO: 추후 토큰 관리 시 적용

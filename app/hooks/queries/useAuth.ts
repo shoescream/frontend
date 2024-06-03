@@ -24,18 +24,22 @@ interface LoginProps {
 }
 
 const useLogin = () => {
-  const router = useRouter();
-
   return useMutation({
     mutationFn: async ({ userId, password }: LoginProps) => {
-      const response: Response<LoginResponse> = await Instance.post('/signin', {
-        memberId: userId,
-        password,
-      });
+      const response: { data: Response<LoginResponse> } = await Instance.post(
+        '/signin',
+        {
+          memberId: userId,
+          password,
+        }
+      );
 
-      return response;
+      console.log(response);
+
+      return response.data;
     },
     onSuccess: (data) => {
+      console.log(data.resultCode);
       if (data.resultCode === 'SUCCESS' && data.result) {
         LocalStorage.setItem('@token', data.result.tokenResponse.accessToken);
         localStorage.setItem(
