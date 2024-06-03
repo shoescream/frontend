@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { Instance } from 'app/api';
 
 export interface RankingProduct {
     id: number;
@@ -21,7 +21,7 @@ const fetchRankingData = async (): Promise<RankingProduct[][]> => {
         { gender: 'M', detail: 'SND', productType: '01' }
     ];
 
-    const responseArray = await Promise.all(rankingParamsArray.map(params => axios.get('https://shoescream.shop/ranking', { params })));
+    const responseArray = await Promise.all(rankingParamsArray.map(params => Instance.get('/ranking', { params })));
     return responseArray.map(response => response.data.result);
 };
 
