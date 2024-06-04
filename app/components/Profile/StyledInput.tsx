@@ -5,6 +5,7 @@ import { RegisterOptions, useFormContext } from 'react-hook-form';
 import theme from '@/styles/theme';
 import Button from '../common/Button';
 import { FormData } from 'app/(route)/my/profile/page';
+import ModifyButton from '../common/Button/ModifyButton';
 
 interface StyledInputProps extends Pick<HTMLInputElement, 'type'> {
   label: string;
@@ -52,7 +53,7 @@ const StyledInput = ({
     <InputWrapper>
       {!changeToEdit && (
         <ModifyButton
-          onClick={() => {
+          onClickModify={() => {
             if (onClickModify) {
               onClickModify();
             } else {
@@ -115,24 +116,6 @@ export default StyledInput;
 
 const InputWrapper = styled.div`
   position: relative;
-`;
-
-const ModifyButton = styled.button`
-  position: absolute;
-  right: 0;
-  bottom: 2.2rem;
-  z-index: 1;
-  height: 3.4rem;
-  border: 0.1rem solid ${theme.colors.border};
-  color: ${theme.colors.text.primary};
-  background-color: white;
-  border-radius: 1rem;
-  font-size: 1.2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 1.1rem;
-  cursor: pointer;
 `;
 
 const ButtonWrapper = styled.div`

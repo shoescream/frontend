@@ -73,7 +73,7 @@ const Content = styled.div`
   padding: 0 4rem;
 
   &.full-width {
-    width: ${window.innerWidth};
+    width: 100%;
     margin: 13rem 0 0;
     padding: 0;
   }

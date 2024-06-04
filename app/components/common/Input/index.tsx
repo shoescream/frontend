@@ -38,6 +38,12 @@ const Input = ({
     return theme.colors.main;
   };
 
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    if (type === 'text' && name === 'accountNumber') {
+      e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+    }
+  };
+
   return (
     <InputWrapper style={styles}>
       <Label $color={labelColor()} $fontWeight={isFromMypage ? 400 : 600}>
@@ -50,6 +56,7 @@ const Input = ({
         placeholder={placeholder}
         readOnly={readonly}
         style={inputStyle}
+        onInput={handleInput}
       />
       {errormessage && <ErrorText>{errormessage}</ErrorText>}
     </InputWrapper>
@@ -63,7 +70,6 @@ export default Input;
 const InputWrapper = styled.div`
   padding: 1rem 0 1.4rem;
   position: relative;
-  height: 8rem;
   margin: 0 auto;
 `;
 
