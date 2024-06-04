@@ -7,24 +7,25 @@ import theme from '@/styles/theme';
 import BidSectionPage from './BidSection';
 import BuySectionPage from './BuySection';
 import { useBuyProducts } from '@/hooks/queries/useBuyProducts';
+import { usePathname } from 'next/navigation';
 
 const SellAndBuyPage = () => {
     const [view, setView] = useState('buy');
-    const productNumber = 1;
-    const { data: products = [] } = useBuyProducts(productNumber);
+    const pathname = usePathname();
 
-    console.log('sell and buy data:', products);
+    const productNumber = parseInt(pathname.replace('/buy/', ''), 10);
+    const { data } = useBuyProducts(productNumber);
 
     return (
         <MainContainer>
             <SellAndBuyContainer>
                 <TopSection>
-                    {products && products.length > 0 && (
+                    {data && data.length > 0 && (
                         <>
-                            <Image>이미지</Image>
+                            <Image/>
                             <ProductInfo>
-                                <EngProductName>{products[0].productName}</EngProductName>
-                                <KorProductName>{products[0].productSubName}</KorProductName>
+                                <EngProductName>{data[0].productName}</EngProductName>
+                                <KorProductName>{data[0].productSubName}</KorProductName>
                                 <Size>사이즈</Size>
                             </ProductInfo>
                         </>
@@ -32,16 +33,16 @@ const SellAndBuyPage = () => {
                 </TopSection>
                 <Separator />
                 <PriceInfo>
-                    {products && products.length > 0 && (
+                    {data && data.length > 0 && (
                         <>
                             <PriceContainer>
                                 <PriceLabel>즉시 구매가</PriceLabel>
-                                <Price>{products[0].lowestPrice}</Price>
+                                <Price>{data[0].lowestPrice}</Price>
                             </PriceContainer>
                             <PriceSeparator />
                             <PriceContainer>
                                 <PriceLabel>즉시 판매가</PriceLabel>
-                                <Price>{products[0].highestPrice}</Price>
+                                <Price>{data[0].highestPrice}</Price>
                             </PriceContainer>
                         </>
                     )}
@@ -50,7 +51,7 @@ const SellAndBuyPage = () => {
                     <ButtonContainer>
                         <Button
                             type='button'
-                            buttonColor='buying'
+                            buttonColor={view === 'bid' ? 'buying' : 'none'}
                             size='xlarge'
                             onClick={() => setView('bid')}
                         >
@@ -58,7 +59,7 @@ const SellAndBuyPage = () => {
                         </Button>
                         <Button
                             type='button'
-                            buttonColor='buying'
+                            buttonColor={view === 'buy' ? 'buying' : 'none'}
                             size='xlarge'
                             onClick={() => setView('buy')}
                         >
