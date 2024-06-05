@@ -21,41 +21,42 @@ const PriceGrid = ({
   onSetClickedItem,
   isForLookingSizes = false,
   isTypeSell,
+  customGridTemplate,
 }: PriceGridProps) => {
   const addComma = useAddComma();
 
   console.log(data);
 
   return (
-    <Grid>
-      {/* {data?.map((item, index) => {
+    <Grid style={{ gridTemplateColumns: customGridTemplate || '1fr 1fr 1fr' }}>
+      {Object.keys(data).map((size, index) => {
         return (
           <GridItem
             key={index}
-            $clicked={clickedItem === index}
-            onClick={() => onSetClickedItem(index)}
+            $clicked={clickedItem === Number(size)}
+            onClick={() => onSetClickedItem(Number(size))}
           >
-            <GridItemTitle $clicked={clickedItem === index}>
+            <GridItemTitle $clicked={clickedItem === Number(size)}>
               {index === 0 && isForLookingSizes ? (
                 <strong>모든 사이즈</strong>
               ) : (
-                Object.keys(item)[0]
+                size
               )}
             </GridItemTitle>
             <GridItemPrice
               $isTypeSell={isTypeSell!}
               $isFirstItem={index === 0 && isForLookingSizes}
-              $clicked={clickedItem === index}
+              $clicked={clickedItem === Number(index)}
             >
               {isForLookingSizes && index === 0 ? (
                 <strong>구매입찰</strong>
               ) : (
-                addComma(item[Object.keys(item)[0]]) + '원'
+                addComma(data[size]) + '원'
               )}
             </GridItemPrice>
           </GridItem>
         );
-      })} */}
+      })}
     </Grid>
   );
 };
