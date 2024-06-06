@@ -32,7 +32,7 @@ const PriceGrid = ({
       {Object.keys(data).map((size, index) => {
         return (
           <GridItem
-            key={index}
+            key={size}
             $clicked={clickedItem === Number(size)}
             onClick={() => onSetClickedItem(Number(size))}
           >
