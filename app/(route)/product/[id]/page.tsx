@@ -346,7 +346,7 @@ const NameBox = styled.div`
 `;
 
 const EngName = styled.p`
-  font-size: 1.8rem;
+  font-size: ${theme.fontSize.title1};
   font-weight: 300;
   margin-bottom: 0.4rem;
 `;
@@ -366,7 +366,7 @@ const SizeButton = styled.div`
   border-radius: 1rem;
   cursor: pointer;
   width: 100%;
-  font-size: 1.5rem;
+  font-size: ${theme.fontSize.subtitle3};
   font-weight: 600;
   display: flex;
   justify-content: space-between;
@@ -426,7 +426,7 @@ const DetailTitleBox = styled.div`
 `;
 
 const DetailTitle = styled.p`
-  font-size: 1.8rem;
+  font-size: ${theme.fontSize.title2};
   font-weight: 600;
 `;
 
@@ -460,11 +460,11 @@ const BlurBoxText = styled.span`
   white-space: pre-wrap;
   text-align: center;
   color: ${theme.colors.main};
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
 `;
 
 const ButtonText = styled.span`
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
 `;
 
 const ModalHeader = styled.div`

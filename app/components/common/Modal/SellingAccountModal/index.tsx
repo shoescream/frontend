@@ -227,7 +227,7 @@ const ModalHeader = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: 700;
-  font-size: 1.8rem;
+  font-size: ${theme.fontSize.title2};
   height: 5.8rem;
   position: relative;
 `;
@@ -242,7 +242,7 @@ const CloseButton = styled.button`
 `;
 
 const Subtitle = styled.h4`
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   font-weight: 600;
 `;
 
@@ -259,7 +259,7 @@ const Select = styled.div<{ hasValue: boolean }>`
   padding: 0.6rem 0 0.7rem;
   cursor: pointer;
   border-bottom: 0.1rem solid ${theme.colors.border};
-  font-size: 1.5rem;
+  font-size: ${theme.fontSize.subtitle3};
   width: 100%;
   position: relative;
   outline: none;
@@ -284,7 +284,7 @@ const Dropdown = styled.div`
 
 const Option = styled.div`
   padding: 0.9rem 1.6rem 1rem 1.6rem;
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   cursor: pointer;
   position: relative;
   color: ${theme.colors.text.primary};

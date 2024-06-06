@@ -98,7 +98,7 @@ const TableHeader = styled.th`
   text-align: center;
   background-color: #fafafa;
   color: ${theme.colors.text.primary};
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   font-weight: 400;
   position: sticky;
   left: 0;
@@ -111,7 +111,7 @@ const TableCell = styled.td`
   padding: 1.1rem;
   text-align: center;
   color: ${theme.colors.text.primary};
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   font-weight: 400;
 `;
 

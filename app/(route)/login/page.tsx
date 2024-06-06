@@ -178,11 +178,11 @@ const SocialLoginButtonWrapper = styled.div`
   align-items: center;
   color: black;
   padding: 0 2rem;
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
 `;
 
 const Text = styled.span`
-  font-size: 1.6rem;
+  font-size: ${theme.fontSize.subtitle2};
   color: white;
   font-weight: 700;
 `;

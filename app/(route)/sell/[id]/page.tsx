@@ -159,13 +159,13 @@ const Section = styled.section`
 `;
 
 const Title = styled.p`
-  font-size: 1.8rem;
+  font-size: ${theme.fontSize.title2};
   font-weight: 600;
 `;
 
 const Category = styled.h4`
   padding: 1.2rem 0 0.8rem;
-  font-size: 1.5rem;
+  font-size: ${theme.fontSize.subtitle3};
   font-weight: 300;
 `;
 
@@ -186,11 +186,11 @@ const Row = styled.div`
 const TableItem = styled.div`
   color: #22222250;
   min-width: 6.6rem;
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
 `;
 
 const TableItemValue = styled.div`
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   color: ${theme.colors.main};
 `;
 
@@ -204,20 +204,20 @@ const ResultSection = styled.section`
 
 const Total = styled.p`
   color: ${theme.colors.main};
-  font-size: 1.6rem;
+  font-size: ${theme.fontSize.subtitle2};
   font-weight: 600;
 `;
 
 const TotalValue = styled.p`
   padding-top: 0.8rem;
   color: ${theme.colors.main};
-  font-size: 2rem;
+  font-size: ${theme.fontSize.title1};
   font-weight: 700;
   text-align: right;
 `;
 
 const NoAccount = styled.p`
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   line-height: 1.7rem;
   font-weight: 200;
   white-space: pre-line;
@@ -232,6 +232,6 @@ const AccountRow = styled(Row)`
 
 const AccountCategory = styled.span`
   min-width: 8rem;
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   color: ${theme.colors.text.secondary};
 `;

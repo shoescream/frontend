@@ -172,7 +172,7 @@ const Section = styled.div`
 `;
 
 const ListItem = styled.p`
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   line-height: 2.2rem;
 `;
 

@@ -137,13 +137,13 @@ const PointSection = styled(Section)`
 `;
 
 const Title = styled.p`
-  font-size: 1.8rem;
+  font-size: ${theme.fontSize.title2};
   font-weight: 600;
 `;
 
 const Category = styled.h4`
   padding: 1.2rem 0 0.8rem;
-  font-size: 1.5rem;
+  font-size: ${theme.fontSize.subtitle3};
   font-weight: 300;
 `;
 
@@ -152,7 +152,7 @@ const SearchCouponButton = styled.button<{ disabled: boolean }>`
   position: relative;
   border: 0.1rem solid #ebebeb;
   border-radius: 1rem;
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   height: 4.8rem;
   margin-right: 0.8rem;
   text-align: left;
@@ -171,7 +171,7 @@ const MaxiumButton = styled.button<{ disabled: boolean }>`
   border-color: ${(props) => (props.disabled ? 'white' : '#22222260')};
   border-radius: 1.2rem;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-  font-size: 1.2rem;
+  font-size: ${theme.fontSize.caption1};
   padding: 0.5rem 1rem;
   color: ${(props) => (props.disabled ? 'white' : '#222')};
   background-color: ${(props) =>
@@ -183,7 +183,7 @@ const StyledInput = styled.input<{ readOnly: boolean }>`
   padding: 1.4rem 1.2rem;
   border: 0.1rem solid #ebebeb;
   border-radius: 1rem;
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   height: 4.8rem;
   margin-right: 0.8rem;
   text-align: left;
@@ -196,7 +196,7 @@ const StyledInput = styled.input<{ readOnly: boolean }>`
 `;
 
 const HelperText = styled.div`
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   margin-top: 1.1rem;
   position: relative;
   color: #22222270;
@@ -219,11 +219,11 @@ const Row = styled.div`
 const TableItem = styled.div`
   color: #22222250;
   min-width: 6.6rem;
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
 `;
 
 const TableItemValue = styled.div`
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   color: ${theme.colors.main};
 `;
 
@@ -237,14 +237,14 @@ const ResultSection = styled.section`
 
 const Total = styled.p`
   color: ${theme.colors.main};
-  font-size: 1.6rem;
+  font-size: ${theme.fontSize.subtitle2};
   font-weight: 600;
 `;
 
 const TotalValue = styled.p`
   padding-top: 0.8rem;
   color: ${theme.colors.main};
-  font-size: 2rem;
+  font-size: ${theme.fontSize.title1};
   font-weight: 700;
   text-align: right;
 `;
@@ -258,5 +258,5 @@ const Divider = styled.div`
 const Points = styled.p`
   color: rgb(124, 114, 238);
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
 `;

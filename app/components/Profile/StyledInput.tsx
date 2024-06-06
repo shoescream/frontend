@@ -126,7 +126,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const HelperText = styled.p`
-  font-size: 1.1rem;
+  font-size: ${theme.fontSize.caption2};
   color: ${theme.colors.text.secondary};
   line-height: 1.6rem;
 `;

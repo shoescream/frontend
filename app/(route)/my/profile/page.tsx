@@ -137,7 +137,7 @@ const FormWrapper = styled.form`
 `;
 
 const WithDrawal = styled.a`
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   color: ${theme.colors.text.secondary};
   margin-top: 8.5rem;
   padding: 0.5rem 0;

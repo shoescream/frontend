@@ -51,7 +51,7 @@ const ProductPayPage = ({
             <div style={{ marginTop: '0.1rem' }}>
               <strong
                 style={{
-                  fontSize: '1.4rem',
+                  fontSize: theme.fontSize.body1,
                   fontWeight: 600,
                 }}
               >
@@ -61,7 +61,7 @@ const ProductPayPage = ({
             <div style={{ marginTop: '0.1rem' }}>
               <p
                 style={{
-                  fontSize: '1.4rem',
+                  fontSize: theme.fontSize.body1,
                   fontWeight: 300,
                 }}
               >
@@ -71,7 +71,7 @@ const ProductPayPage = ({
             <div style={{ marginTop: '0.2rem' }}>
               <p
                 style={{
-                  fontSize: '1.3rem',
+                  fontSize: theme.fontSize.body2,
                   color: theme.colors.text.secondary,
                 }}
               >
@@ -81,7 +81,7 @@ const ProductPayPage = ({
             <div style={{ marginTop: '0.7rem' }}>
               <strong
                 style={{
-                  fontSize: '1.4rem',
+                  fontSize: theme.fontSize.body1,
                 }}
               >
                 {size}
@@ -100,7 +100,7 @@ const ProductPayPage = ({
           >
             <span
               style={{
-                fontSize: '1.6rem',
+                fontSize: theme.fontSize.subtitle2,
                 fontWeight: '600',
                 fontFamily: theme.fonts.pretendard,
               }}
@@ -109,7 +109,7 @@ const ProductPayPage = ({
             </span>
             <span
               style={{
-                fontSize: '1.6rem',
+                fontSize: theme.fontSize.subtitle2,
                 margin: '0rem 0.6rem',
                 fontWeight: '700',
                 color: '#FFFFFFA6',
@@ -120,7 +120,7 @@ const ProductPayPage = ({
             </span>
             <span
               style={{
-                fontSize: '1.6rem',
+                fontSize: theme.fontSize.subtitle2,
                 fontWeight: '600',
                 fontFamily: theme.fonts.pretendard,
               }}

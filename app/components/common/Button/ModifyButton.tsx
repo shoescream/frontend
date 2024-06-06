@@ -31,7 +31,7 @@ const StyledButton = styled.button`
   color: ${theme.colors.text.primary};
   background-color: white;
   border-radius: 1rem;
-  font-size: 1.2rem;
+  font-size: ${theme.fontSize.caption1};
   display: flex;
   justify-content: center;
   align-items: center;
