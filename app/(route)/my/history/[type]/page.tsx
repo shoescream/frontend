@@ -15,36 +15,29 @@ const MyHistory = (props: any) => {
   const day = dayjs();
   const [endDate, setEndDate] = useState(day);
   const [startDate, setStartDate] = useState(day.add(-2, 'month'));
+  const [sortOption, setSortOption] = useState('날짜 빠른 순');
   const type = props.params.type;
 
   const title = type === 'selling' ? '판매' : '구매';
 
   const router = useRouter();
-  const { data: bidding, refetch: bidRe } = useProductHistory({
-    type,
-    status: 'bidding',
-    startDate: startDate.format('YYYY-MM-DD'),
-    endDate: endDate.format('YYYY-MM-DD'),
-  });
+  const fetchProductHistory = (status: 'bidding' | 'pending' | 'finished') => {
+    return useProductHistory({
+      type,
+      status,
+      startDate: startDate.format('YYYY-MM-DD'),
+      endDate: endDate.format('YYYY-MM-DD'),
+    });
+  };
 
-  const { data: pending, refetch: pendRe } = useProductHistory({
-    type,
-    status: 'pending',
-    startDate: startDate.format('YYYY-MM-DD'),
-    endDate: endDate.format('YYYY-MM-DD'),
-  });
-
-  const { data: finished, refetch: finiRe } = useProductHistory({
-    type,
-    status: 'finished',
-    startDate: startDate.format('YYYY-MM-DD'),
-    endDate: endDate.format('YYYY-MM-DD'),
-  });
+  const { data: bidding, refetch: bidRe } = fetchProductHistory('bidding');
+  const { data: pending, refetch: pendRe } = fetchProductHistory('pending');
+  const { data: finished, refetch: finiRe } = fetchProductHistory('finished');
 
   const data = [
-    { count: bidding ? bidding.result.length : 0, title: '입찰' },
-    { count: pending ? pending.result.length : 0, title: '진행중' },
-    { count: finished ? finished.result.length : 0, title: '완료' },
+    { count: bidding ? bidding.length : 0, title: '입찰' },
+    { count: pending ? pending.length : 0, title: '진행중' },
+    { count: finished ? finished.length : 0, title: '완료' },
   ];
 
   const datePickerValues = {
@@ -88,13 +81,14 @@ const MyHistory = (props: any) => {
       return (
         <>
           <p>상태</p>
+          <p>{title} 예정일</p>
         </>
       );
     } else if (selectState[2] === 1) {
       return (
         <>
-          <p>{title} 일</p>
           <p>상태</p>
+          <p>{title}일</p>
         </>
       );
     }
@@ -104,24 +98,24 @@ const MyHistory = (props: any) => {
     if (selectState[0] === 1) {
       return (
         <>
-          <option>전체</option>
-          <option>만료 일</option>
-          <option>가격</option>
+          <option value="날짜 빠른 순">날짜 빠른 순</option>
+          <option value="날짜 느린 순">날짜 느린 순</option>
+          <option value="가격 높은 순">가격 높은 순</option>
+          <option value="가격 낮은 순">가격 낮은 순</option>
         </>
       );
     } else if (selectState[1] === 1) {
       return (
         <>
-          <option>전체</option>
-          <option>상태</option>
+          <option value="날짜 빠른 순">날짜 빠른 순</option>
+          <option value="날짜 느린 순">날짜 느린 순</option>
         </>
       );
     } else if (selectState[2] === 1) {
       return (
         <>
-          <option>전체</option>
-          <option>만료 일</option>
-          <option>가격</option>
+          <option value="날짜 빠른 순">날짜 빠른 순</option>
+          <option value="날짜 느린 순">날짜 느린 순</option>
         </>
       );
     }
@@ -152,7 +146,12 @@ const MyHistory = (props: any) => {
         reFetchHandler={reFetchHandler}
       />
       <StateOptionBox>
-        <SortOption>{setOption()}</SortOption>
+        <SortOption
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+        >
+          {setOption()}
+        </SortOption>
         <OptionTitle>{setTitle()}</OptionTitle>
       </StateOptionBox>
       <SetHistoryList
