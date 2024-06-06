@@ -2,20 +2,17 @@ import { useQuery } from '@tanstack/react-query';
 import { Instance } from 'app/api';
 
 export interface ProductHistory {
-  result: [
-    {
-      productName: string;
-      productImage: string;
-      price: number;
-      size: number;
-      createdAt: string;
-      deadLine: null;
-      tradedAt: string;
-      type: string;
-      status: string;
-    }
-  ];
+  productName: string;
+  productImage: string;
+  price: number;
+  size: number;
+  createdAt: string;
+  deadLine: null;
+  tradedAt: string;
+  type: string;
+  status: string;
 }
+[];
 
 interface ProductHistoryProps {
   type: string;
@@ -31,7 +28,7 @@ const useProductHistory = ({
   endDate,
 }: ProductHistoryProps) => {
   return useQuery<ProductHistory>({
-    queryKey: ['type', type, status],
+    queryKey: ['product-history', type, status],
     enabled: !!type,
     retry: false,
     queryFn: async () => {
