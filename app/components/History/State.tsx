@@ -19,7 +19,7 @@ const StateBox = ({
     <StateWrapper>
       {data.map((data, idx) => (
         <State
-          key={idx}
+          key={data.title}
           onClick={() => stateHandler(idx)}
           select={selectState[idx]}
           type={type}
