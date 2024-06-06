@@ -1,14 +1,16 @@
 import { ProductHistory } from '@/hooks/queries/useHistory';
+import useAddComma from '@/hooks/useAddComma';
 import theme from '@/styles/theme';
+import dayjs from 'dayjs';
 import moment from 'moment';
-import { useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface SetHistoryListProps {
   selectState: number[];
-  bidding: ProductHistory;
-  pending: ProductHistory;
-  finished: ProductHistory;
+  bidding: ProductHistory[];
+  pending: ProductHistory[];
+  finished: ProductHistory[];
 }
 
 const SetHistoryList = ({
@@ -18,18 +20,23 @@ const SetHistoryList = ({
   finished,
 }: SetHistoryListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [bidData, setBidData] = useState(bidding);
+  const [penData, setPenData] = useState(pending);
+  const [finData, setFinData] = useState(finished);
+  const addComma = useAddComma();
   const pageSize = 5;
   const maxPageButtons = 10;
   const getTotalItems = () => {
     if (selectState[0] === 1) {
-      return bidding.result.length;
+      return bidding.length;
     } else if (selectState[1] === 1) {
-      return pending.result.length;
+      return pending.length;
     } else if (selectState[2] === 1) {
-      return finished.result.length;
+      return finished.length;
     }
     return 0;
   };
+
   const totalItems = getTotalItems();
   const totalPages = Math.ceil(totalItems / pageSize);
   const renderItem = () => {
@@ -38,9 +45,9 @@ const SetHistoryList = ({
     if (selectState[0] === 1) {
       return (
         <>
-          {bidding && (
+          {bidData && (
             <>
-              {bidding.result.slice(startIndex, endIndex).map((data, idx) => (
+              {bidData.slice(startIndex, endIndex).map((data, idx) => (
                 <ItemBox key={idx}>
                   <ProductInfo key={idx}>
                     <img src={data.productImage} alt={data.productImage} />
@@ -50,7 +57,7 @@ const SetHistoryList = ({
                     </ProductNameOption>
                   </ProductInfo>
                   <ItemOption>
-                    <p>{data.price}</p>
+                    <p>{addComma(data.price)}</p>
                     <p>{moment(data.deadLine).format('YY-MM-DD')}</p>
                   </ItemOption>
                 </ItemBox>
@@ -62,9 +69,9 @@ const SetHistoryList = ({
     } else if (selectState[1] === 1) {
       return (
         <>
-          {pending && (
+          {penData && (
             <>
-              {pending.result.slice(startIndex, endIndex).map((data, idx) => (
+              {penData.slice(startIndex, endIndex).map((data, idx) => (
                 <ItemBox key={idx}>
                   <ProductInfo key={idx}>
                     <img src={data.productImage} alt={data.productImage} />
@@ -85,9 +92,9 @@ const SetHistoryList = ({
     } else if (selectState[2] === 1) {
       return (
         <>
-          {finished && (
+          {finData && (
             <>
-              {finished.result.slice(startIndex, endIndex).map((data, idx) => (
+              {finData.slice(startIndex, endIndex).map((data, idx) => (
                 <ItemBox key={idx}>
                   <ProductInfo key={idx}>
                     <img />
