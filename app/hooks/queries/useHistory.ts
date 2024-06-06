@@ -12,7 +12,6 @@ export interface ProductHistory {
   type: string;
   status: string;
 }
-[];
 
 interface ProductHistoryProps {
   type: string;
@@ -20,14 +19,13 @@ interface ProductHistoryProps {
   startDate: string;
   endDate: string;
 }
-
 const useProductHistory = ({
   type,
   status,
   startDate,
   endDate,
 }: ProductHistoryProps) => {
-  return useQuery<ProductHistory>({
+  return useQuery<ProductHistory[]>({
     queryKey: ['product-history', type, status],
     enabled: !!type,
     retry: false,
