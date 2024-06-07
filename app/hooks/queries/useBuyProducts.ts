@@ -16,7 +16,7 @@ const fetchProducts = async (productNumber: number | string): Promise<BuyProduct
             'Authorization': `Bearer ${token}`,
         },
     });
-    console.log("Buy Data: ", response.data.result);
+    console.log('Buy Data: ', response.data.result);
     return response.data.result;
 };
 
