@@ -10,7 +10,13 @@ export interface BuyProduct {
 }
 
 const fetchProducts = async (productNumber: number | string): Promise<BuyProduct[]> => {
-    const response = await Instance.get('/buy/' + productNumber);
+    const token = localStorage.getItem('token');
+    const response = await Instance.get(`/buy/${productNumber}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    console.log("Buy Data: ", response.data.result);
     return response.data.result;
 };
 
