@@ -88,13 +88,11 @@ const Brand = styled.h4`
 `;
 
 const ProductName = styled.p`
-    margin: 0.5rem;
-    margin-bottom: 3rem;
+    margin: 0.5rem 0.5rem 3rem;
 `;
 
 const Price = styled.strong`
-    margin: 0.5rem;
-    margin-bottom: 3rem;
+    margin: 0.5rem 0.5rem 3rem;
 `;
 
 const LikeButton = styled.button`
