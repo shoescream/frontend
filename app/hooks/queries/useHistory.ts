@@ -32,7 +32,6 @@ const useProductHistory = ({
     enabled: !!type,
     retry: false,
     queryFn: async () => {
-      console.log(status);
       const response = await Instance.get(
         '/my/' +
           type +
@@ -40,7 +39,6 @@ const useProductHistory = ({
           `&startDate=${startDate}` +
           `&endDate=${endDate}`
       );
-      console.log(response.data);
       return response.data;
     },
   });
