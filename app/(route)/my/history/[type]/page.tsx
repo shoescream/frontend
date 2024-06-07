@@ -21,17 +21,25 @@ const MyHistory = (props: any) => {
   const title = type === 'selling' ? '판매' : '구매';
 
   const router = useRouter();
-  const fetchProductHistory = (status: 'bidding' | 'pending' | 'finished') => {
-    return useProductHistory({
-      type,
-      status,
-      startDate: startDate.format('YYYY-MM-DD'),
-      endDate: endDate.format('YYYY-MM-DD'),
-    });
-  };
-  const { data: bidding, refetch: bidRe } = fetchProductHistory('bidding');
-  const { data: pending, refetch: pendRe } = fetchProductHistory('pending');
-  const { data: finished, refetch: finiRe } = fetchProductHistory('finished');
+
+  const { data: bidding, refetch: bidRe } = useProductHistory({
+    type,
+    status: 'bidding',
+    startDate: startDate.format('YYYY-MM-DD'),
+    endDate: endDate.format('YYYY-MM-DD'),
+  });
+  const { data: pending, refetch: pendRe } = useProductHistory({
+    type,
+    status: 'pending',
+    startDate: startDate.format('YYYY-MM-DD'),
+    endDate: endDate.format('YYYY-MM-DD'),
+  });
+  const { data: finished, refetch: finiRe } = useProductHistory({
+    type,
+    status: 'finished',
+    startDate: startDate.format('YYYY-MM-DD'),
+    endDate: endDate.format('YYYY-MM-DD'),
+  });
 
   const data = [
     { count: bidding ? bidding.result.length : 0, title: '입찰' },
