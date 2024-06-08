@@ -5,16 +5,16 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
 import BidSectionPage from './BidSection';
-import BuySectionPage from './BuySection';
-import { useBuyProducts } from '@/hooks/queries/useSellAndBuyProducts';
+import SellSectionPage from './SellSection';
+import { useSellProducts } from '@/hooks/queries/useSellAndBuyProducts';
 import { usePathname } from 'next/navigation';
 
-const BuyPage = () => {
-    const [view, setView] = useState('buy');
+const SellPage = () => {
+    const [view, setView] = useState('sell');
     const pathname = usePathname();
 
-    const productNumber = parseInt(pathname.replace('/buy/', ''), 10);
-    const { data } = useBuyProducts(productNumber);
+    const productNumber = parseInt(pathname.replace('/sell/', ''), 10);
+    const { data } = useSellProducts(productNumber);
 
     return (
         <MainContainer>
@@ -51,7 +51,7 @@ const BuyPage = () => {
                     <ButtonContainer>
                         <Button
                             type='button'
-                            buttonColor={view === 'bid' ? 'buying' : 'none'}
+                            buttonColor={view === 'bid' ? 'selling' : 'none'}
                             size='xlarge'
                             onClick={() => setView('bid')}
                         >
@@ -59,14 +59,14 @@ const BuyPage = () => {
                         </Button>
                         <Button
                             type='button'
-                            buttonColor={view === 'buy' ? 'buying' : 'none'}
+                            buttonColor={view === 'sell' ? 'selling' : 'none'}
                             size='xlarge'
-                            onClick={() => setView('buy')}
+                            onClick={() => setView('sell')}
                         >
                             즉시 구매
                         </Button>
                     </ButtonContainer>
-                    {view === 'buy' && <BuySectionPage />}
+                    {view === 'sell' && <SellSectionPage />}
                     {view === 'bid' && <BidSectionPage />}
                 </BottomSection>
             </SellAndBuyContainer>
@@ -74,7 +74,7 @@ const BuyPage = () => {
     );
 };
 
-export default BuyPage;
+export default SellPage;
 
 const MainContainer = styled.div`
     display: flex;

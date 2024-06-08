@@ -23,7 +23,7 @@ const BidSectionPage = () => {
             setBidError('2만원부터 천원단위로 입력하세요.');
         }
     };
-    
+
     const handleExpiryChange = (days: number) => {
         const today = new Date();
         today.setDate(today.getDate() + days);

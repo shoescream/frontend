@@ -9,7 +9,7 @@ export interface ShopProductType {
     productCode: string;
     productName: string;
     productSubName: string;
-    price: number;
+    price: string;
     productImageResponse: {
         productImage: string[];
     };
