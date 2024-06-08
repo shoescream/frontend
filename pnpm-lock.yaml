@@ -42,6 +42,89 @@ dependencies:
     specifier: ^4.5.2
     version: 4.5.2(@types/react@18.3.1)(react@18.3.1)
 
+<<<<<<< HEAD
+  .:
+    dependencies:
+      '@emotion/react':
+        specifier: ^11.11.4
+        version: 11.11.4(@types/react@18.3.2)(react@18.3.1)
+      '@emotion/styled':
+        specifier: ^11.11.5
+        version: 11.11.5(@emotion/react@11.11.4(@types/react@18.3.2)(react@18.3.1))(@types/react@18.3.2)(react@18.3.1)
+      '@mui/x-date-pickers':
+        specifier: ^7.5.0
+        version: 7.5.0(@emotion/react@11.11.4(@types/react@18.3.2)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.2)(react@18.3.1))(@types/react@18.3.2)(react@18.3.1))(@mui/material@5.15.18(@emotion/react@11.11.4(@types/react@18.3.2)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.2)(react@18.3.1))(@types/react@18.3.2)(react@18.3.1))(@types/react@18.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.2)(dayjs@1.11.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@svgr/webpack':
+        specifier: ^8.1.0
+        version: 8.1.0(typescript@5.4.5)
+      '@tanstack/react-query':
+        specifier: ^5.32.0
+        version: 5.36.0(react@18.3.1)
+      axios:
+        specifier: ^1.6.8
+        version: 1.6.8
+      dayjs:
+        specifier: ^1.11.11
+        version: 1.11.11
+      mui:
+        specifier: ^0.0.1
+        version: 0.0.1
+      next:
+        specifier: 14.2.3
+        version: 14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: ^18
+        version: 18.3.1
+      react-dom:
+        specifier: ^18
+        version: 18.3.1(react@18.3.1)
+      react-hook-form:
+        specifier: ^7.51.3
+        version: 7.51.4(react@18.3.1)
+      react-icons:
+        specifier: ^5.2.0
+        version: 5.2.1(react@18.3.1)
+      react-query:
+        specifier: ^3.39.3
+        version: 3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      recharts:
+        specifier: ^2.12.7
+        version: 2.12.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      router:
+        specifier: ^1.3.8
+        version: 1.3.8
+      styled-components:
+        specifier: ^6.1.8
+        version: 6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      swiper:
+        specifier: ^11.1.1
+        version: 11.1.1
+      zustand:
+        specifier: ^4.5.2
+        version: 4.5.2(@types/react@18.3.2)(react@18.3.1)
+    devDependencies:
+      '@types/node':
+        specifier: ^20.12.7
+        version: 20.12.11
+      '@types/react':
+        specifier: ^18.3.1
+        version: 18.3.2
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.3.0
+      '@types/styled-components':
+        specifier: ^5.1.34
+        version: 5.1.34
+      eslint:
+        specifier: ^8
+        version: 8.57.0
+      eslint-config-next:
+        specifier: 14.2.3
+        version: 14.2.3(eslint@8.57.0)(typescript@5.4.5)
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+=======
 devDependencies:
   '@svgr/webpack':
     specifier: ^8.1.0
@@ -67,6 +150,7 @@ devDependencies:
   typescript:
     specifier: ^5.4.5
     version: 5.4.5
+>>>>>>> be40deab32f722ad306fd9cfe5ac37fdae90e197
 
 packages:
   /@ampproject/remapping@2.3.0:
@@ -4047,6 +4131,9 @@ packages:
       }
     hasBin: true
 
+  remove-accents@0.5.0:
+    resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
+
   resolve-from@4.0.0:
     resolution:
       {
@@ -4087,6 +4174,10 @@ packages:
         integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==,
       }
     hasBin: true
+
+  router@1.3.8:
+    resolution: {integrity: sha512-461UFH44NtSfIlS83PUg2N7OZo86BC/kB3dY77gJdsODsBhhw7+2uE0tzTINxrY9CahCUVk1VhpWCA5i1yoIEg==}
+    engines: {node: '>= 0.8'}
 
   run-parallel@1.2.0:
     resolution:
@@ -4526,6 +4617,10 @@ packages:
       }
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  utils-merge@1.0.1:
+    resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
+    engines: {node: '>= 0.4.0'}
 
   victory-vendor@36.9.2:
     resolution:
@@ -8229,6 +8324,13 @@ snapshots:
     resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
     dev: false
 
+<<<<<<< HEAD
+  debug@2.6.9:
+    dependencies:
+      ms: 2.0.0
+
+  debug@3.2.7:
+=======
   /debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
     peerDependencies:
@@ -8236,6 +8338,7 @@ snapshots:
     peerDependenciesMeta:
       supports-color:
         optional: true
+>>>>>>> be40deab32f722ad306fd9cfe5ac37fdae90e197
     dependencies:
       ms: 2.1.3
     dev: true
@@ -10015,6 +10118,8 @@ snapshots:
     engines: {node: '>=16 || 14 >=14.17'}
     dev: true
 
+  ms@2.0.0: {}
+
   /ms@2.1.2:
     resolution:
       {
@@ -10443,11 +10548,24 @@ snapshots:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
     dev: false
 
+<<<<<<< HEAD
+  react-query@3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@babel/runtime': 7.24.5
+      broadcast-channel: 3.7.0
+      match-sorter: 6.3.4
+      react: 18.3.1
+    optionalDependencies:
+      react-dom: 18.3.1(react@18.3.1)
+
+  react-smooth@4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+=======
   /react-smooth@4.0.1(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-OE4hm7XqR0jNOq3Qmk9mFLyd6p2+j6bvbPJ7qlB7+oo0eNcL2l7WQzG6MBnT3EXY6xzkLMUBec3AfewJdA0J8w==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+>>>>>>> be40deab32f722ad306fd9cfe5ac37fdae90e197
     dependencies:
       fast-equals: 5.0.1
       prop-types: 15.8.1

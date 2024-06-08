@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Sidebar from '@/components/ShopPage/Sidebar';
-import ItemBox from '@/components/ShopPage/ItemBoxWithLike';
+import ItemBox from '@/components/ShopPage/ItemBox';
 import useAddComma from '@/hooks/useAddComma';
 import { useShopProducts, ShopProductType } from '@/hooks/queries/useShopProducts';
 
@@ -22,9 +22,6 @@ const ShopPage = () => {
             }
         });
     };
-
-    // console.log('Fetched shop data:', products);
-
 
     // 필터링 로직
     const filterProducts = (products: ShopProductType[]) => {
@@ -63,13 +60,12 @@ const ShopPage = () => {
                     {filteredProducts.map((product, index) => (
                         <ItemBox
                             key={index}
-                            product={product}
-                            productImage={''}
-                            brandName={product.brandName} 
-                            productName={product.productName}
-                            productCode={product.productCode}
-                            price={addComma(product.price) + '원'} 
-                            productNumber={product.productNumber}
+                            product={{
+                                ...product,
+                                price: addComma(parseInt(product.price)) + '원'
+                            }}
+                            showLikeButton={true}
+                            pageType={'shop'}
                         />
                     ))}
                 </ItemContainer>
