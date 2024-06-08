@@ -9,7 +9,7 @@ import BuySectionPage from './BuySection';
 import { useBuyProducts } from '@/hooks/queries/useBuyProducts';
 import { usePathname } from 'next/navigation';
 
-const SellAndBuyPage = () => {
+const BuyPage = () => {
     const [view, setView] = useState('buy');
     const pathname = usePathname();
 
@@ -74,7 +74,7 @@ const SellAndBuyPage = () => {
     );
 };
 
-export default SellAndBuyPage;
+export default BuyPage;
 
 const MainContainer = styled.div`
     display: flex;
