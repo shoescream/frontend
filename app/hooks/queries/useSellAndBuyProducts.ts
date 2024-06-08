@@ -9,24 +9,26 @@ export interface BuyProduct {
     highestPrice: number;
 }
 
-const fetchBuyProducts = async (productNumber: number | string): Promise<BuyProduct[]> => {
+const fetchBuyProducts = async (productNumber: number | string, size: string): Promise<BuyProduct> => {
     const token = localStorage.getItem('token');
     const response = await Instance.get(`/buy/${productNumber}`, {
         headers: {
             'Authorization': `Bearer ${token}`,
         },
+        params: {
+            size: size,
+        },
     });
-    console.log('Buy Data:' , response.data.result);
+    console.log('Buy Data:', response.data.result);
     return response.data.result;
 };
 
-const useBuyProducts = (productNumber: number | string) => {
-    return useQuery<BuyProduct[]>({
-        queryKey: ['products', productNumber],
-        queryFn: () => fetchBuyProducts(productNumber),
+const useBuyProducts = (productNumber: number | string, size: string) => {
+    return useQuery<BuyProduct>({
+        queryKey: ['products', productNumber, size],
+        queryFn: () => fetchBuyProducts(productNumber, size),
     });
 };
-
 
 export interface SellProduct {
     productCode: string;
@@ -36,21 +38,22 @@ export interface SellProduct {
     highestPrice: number;
 }
 
-const fetchSellProducts = async (productNumber: number | string): Promise<SellProduct[]> => {
+const fetchSellProducts = async (productNumber: number | string, size: string): Promise<SellProduct> => {
     const token = localStorage.getItem('token');
     const response = await Instance.get(`/sell/${productNumber}`, {
         headers: {
             'Authorization': `Bearer ${token}`,
         },
+        params: { size }
     });
-    console.log('Sell Data:' , response.data.result);
+    console.log('Sell Data:', response.data.result);
     return response.data.result;
 };
 
-const useSellProducts = (productNumber: number | string) => {
-    return useQuery<SellProduct[]>({
-        queryKey: ['products', productNumber],
-        queryFn: () => fetchSellProducts(productNumber),
+const useSellProducts = (productNumber: number | string, size: string) => {
+    return useQuery<SellProduct>({
+        queryKey: ['products', productNumber, size],
+        queryFn: () => fetchSellProducts(productNumber, size),
     });
 };
 
