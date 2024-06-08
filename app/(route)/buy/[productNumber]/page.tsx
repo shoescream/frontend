@@ -16,9 +16,10 @@ const BuyPage = () => {
     const productNumber = parseInt(pathname.replace('/buy/', ''), 10);
     const { data } = useBuyProducts(productNumber);
 
+    console.log("buy페이지 data: ", data);
     return (
         <MainContainer>
-            <SellAndBuyContainer>
+            <BuyContainer>
                 <TopSection>
                     {data && data.length > 0 && (
                         <>
@@ -69,7 +70,7 @@ const BuyPage = () => {
                     {view === 'buy' && <BuySectionPage />}
                     {view === 'bid' && <BidSectionPage />}
                 </BottomSection>
-            </SellAndBuyContainer>
+            </BuyContainer>
         </MainContainer>
     );
 };
@@ -83,7 +84,7 @@ const MainContainer = styled.div`
     background-color: ${theme.colors.gray[100]};
 `;
 
-const SellAndBuyContainer = styled.div`
+const BuyContainer = styled.div`
     background-color: white;
     width: 50%;
     margin-top: 2rem;

@@ -9,17 +9,17 @@ const SellSectionPage = () => {
     return (
         <BuySection>
             <InfoRow>
-                <InfoLabel>즉시 구매가</InfoLabel>
+                <InfoLabel>즉시 판매가</InfoLabel>
                 <InfoValue onClick={() => setView('bid')}>136,000원</InfoValue>
             </InfoRow>
             <Separator />
             <InfoText>총 결제 금액은 다음 화면에서 계산됩니다.</InfoText>
             <Separator />
             <InfoRow>
-                <InfoLabel>총 결제금액</InfoLabel>
-                <Next>다음 화면에서 확인</Next>
+                <InfoLabel>정산 금액</InfoLabel>
+                <TotalPrice>120,000원</TotalPrice>
             </InfoRow>
-            <Button type='button' buttonColor='dark' size='full'>즉시 구매 계속</Button>
+            <Button type='button' buttonColor='dark' size='full'>즉시 판매 계속</Button>
         </BuySection>
     );
 };
@@ -64,7 +64,7 @@ const InfoText = styled.p`
     margin-bottom: 2rem;
 `;
 
-const Next = styled.p`
-    font-size: 1.2rem;
-    color: ${theme.colors.gray[200]};
+const TotalPrice = styled.strong`
+    font-size: 1.8rem;
+    color: ${theme.colors.selling};
 `;

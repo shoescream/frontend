@@ -18,7 +18,7 @@ const SellPage = () => {
 
     return (
         <MainContainer>
-            <SellAndBuyContainer>
+            <SellContainer>
                 <TopSection>
                     {data && data.length > 0 && (
                         <>
@@ -55,7 +55,7 @@ const SellPage = () => {
                             size='xlarge'
                             onClick={() => setView('bid')}
                         >
-                            구매 입찰
+                            판매 입찰
                         </Button>
                         <Button
                             type='button'
@@ -63,13 +63,13 @@ const SellPage = () => {
                             size='xlarge'
                             onClick={() => setView('sell')}
                         >
-                            즉시 구매
+                            즉시 판매
                         </Button>
                     </ButtonContainer>
                     {view === 'sell' && <SellSectionPage />}
                     {view === 'bid' && <BidSectionPage />}
                 </BottomSection>
-            </SellAndBuyContainer>
+            </SellContainer>
         </MainContainer>
     );
 };
@@ -83,7 +83,7 @@ const MainContainer = styled.div`
     background-color: ${theme.colors.gray[100]};
 `;
 
-const SellAndBuyContainer = styled.div`
+const SellContainer = styled.div`
     background-color: white;
     width: 50%;
     margin-top: 2rem;

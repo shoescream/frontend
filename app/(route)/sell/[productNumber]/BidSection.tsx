@@ -36,7 +36,7 @@ const BidSectionPage = () => {
     return (
         <BidSection>
             <InfoRow>
-                <InfoLabel>구매 희망가</InfoLabel>
+                <InfoLabel>판매 희망가</InfoLabel>
                 {bidError && <ErrorText>{bidError}</ErrorText>}
             </InfoRow>
             <InfoRow style={{ justifyContent: 'flex-end' }}>
@@ -75,7 +75,7 @@ const BidSectionPage = () => {
                 <InfoLabel>총 결제금액</InfoLabel>
                 <Next>다음 화면에서 확인</Next>
             </InfoRow>
-            <Button type='button' buttonColor='dark' size='full'>구매 입찰 계속</Button>
+            <Button type='button' buttonColor='dark' size='full'>판매 입찰 계속</Button>
         </BidSection>
     );
 };
