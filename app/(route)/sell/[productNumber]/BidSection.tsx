@@ -68,8 +68,20 @@ const BidSectionPage: React.FC<BidSectionPageProps> = ({ highestPrice }) => {
                 </BidInputWrapper>
             </InfoRow>
             <Separator isError={!!bidError} />
-            <InfoText>총 결제 금액은 다음 화면에서 계산됩니다.</InfoText>
-            <Separator />
+            <InfoText>
+                <InfoRow>
+                    <LeftText>검수비</LeftText>
+                    <RightText>무료</RightText>
+                </InfoRow>
+                <InfoRow>
+                    <LeftText>수수료</LeftText>
+                    <RightText>?원</RightText>
+                </InfoRow>
+                <InfoRow>
+                    <LeftText>배송비</LeftText>
+                    <RightText>선불 ・ 판매자 부담</RightText>
+                </InfoRow>
+            </InfoText>
             <InfoLabel>입찰 마감기한</InfoLabel>
             {expiry !== null && <ExpiryText>{expiry}일 ({expiryDate} 마감)</ExpiryText>}
             <ButtonContainer>
@@ -130,9 +142,8 @@ const InfoLabel = styled.strong`
 
 const InfoText = styled.p`
     font-size: 1.2rem;
-    color: gray;
     text-align: left;
-    margin-bottom: 2rem;
+    margin-bottom: 5rem;
 `;
 
 const Next = styled.p`
@@ -145,7 +156,7 @@ interface BidInputProps {
 }
 
 const BidInput = styled.input<BidInputProps>`
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     &:focus {
         outline: none;
         border-bottom: 1px solid ${props => props.isError ? 'red' : 'black'};
@@ -176,5 +187,18 @@ const BidInputWrapper = styled.div`
 
 const BidInputUnit = styled.span`
     align-self: flex-end;
-    // text-style: bold;
+    font-size: 1.8rem;
+`;
+
+const LeftText = styled.span`
+    flex: 1;
+    font-size: 1.2rem;
+    text-align: left;
+    color: gray;
+`;
+
+const RightText = styled.span`
+    flex: 1;
+    font-size: 1.2rem;
+    text-align: right;
 `;

@@ -130,7 +130,7 @@ interface BidInputProps {
 }
 
 const BidInput = styled.input<BidInputProps>`
-    font-size: 1.4rem; 
+    font-size: 1.8rem; 
     &:focus {
         outline: none;
         border-bottom: 1px solid ${props => props.isError ? 'red' : 'black'};
@@ -161,5 +161,6 @@ const BidInputWrapper = styled.div`
 
 const BidInputUnit = styled.span`
     align-self: flex-end;
+    font-size: 1.5rem;
     // text-style: bold;
 `;

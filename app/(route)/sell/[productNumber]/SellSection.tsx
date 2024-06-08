@@ -19,14 +19,28 @@ const SellSectionPage: React.FC<SellSectionPageProps> = ({ highestPrice }) => {
                 <InfoValue onClick={() => setView('bid')}>{addComma(highestPrice)}원</InfoValue>
             </InfoRow>
             <Separator />
-            <InfoText>총 결제 금액은 다음 화면에서 계산됩니다.</InfoText>
+            <InfoText>
+                <InfoRow>
+                    <LeftText>검수비</LeftText>
+                    <RightText>무료</RightText>
+                </InfoRow>
+                <InfoRow>
+                    <LeftText>수수료</LeftText>
+                    <RightText>?원</RightText>
+                </InfoRow>
+                <InfoRow>
+                    <LeftText>배송비</LeftText>
+                    <RightText>선불 ・ 판매자 부담</RightText>
+                </InfoRow>
+            </InfoText>
             <Separator />
             <InfoRow>
                 <InfoLabel>정산 금액</InfoLabel>
-                <TotalPrice>120,000원</TotalPrice>
+                <TotalPrice>{addComma(highestPrice)}원</TotalPrice>
             </InfoRow>
             <Button type='button' buttonColor='dark' size='full'>즉시 판매 계속</Button>
         </BuySection>
+
     );
 };
 
@@ -73,4 +87,16 @@ const InfoText = styled.p`
 const TotalPrice = styled.strong`
     font-size: 1.8rem;
     color: ${theme.colors.selling};
+`;
+
+const LeftText = styled.span`
+    flex: 1;
+    font-size: 1.2rem;
+    text-align: left;
+`;
+
+const RightText = styled.span`
+    flex: 1;
+    font-size: 1.2rem;
+    text-align: right;
 `;
