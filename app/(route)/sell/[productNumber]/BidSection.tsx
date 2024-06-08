@@ -3,24 +3,35 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
 import useAddComma from '@/hooks/useAddComma';
+import SellSectionPage from './SellSection';
 
-const BidSectionPage = () => {
+interface BidSectionPageProps {
+    highestPrice: number;
+}
+
+const BidSectionPage: React.FC<BidSectionPageProps> = ({ highestPrice }) => {
     const [bidPrice, setBidPrice] = useState('');
     const [bidError, setBidError] = useState('');
     const [expiry, setExpiry] = useState<number | null>(null);
     const [expiryDate, setExpiryDate] = useState('');
     const [selectedButton, setSelectedButton] = useState<number | null>(null);
+    const [shouldRedirect, setShouldRedirect] = useState(false);
 
     const addComma = useAddComma();
 
     const handleBidPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.replace(/,/g, ''); 
+        const value = e.target.value.replace(/,/g, '');
         if (/^\d+$/.test(value) && parseInt(value) >= 20000 && parseInt(value) % 1000 === 0) {
-            setBidPrice(addComma(parseInt(value))); 
+            const numericValue = parseInt(value);
+            setBidPrice(addComma(numericValue));
             setBidError('');
+            if (numericValue <= highestPrice) {
+                setShouldRedirect(true);
+            }
         } else {
             setBidPrice(value);
             setBidError('2만원부터 천원단위로 입력하세요.');
+            setShouldRedirect(false);
         }
     };
 
@@ -32,6 +43,10 @@ const BidSectionPage = () => {
         setExpiryDate(formattedDate);
         setSelectedButton(days);
     };
+
+    if (shouldRedirect) {
+        return <SellSectionPage highestPrice={highestPrice} />;
+    }
 
     return (
         <BidSection>
@@ -103,7 +118,7 @@ const BidSection = styled.div`
 const InfoRow = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     margin-bottom: 0.5rem;
 `;
 
@@ -130,18 +145,18 @@ interface BidInputProps {
 }
 
 const BidInput = styled.input<BidInputProps>`
-    font-size: 1.4rem; 
+    font-size: 1.4rem;
     &:focus {
         outline: none;
         border-bottom: 1px solid ${props => props.isError ? 'red' : 'black'};
     }
     &::placeholder {
-        text-decoration: none; 
+        text-decoration: none;
     }
 `;
 
 const ErrorText = styled.p`
-    font-size: 1rem; 
+    font-size: 1rem;
     color: red;
     text-align: right;
     margin-top: 0;

@@ -2,15 +2,21 @@ import React, { useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
+import useAddComma from '@/hooks/useAddComma';
 
-const SellSectionPage = () => {
+interface SellSectionPageProps {
+    highestPrice: number;
+}
+
+const SellSectionPage: React.FC<SellSectionPageProps> = ({ highestPrice }) => {
     const [view, setView] = useState('buy');
+    const addComma = useAddComma();
 
     return (
         <BuySection>
             <InfoRow>
                 <InfoLabel>즉시 판매가</InfoLabel>
-                <InfoValue onClick={() => setView('bid')}>136,000원</InfoValue>
+                <InfoValue onClick={() => setView('bid')}>{addComma(highestPrice)}원</InfoValue>
             </InfoRow>
             <Separator />
             <InfoText>총 결제 금액은 다음 화면에서 계산됩니다.</InfoText>

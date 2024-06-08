@@ -8,41 +8,46 @@ import BidSectionPage from './BidSection';
 import SellSectionPage from './SellSection';
 import { useSellProducts } from '@/hooks/queries/useSellAndBuyProducts';
 import { usePathname } from 'next/navigation';
+import useAddComma from '@/hooks/useAddComma';
 
 const SellPage = () => {
     const [view, setView] = useState('sell');
     const pathname = usePathname();
 
     const productNumber = parseInt(pathname.replace('/sell/', ''), 10);
-    const { data } = useSellProducts(productNumber);
+    const size = '250'; // 임시 설정
+
+    const addComma = useAddComma();
+
+    const { data } = useSellProducts(productNumber, size);
 
     return (
         <MainContainer>
             <SellContainer>
                 <TopSection>
-                    {data && data.length > 0 && (
+                    {data && (
                         <>
-                            <Image/>
+                            <Image />
                             <ProductInfo>
-                                <EngProductName>{data[0].productName}</EngProductName>
-                                <KorProductName>{data[0].productSubName}</KorProductName>
-                                <Size>사이즈</Size>
+                                <EngProductName>{data.productName}</EngProductName>
+                                <KorProductName>{data.productSubName}</KorProductName>
+                                <Size>{size}</Size>
                             </ProductInfo>
                         </>
                     )}
                 </TopSection>
                 <Separator />
                 <PriceInfo>
-                    {data && data.length > 0 && (
+                    {data && (
                         <>
                             <PriceContainer>
                                 <PriceLabel>즉시 구매가</PriceLabel>
-                                <Price>{data[0].lowestPrice}</Price>
+                                <Price>{addComma(data.lowestPrice)}원</Price>
                             </PriceContainer>
                             <PriceSeparator />
                             <PriceContainer>
                                 <PriceLabel>즉시 판매가</PriceLabel>
-                                <Price>{data[0].highestPrice}</Price>
+                                <Price>{addComma(data.highestPrice)}원</Price>
                             </PriceContainer>
                         </>
                     )}
@@ -66,8 +71,8 @@ const SellPage = () => {
                             즉시 판매
                         </Button>
                     </ButtonContainer>
-                    {view === 'sell' && <SellSectionPage />}
-                    {view === 'bid' && <BidSectionPage />}
+                    {view === 'sell' && data && <SellSectionPage highestPrice={data.highestPrice} />}
+                    {view === 'bid' && data && <BidSectionPage highestPrice={data.highestPrice} />}
                 </BottomSection>
             </SellContainer>
         </MainContainer>

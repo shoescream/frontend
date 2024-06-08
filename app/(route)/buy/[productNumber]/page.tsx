@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
@@ -8,42 +8,48 @@ import BidSectionPage from './BidSection';
 import BuySectionPage from './BuySection';
 import { useBuyProducts } from '@/hooks/queries/useSellAndBuyProducts';
 import { usePathname } from 'next/navigation';
+import useAddComma from '@/hooks/useAddComma';
 
-const BuyPage = () => {
+const BuyPage: React.FC = () => {
     const [view, setView] = useState('buy');
     const pathname = usePathname();
 
     const productNumber = parseInt(pathname.replace('/buy/', ''), 10);
-    const { data } = useBuyProducts(productNumber);
+    const size = '230'; // 임시 설정
+    const { data } = useBuyProducts(productNumber, size);
 
-    console.log("buy페이지 data: ", data);
+    const addComma = useAddComma();
+
+    console.log("BUY PAGE DATA2: ", data);
+    console.log("BUY PAGE DATA: ", data && data.highestPrice ? data.highestPrice : "No data available");
+
     return (
         <MainContainer>
             <BuyContainer>
                 <TopSection>
-                    {data && data.length > 0 && (
+                    {data && (
                         <>
                             <Image/>
                             <ProductInfo>
-                                <EngProductName>{data[0].productName}</EngProductName>
-                                <KorProductName>{data[0].productSubName}</KorProductName>
-                                <Size>사이즈</Size>
+                                <EngProductName>{data.productName}</EngProductName>
+                                <KorProductName>{data.productSubName}</KorProductName>
+                                <Size>{size}</Size>
                             </ProductInfo>
                         </>
                     )}
                 </TopSection>
                 <Separator />
                 <PriceInfo>
-                    {data && data.length > 0 && (
+                    {data && (
                         <>
                             <PriceContainer>
                                 <PriceLabel>즉시 구매가</PriceLabel>
-                                <Price>{data[0].lowestPrice}</Price>
+                                <Price>{addComma(data.lowestPrice)}원</Price>
                             </PriceContainer>
                             <PriceSeparator />
                             <PriceContainer>
                                 <PriceLabel>즉시 판매가</PriceLabel>
-                                <Price>{data[0].highestPrice}</Price>
+                                <Price>{addComma(data.highestPrice)}원</Price>
                             </PriceContainer>
                         </>
                     )}
@@ -67,7 +73,7 @@ const BuyPage = () => {
                             즉시 구매
                         </Button>
                     </ButtonContainer>
-                    {view === 'buy' && <BuySectionPage />}
+                    {view === 'buy' && data && <BuySectionPage lowestPrice={data.lowestPrice} />}
                     {view === 'bid' && <BidSectionPage />}
                 </BottomSection>
             </BuyContainer>
