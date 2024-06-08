@@ -10,7 +10,7 @@ import styled from 'styled-components';
 interface SellOrBuySizeModalProps {
   data: {
     [key: string]: number;
-  }[];
+  };
   onClose: () => void;
   type: 'buy' | 'sell';
 }

@@ -4,11 +4,14 @@ import styled from 'styled-components';
 import PriceGrid from '@/components/DetailProduct/PriceGrid';
 import Button from '../../Button';
 
-const SIZES: { [key: string]: number }[] = new Array(17).fill(0).map((_, i) => {
-  return {
-    size: 220 + i * 5,
-  };
-});
+const SIZES: { [key: string]: number } = Object.assign(
+  {},
+  ...new Array(17).fill(0).map((_, i) => {
+    return {
+      [`${220 + i * 5}`]: 0,
+    };
+  })
+);
 
 interface SizeListModalProps {
   onClose: () => void;
@@ -45,7 +48,7 @@ const SizeListModal = ({
             styles={{ height: '4.2rem' }}
             onClick={() => {
               onClose();
-              onSetValue(Number(SIZES[currentItem].size));
+              onSetValue(Number(SIZES[currentItem]));
             }}
           >
             확인
