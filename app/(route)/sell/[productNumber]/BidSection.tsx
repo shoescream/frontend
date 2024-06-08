@@ -74,10 +74,6 @@ const BidSectionPage: React.FC<BidSectionPageProps> = ({ highestPrice }) => {
                     <RightText>무료</RightText>
                 </InfoRow>
                 <InfoRow>
-                    <LeftText>수수료</LeftText>
-                    <RightText>?원</RightText>
-                </InfoRow>
-                <InfoRow>
                     <LeftText>배송비</LeftText>
                     <RightText>선불 ・ 판매자 부담</RightText>
                 </InfoRow>

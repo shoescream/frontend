@@ -25,10 +25,6 @@ const SellSectionPage: React.FC<SellSectionPageProps> = ({ highestPrice }) => {
                     <RightText>무료</RightText>
                 </InfoRow>
                 <InfoRow>
-                    <LeftText>수수료</LeftText>
-                    <RightText>?원</RightText>
-                </InfoRow>
-                <InfoRow>
                     <LeftText>배송비</LeftText>
                     <RightText>선불 ・ 판매자 부담</RightText>
                 </InfoRow>
@@ -79,7 +75,6 @@ const InfoValue = styled.strong`
 
 const InfoText = styled.p`
     font-size: 1.2rem;
-    color: gray;
     text-align: left;
     margin-bottom: 2rem;
 `;
@@ -93,6 +88,7 @@ const LeftText = styled.span`
     flex: 1;
     font-size: 1.2rem;
     text-align: left;
+    color: gray;
 `;
 
 const RightText = styled.span`
