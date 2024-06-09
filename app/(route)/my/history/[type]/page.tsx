@@ -30,14 +30,29 @@ const MyHistory = (props: any) => {
     });
   };
 
-  const { data: bidding, refetch: bidRe } = fetchProductHistory('bidding');
-  const { data: pending, refetch: pendRe } = fetchProductHistory('pending');
-  const { data: finished, refetch: finiRe } = fetchProductHistory('finished');
+  const { data: bidding, refetch: bidRe } = useProductHistory({
+    type,
+    status: 'bidding',
+    startDate: startDate.format('YYYY-MM-DD'),
+    endDate: endDate.format('YYYY-MM-DD'),
+  });
+  const { data: pending, refetch: pendRe } = useProductHistory({
+    type,
+    status: 'pending',
+    startDate: startDate.format('YYYY-MM-DD'),
+    endDate: endDate.format('YYYY-MM-DD'),
+  });
+  const { data: finished, refetch: finiRe } = useProductHistory({
+    type,
+    status: 'finished',
+    startDate: startDate.format('YYYY-MM-DD'),
+    endDate: endDate.format('YYYY-MM-DD'),
+  });
 
   const data = [
-    { count: bidding ? bidding.length : 0, title: '입찰' },
-    { count: pending ? pending.length : 0, title: '진행중' },
-    { count: finished ? finished.length : 0, title: '완료' },
+    { count: bidding ? bidding.result.length : 0, title: '입찰' },
+    { count: pending ? pending.result.length : 0, title: '진행중' },
+    { count: finished ? finished.result.length : 0, title: '완료' },
   ];
 
   const datePickerValues = {
@@ -156,9 +171,9 @@ const MyHistory = (props: any) => {
       </StateOptionBox>
       <SetHistoryList
         selectState={selectState}
-        bidding={bidding}
-        pending={pending}
-        finished={finished}
+        bidding={bidding.result}
+        pending={pending.result}
+        finished={finished.result}
       />
     </>
   );
@@ -177,7 +192,8 @@ const StateOptionBox = styled.div`
 const OptionTitle = styled.div`
   display: flex;
   p {
-    margin: 0 5rem;
+    width: 15rem;
+    text-align: center;
     padding-top: 2rem;
   }
 `;

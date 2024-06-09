@@ -97,15 +97,15 @@ const SetHistoryList = ({
               {finData.slice(startIndex, endIndex).map((data, idx) => (
                 <ItemBox key={idx}>
                   <ProductInfo key={idx}>
-                    <img />
+                    <img src={data.productImage} alt={data.productImage} />
                     <ProductNameOption>
                       <p id="product_name">{data.productName}</p>
                       <p id="product_option">{data.size}</p>
                     </ProductNameOption>
                   </ProductInfo>
                   <ItemOption>
-                    <p>{moment(data.tradedAt).format('YY-MM-DD')}</p>
                     <p>{data.status}</p>
+                    <p>{moment(data.tradedAt).format('YY-MM-DD')}</p>
                   </ItemOption>
                 </ItemBox>
               ))}
@@ -199,7 +199,8 @@ const ItemOption = styled.div`
   display: flex;
   line-height: 8rem;
   p {
-    margin: 0 5rem;
+    width: 15rem;
+    text-align: center;
   }
 `;
 

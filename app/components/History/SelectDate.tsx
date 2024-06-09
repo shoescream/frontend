@@ -79,7 +79,7 @@ const SelectDate = ({
           {buttonProps.map((data, idx) => (
             <Button
               size="small"
-              buttonColor="light"
+              buttonColor="none"
               styles={{
                 height: '3rem',
                 marginTop: '1rem',
