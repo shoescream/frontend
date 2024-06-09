@@ -28,12 +28,14 @@ const useLogin = () => {
 
   return useMutation({
     mutationFn: async ({ userId, password }: LoginProps) => {
-      const response: Response<LoginResponse> = await Instance.post('/signin', {
-        memberId: userId,
-        password,
-      });
-
-      return response;
+      const response: { data: Response<LoginResponse> } = await Instance.post(
+        '/signin',
+        {
+          memberId: userId,
+          password,
+        }
+      );
+      return response.data;
     },
     onSuccess: (data) => {
       if (data.resultCode === 'SUCCESS' && data.result) {
