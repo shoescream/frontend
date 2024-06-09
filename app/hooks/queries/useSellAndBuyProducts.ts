@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Instance } from 'app/api';
 
 export interface BuyProduct {
+    productImage: string;
     productCode: string;
     productName: string;
     productSubName: string;
@@ -31,6 +32,7 @@ const useBuyProducts = (productNumber: number | string, size: string) => {
 };
 
 export interface SellProduct {
+    productImage: string;
     productCode: string;
     productName: string;
     productSubName: string;

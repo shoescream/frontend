@@ -48,6 +48,8 @@ const BidSectionPage: React.FC<BidSectionPageProps> = ({ highestPrice }) => {
         return <SellSectionPage highestPrice={highestPrice} />;
     }
 
+    const displayBidPrice = bidPrice ? `${bidPrice}원` : "-";
+
     return (
         <BidSection>
             <InfoRow>
@@ -95,8 +97,8 @@ const BidSectionPage: React.FC<BidSectionPageProps> = ({ highestPrice }) => {
             </ButtonContainer>
             <Separator />
             <InfoRow>
-                <InfoLabel>총 결제금액</InfoLabel>
-                <Next>다음 화면에서 확인</Next>
+                <InfoLabel>정산금액</InfoLabel>
+                <TotalPrice>{displayBidPrice}</TotalPrice>
             </InfoRow>
             <Button type='button' buttonColor='dark' size='full'>판매 입찰 계속</Button>
         </BidSection>
@@ -142,9 +144,9 @@ const InfoText = styled.p`
     margin-bottom: 5rem;
 `;
 
-const Next = styled.p`
-    font-size: 1.2rem;
-    color: ${theme.colors.gray[200]};
+const TotalPrice = styled.strong`
+    font-size: 1.5rem;
+    color: ${theme.colors.selling};
 `;
 
 interface BidInputProps {

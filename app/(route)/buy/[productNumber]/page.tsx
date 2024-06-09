@@ -29,7 +29,10 @@ const BuyPage: React.FC = () => {
                 <TopSection>
                     {data && (
                         <>
-                            <Image/>
+                            <Image
+                                referrerPolicy="no-referrer"
+                                src={data.productImage}
+                                alt={data.productName} />
                             <ProductInfo>
                                 <EngProductName>{data.productName}</EngProductName>
                                 <KorProductName>{data.productSubName}</KorProductName>
@@ -108,6 +111,7 @@ const Image = styled.img`
     height: 8rem;
     margin-right: 2rem;
     border-radius: 1rem;
+    background-color: ${theme.colors.gray[100]}
 `;
 
 const ProductInfo = styled.div`
