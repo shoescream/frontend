@@ -1,48 +1,19 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
-import ItemBoxWithoutLike from '@/components/ShopPage/ItemBoxWithoutLike';
-import axios from 'axios';
+import ItemBox from '@/components/ShopPage/ItemBox';
+import useAddComma from '@/hooks/useAddComma';
+import useRankingProducts from '@/hooks/queries/useRankingProducts';
 
-interface RankingProduct {
-  id: number;
-  productCode: string;
-  productName: string;
-  productSubName: string;
-  price: string;
-  productImageResponse: {
-    productImage: string[];
-  };
-}
-
-const RankingPage: React.FC = () => {
+const RankingPage = () => {
   const [additionalImagesCounts, setAdditionalImagesCounts] = useState([
     5, 5, 5,
   ]);
-  const [rankingData, setRankingData] = useState<RankingProduct[][]>([]);
+  const addComma = useAddComma();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const rankingParamsArray = [
-        { gender: 'M', detail: 'SNK', productType: '01' },
-        { gender: 'F', detail: 'SNK', productType: '01' },
-        { gender: 'M', detail: 'SND', productType: '01' },
-      ];
-
-      const responseArray = await Promise.all(
-        rankingParamsArray.map((params) =>
-          axios.get('http://3.35.24.20:8080/ranking', { params })
-        )
-      );
-      const data = responseArray.map((response) => response.data.result);
-
-      console.log('Fetched ranking data:', data);
-      setRankingData(data);
-    };
-    fetchData();
-  }, []);
+  const { data: rankingData = [] } = useRankingProducts();
 
   const handleShowMoreImages = (index: number) => {
     setAdditionalImagesCounts((prev) =>
@@ -65,20 +36,18 @@ const RankingPage: React.FC = () => {
             조회, 관심, 거래 급상승(최근 3일)
           </p>
           <ImageContainer>
-            {categoryData &&
-              categoryData
-                .slice(0, additionalImagesCounts[index])
-                .map((item, i) => {
-                  return (
-                    <ItemBoxWithoutLike
-                      key={i}
-                      branName={item.productName}
-                      productName={item.productSubName}
-                      price={item.price}
-                      productImage={item.productImageResponse.productImage[0]}
-                    />
-                  );
-                })}
+            {categoryData
+              .slice(0, additionalImagesCounts[index])
+              .map((item, i) => (
+                <ItemBox
+                  key={i}
+                  product={{
+                    ...item,
+                    price: addComma(parseInt(item.price)) + '원',
+                  }}
+                  pageType={'ranking'}
+                />
+              ))}
           </ImageContainer>
           {additionalImagesCounts[index] < 30 && (
             <div
@@ -90,7 +59,7 @@ const RankingPage: React.FC = () => {
             >
               <Button
                 type="button"
-                buttonColor="light"
+                buttonColor="none"
                 size="medium"
                 onClick={() => handleShowMoreImages(index)}
               >

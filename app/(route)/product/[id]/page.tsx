@@ -67,7 +67,7 @@ const DetailProduct = () => {
       {isOpen && (
         <BySizeModal
           onClose={() => setIsOpen(false)}
-          data={data!.productOptionResponse.sizeAndPriceBuyInfo!}
+          data={data?.productOptionResponse.sizeAndPriceBuyInfo!}
           currentItem={currentSizeItem}
           onSetCurrentItem={setCurrentSizeItem}
         />

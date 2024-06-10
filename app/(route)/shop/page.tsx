@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Sidebar from '@/components/ShopPage/Sidebar';
-import ItemBox from '@/components/ShopPage/ItemBoxWithLike';
+import ItemBox from '@/components/ShopPage/ItemBox';
 import useAddComma from '@/hooks/useAddComma';
 import {
   useShopProducts,
@@ -12,7 +12,6 @@ import {
 
 const ShopPage = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const addComma = useAddComma();
 
   const { data: products = [] } = useShopProducts();
 
@@ -25,8 +24,6 @@ const ShopPage = () => {
       }
     });
   };
-
-  // console.log('Fetched shop data:', products);
 
   // 필터링 로직
   const filterProducts = (products: ShopProductType[]) => {
@@ -50,10 +47,11 @@ const ShopPage = () => {
       const brandOptions = selectedOptions.filter(
         (option) => !['남성', '여성'].includes(option)
       );
-      const brandMatch =
+      const branddMatch =
         brandOptions.length === 0 || brandOptions.includes(product.brandName);
 
-      return genderMatch && brandMatch;
+      // return genderMatch;
+      return genderMatch && branddMatch;
     });
   };
 
@@ -74,13 +72,12 @@ const ShopPage = () => {
           {filteredProducts.map((product, index) => (
             <ItemBox
               key={index}
-              product={product}
-              productImage={''}
-              brandName={product.brandName}
-              productName={product.productName}
-              productCode={product.productCode}
-              price={addComma(product.price) + '원'}
-              productNumber={product.productNumber}
+              product={{
+                ...product,
+                price: parseInt(String(product.price)),
+              }}
+              showLikeButton
+              pageType={'shop'}
             />
           ))}
         </ItemContainer>
@@ -90,6 +87,7 @@ const ShopPage = () => {
 };
 
 export default ShopPage;
+
 const Container = styled.div`
   display: flex;
   justify-content: space-between;

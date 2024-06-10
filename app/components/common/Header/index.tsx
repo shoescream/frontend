@@ -11,7 +11,7 @@ import Button from '../Button';
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const token = LocalStorage.getItem('@token');
+  const token = LocalStorage.getItem('@token') as string;
   const name = pathname.slice(1, -2);
 
   const Logo = () => {
@@ -25,7 +25,7 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <HeaderTop>
-        <MultiNavBar type="top" data={NAV_DATA.TOP_NAV_DATA(token!)} />
+        <MultiNavBar type="top" data={NAV_DATA.TOP_NAV_DATA(token)} />
       </HeaderTop>
 
       {pathname.startsWith('/sell') || pathname.startsWith('/buy') ? (

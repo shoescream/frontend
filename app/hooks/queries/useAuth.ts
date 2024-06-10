@@ -33,9 +33,6 @@ const useLogin = () => {
           password,
         }
       );
-
-      console.log(response);
-
       return response.data;
     },
     onSuccess: (data) => {
