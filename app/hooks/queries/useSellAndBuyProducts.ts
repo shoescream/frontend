@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { Instance } from 'app/api';
+import LocalStorage from '@/utils/localStorage';
 
-export interface BuyProduct {
+export interface SellAndBuyProduct {
     productImage: string;
     productCode: string;
     productName: string;
@@ -10,8 +11,8 @@ export interface BuyProduct {
     highestPrice: number;
 }
 
-const fetchBuyProducts = async (productNumber: number | string, size: string): Promise<BuyProduct> => {
-    const token = localStorage.getItem('token');
+const fetchBuyProducts = async (productNumber: number | string, size: string): Promise<SellAndBuyProduct> => {
+    const token = LocalStorage.getItem('@token')
     const response = await Instance.get(`/buy/${productNumber}`, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -25,23 +26,14 @@ const fetchBuyProducts = async (productNumber: number | string, size: string): P
 };
 
 const useBuyProducts = (productNumber: number | string, size: string) => {
-    return useQuery<BuyProduct>({
+    return useQuery<SellAndBuyProduct>({
         queryKey: ['products', productNumber, size],
         queryFn: () => fetchBuyProducts(productNumber, size),
     });
 };
 
-export interface SellProduct {
-    productImage: string;
-    productCode: string;
-    productName: string;
-    productSubName: string;
-    lowestPrice: number;
-    highestPrice: number;
-}
-
-const fetchSellProducts = async (productNumber: number | string, size: string): Promise<SellProduct> => {
-    const token = localStorage.getItem('token');
+const fetchSellProducts = async (productNumber: number | string, size: string): Promise<SellAndBuyProduct> => {
+    const token = LocalStorage.getItem('@token')
     const response = await Instance.get(`/sell/${productNumber}`, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -53,7 +45,7 @@ const fetchSellProducts = async (productNumber: number | string, size: string): 
 };
 
 const useSellProducts = (productNumber: number | string, size: string) => {
-    return useQuery<SellProduct>({
+    return useQuery<SellAndBuyProduct>({
         queryKey: ['products', productNumber, size],
         queryFn: () => fetchSellProducts(productNumber, size),
     });
