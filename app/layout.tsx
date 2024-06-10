@@ -67,4 +67,4 @@ const HeaderWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   padding-top: 13rem;
-`
+`;
