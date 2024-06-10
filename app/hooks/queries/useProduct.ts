@@ -31,7 +31,7 @@ interface DetailProduct {
 const useDetailProduct = (productNumber: string) => {
   return useQuery<DetailProduct>({
     queryKey: ['detail-product', productNumber],
-    enabled: !!productNumber,
+    enabled: !!Number(productNumber),
     retry: false,
     queryFn: async () => {
       const response = await Instance.get('/products/' + productNumber);
@@ -62,7 +62,7 @@ const useGetTransactions = ({
 }) => {
   return useQuery<ProductTransactions>({
     queryKey: ['transactions', productNumber, size],
-    enabled: !!productNumber && !!size,
+    enabled: !!Number(productNumber) && !!size,
     retry: false,
     queryFn: async () => {
       const response = await Instance.get('/deal-history', {
@@ -98,7 +98,7 @@ const useGetBid = ({
 }) => {
   return useQuery<ProductBids>({
     queryKey: ['bids', productNumber, size],
-    enabled: !!productNumber && !!size,
+    enabled: !!Number(productNumber) && !!size,
     retry: false,
     queryFn: async () => {
       const response = await Instance.get('/bid-history', {
