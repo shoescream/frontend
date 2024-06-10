@@ -3,95 +3,36 @@ import styled from 'styled-components';
 import { FaStar } from 'react-icons/fa';
 import { FaStarHalf } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
-const result = {
-  id: 1,
-  productName: 'Nike V2K Run Summit White Metallic Silver',
-  productSubName: '나이키 V2K 런 서밋 화이트 메탈릭 실버',
-  productImage: '/test/url',
-  brandName: 'Nike',
-  createdAt: '2024-05-11T10:15:31',
-  totalBookmark: 30,
-  totalReview: 15,
-  product_option: [
-    {
-      size: 220,
-    },
-    {
-      size: 225,
-    },
-    {
-      size: 230,
-    },
-    {
-      size: 235,
-    },
-  ],
-  review: [
-    {
-      id: 1,
-      name: '배준오',
-      profileImage: '/asdfs/',
-      purchaseSize: 250,
-      uploadImage: ['/banner_1.png', '/banner_2.png', '/banner_3.png'],
-      description:
-        '상품이 너무 예뻐요 상품이 너무 예뻐요 상품이 너무 예뻐요상품이 너무 예뻐요 상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무  예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요',
-      createdAt: '2024-05-11T10:15:31',
-    },
-    {
-      id: 1,
-      name: '배준오',
-      profileImage: '/asdfs/',
-      purchaseSize: 250,
-      uploadImage: ['/banner_1.png', '/banner_2.png', '/banner_3.png'],
-      description:
-        '상품이 너무 예뻐요 상품이 너무 예뻐요 상품이 너무 예뻐요상품이 너무 예뻐요 상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무  예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요',
-      createdAt: '2024-05-11T10:15:31',
-    },
-    {
-      id: 1,
-      name: '배준오',
-      profileImage: '/asdfs/',
-      purchaseSize: 250,
-      uploadImage: ['/banner_1.png', '/banner_2.png', '/banner_3.png'],
-      description:
-        '상품이 너무 예뻐요 상품이 너무 예뻐요 상품이 너무 예뻐요상품이 너무 예뻐요 상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무  예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요',
-      createdAt: '2024-05-11T10:15:31',
-    },
-    {
-      id: 1,
-      name: '배준오',
-      profileImage: '/asdfs/',
-      purchaseSize: 250,
-      uploadImage: ['/banner_1.png', '/banner_2.png', '/banner_3.png'],
-      description:
-        '상품이 너무 예뻐요 상품이 너무 예뻐요 상품이 너무 예뻐요상품이 너무 예뻐요 상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요상품이 너무  예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요 예뻐요상품이 너무 예뻐요상품이 너무 예뻐요',
-      createdAt: '2024-05-11T10:15:31',
-    },
-  ],
-};
+import { useProductReviews } from '@/hooks/queries/useReview';
 
-const Review = () => {
+interface ReviewProps {
+  productNumber: number;
+}
+const Review = ({ productNumber }: ReviewProps) => {
+  const productReview = useProductReviews(productNumber);
+  console.log(productReview.data);
+  const result = productReview.data?.result;
+  if (!result) return <>...loading</>;
   return (
     <>
       <Title>Review</Title>
       <Container>
-        {result.review.map((review, idx) => (
+        {result.map((review, idx) => (
           <ReviewContainer key={idx}>
             <UserProfile>
               <img src="/profile_ex.png"></img>
               <UserNameRank>
-                <p id="userName">{review.name}</p>
+                <p id="userName">{review.memberId}</p>
                 <p id="userRank">1Lv</p>
               </UserNameRank>
               <p id="createAt">{review.createdAt}</p>
             </UserProfile>
             <StarsWrapper>
               {' '}
-              {/*갯수 로직 작성해야댐 ex)3.5*/}
-              <FaStar className="stars" color="gold"></FaStar>
-              <FaStar className="stars" color="gold"></FaStar>
-              <FaStar className="stars" color="gold"></FaStar>
-              <FaStarHalf className="stars" color="gold"></FaStarHalf>
+              {Array.from({ length: review.rating }, (_, index) => (
+                <FaStar key={index} className="stars" color="gold" />
+              ))}
+              {/* <FaStarHalf className="stars" color="gold"></FaStarHalf> */}
             </StarsWrapper>
             <Option>나이키 V2K 런 퓨어 플래티넘 라이트 아이언 오어</Option>
             <Swiper
@@ -101,7 +42,7 @@ const Review = () => {
                 backgroundColor: '#ebf0f4',
               }}
             >
-              {review.uploadImage.map((img, idx) => (
+              {review.reviewImages.map((img, idx) => (
                 <SwiperSlide key={idx}>
                   <img
                     src={img}
@@ -115,7 +56,7 @@ const Review = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <Description>{review.description}</Description>
+            <Description>{review.reviewTitle}</Description>
           </ReviewContainer>
         ))}
       </Container>

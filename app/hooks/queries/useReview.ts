@@ -3,14 +3,15 @@ import { Instance } from 'app/api';
 import { Result } from './useHistory';
 
 interface useAllReviewsProps {
-  reviewNumber: number;
-  memberId: string;
-  rating: number;
   createdAt: string;
+  memberId: string;
+  reviewNumber: number;
+  rating: number;
   reviewTitle: string;
   reviewContent: string;
   CommentCount: number;
   reviewImages: string[];
+  reviewCommentsCount: number;
 }
 interface productReviewsProps {
   productNumber: number;
