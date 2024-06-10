@@ -69,7 +69,7 @@ const useSellNow = () => {
       sellingBidDeadline,
     }: SellNowProps) => {
       const response: Response<SellingResponse> = await Instance.post(
-        ' /sell-now',
+        '/sell-now',
         {
           productNumber,
           size,
@@ -87,12 +87,13 @@ const useSellNow = () => {
       return response;
     },
     onSuccess: (data) => {
+      console.log(data);
       if (data.resultCode === 'SUCCESS') {
         console.log(data);
       }
     },
     onError: (error) => {
-      console.error('usePayment: ', error);
+      console.error('useSellNow: ', error);
       throw error;
     },
   });

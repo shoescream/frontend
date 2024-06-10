@@ -19,6 +19,7 @@ const ProductPayPage = ({
 }: PropsWithChildren<ProductPayPageProps>) => {
   const pathname = usePathname();
   const addComma = useAddComma();
+  const PATH = pathname.split('/')[1];
   const PRODUCT_NUMBER = pathname.replace('/sell/', '');
   // TODO: 앞의 페이지와 연결되면 size 수정하기
   const SIZE = 245;
@@ -37,8 +38,8 @@ const ProductPayPage = ({
     mutateSellNow({
       productNumber: Number(PRODUCT_NUMBER),
       size: String(SIZE),
-      price: data?.productResponse.price!,
-      sellingBidDeadline: 0,
+      price: data?.productResponse.price as number,
+      sellingBidDeadline: 10,
     });
   };
 
@@ -103,10 +104,10 @@ const ProductPayPage = ({
         {children}
         <Section>
           <Button
-            buttonColor={pathname.startsWith('/sell') ? 'selling' : 'buying'}
+            buttonColor={PATH === 'sell' ? 'selling' : 'buying'}
             styles={{ border: 'none', height: '5.2rem' }}
             onClick={() =>
-              pathname.startsWith('/buy') ? handlePayment() : handleSellNow()
+              PATH === 'sell' ? handleSellNow() : handlePayment()
             }
           >
             <span
@@ -136,9 +137,7 @@ const ProductPayPage = ({
                 fontFamily: theme.fonts.pretendard,
               }}
             >
-              {pathname.startsWith('/buy')
-                ? '카카오 페이로 결제하기'
-                : '판매하기'}
+              {PATH === 'buy' ? '카카오 페이로 결제하기' : '판매하기'}
             </span>
           </Button>
         </Section>
