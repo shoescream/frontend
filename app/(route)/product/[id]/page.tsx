@@ -25,13 +25,13 @@ import Image from 'next/image';
 import Bids from '@/components/DetailProduct/Bids';
 import Charts from '@/components/DetailProduct/Charts';
 import GlobalSizes from '@/components/DetailProduct/GlobalSizes';
+import LocalStorage from '@/utils/localStorage';
 
 const DetailProduct = () => {
   const router = useRouter();
   const pathname = usePathname();
   const addComma = useAddComma();
-  // const isLoggedIn = localStorage.getItem('@token');
-  const isLoggedIn = true;
+  const isLoggedIn = LocalStorage.getItem('@token');
   const [favorite, setFavorite] = useState(false);
   const [saveShop, setSaveShop] = useState(false);
   const [currentFilterBySize, setCurrentFilterBySize] = useState('체결 거래');
@@ -100,7 +100,7 @@ const DetailProduct = () => {
           <RightBox>
             <div>
               <div>
-                <PriceLabel>즉시 구매가</PriceLabel>
+                <PriceLabel>즉시 구매가!</PriceLabel>
                 <Price>{addComma(data?.productResponse.price!)}원</Price>
               </div>
               <FavoriteWrapper>
