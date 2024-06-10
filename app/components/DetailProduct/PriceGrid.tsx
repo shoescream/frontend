@@ -27,34 +27,35 @@ const PriceGrid = ({
 
   return (
     <Grid style={{ gridTemplateColumns: customGridTemplate || '1fr 1fr 1fr' }}>
-      {Object.keys(data).map((size, index) => {
-        return (
-          <GridItem
-            key={index}
-            $clicked={clickedItem === Number(size)}
-            onClick={() => onSetClickedItem(Number(size))}
-          >
-            <GridItemTitle $clicked={clickedItem === Number(size)}>
-              {index === 0 && isForLookingSizes ? (
-                <strong>모든 사이즈</strong>
-              ) : (
-                size
-              )}
-            </GridItemTitle>
-            <GridItemPrice
-              $isTypeSell={isTypeSell!}
-              $isFirstItem={index === 0 && isForLookingSizes}
-              $clicked={clickedItem === Number(index)}
+      {data &&
+        Object.keys(data).map((size, index) => {
+          return (
+            <GridItem
+              key={size}
+              $clicked={clickedItem === Number(size)}
+              onClick={() => onSetClickedItem(Number(size))}
             >
-              {isForLookingSizes && index === 0 ? (
-                <strong>구매입찰</strong>
-              ) : (
-                addComma(data[size]) + '원'
-              )}
-            </GridItemPrice>
-          </GridItem>
-        );
-      })}
+              <GridItemTitle $clicked={clickedItem === Number(size)}>
+                {index === 0 && isForLookingSizes ? (
+                  <strong>모든 사이즈</strong>
+                ) : (
+                  size
+                )}
+              </GridItemTitle>
+              <GridItemPrice
+                $isTypeSell={isTypeSell!}
+                $isFirstItem={index === 0 && isForLookingSizes}
+                $clicked={clickedItem === Number(index)}
+              >
+                {isForLookingSizes && index === 0 ? (
+                  <strong>구매입찰</strong>
+                ) : (
+                  addComma(data[size]) + '원'
+                )}
+              </GridItemPrice>
+            </GridItem>
+          );
+        })}
     </Grid>
   );
 };
