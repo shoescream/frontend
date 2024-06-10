@@ -1,7 +1,7 @@
 'use client';
 import theme from '@/styles/theme';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../Modal';
 import LocalStorage from '@/utils/localStorage';
@@ -18,11 +18,7 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
   const router = useRouter();
   const path = usePathname();
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [token, setToken] = useState('');
-
-  useEffect(() => {
-    setToken(LocalStorage.getItem('@token')!);
-  }, []);
+  const token = LocalStorage.getItem('@token');
 
   return (
     <NavWrapper type={type}>
