@@ -8,6 +8,10 @@ export const MYPAGE_NAV = [
     path: '/my/history/selling',
   },
   {
+    name: '리뷰 작성',
+    path: '/my/review',
+  },
+  {
     name: '관심 상품',
     path: '/my/favorite',
   },
