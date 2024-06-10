@@ -7,12 +7,12 @@ import LocalStorage from '@/utils/localStorage';
 
 const Header = () => {
   const router = useRouter();
-  const token = LocalStorage.getItem('@token');
+  const token = LocalStorage.getItem('@token') as string;
 
   return (
     <HeaderWrapper>
       <HeaderTop>
-        <MultiNavBar type="top" data={NAV_DATA.TOP_NAV_DATA(token!)} />
+        <MultiNavBar type="top" data={NAV_DATA.TOP_NAV_DATA(token)} />
       </HeaderTop>
       <HeaderInner>
         <div id="header__logo" onClick={() => router.push('/')}>

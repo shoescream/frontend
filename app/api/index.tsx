@@ -7,34 +7,44 @@ const Instance = axios.create({
   headers: {
     Accept: 'application/json',
   },
-  // withCredentials: true,
 });
 
-// TODO: 추후 수정
-Instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  config.headers.authorization = `Bearer ${LocalStorage.getItem('@token')}`;
-  return config;
+const InstanceWithToken = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  headers: {
+    Accept: 'application/json',
+  },
+  withCredentials: true,
 });
 
-// Instance.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const status = error.response?.status;
-//     const originalRequest = error.config;
+InstanceWithToken.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    config.headers.authorization = `Bearer ${LocalStorage.getItem('@token')}`;
+    return config;
+  }
+);
 
-//     if (status === 401) {
-//       const token = localStorage.getItem('@token');
-//       const refresh = localStorage.getItem('@refresh');
-//       return Instance(originalRequest);
-//     } else if (status === 400) {
-//       return Promise.reject('존재하지 않는 데이터입니다.');
-//     } else if (status === 404) {
-//       return Promise.reject('잘못된 접근입니다.');
-//     } else if (status === 500) {
-//       return Promise.reject('서버 에러');
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+InstanceWithToken.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const status = error.response?.status;
+    const originalRequest = error.config;
+
+    if (status === 401) {
+      // TODO: Refresh api 생기면 연결할 것
+      // const token = localStorage.getItem('@token');
+      // const refresh = localStorage.getItem('@refresh');
+      // return Instance(originalRequest);
+      return Promise.reject('잘못된 토큰입니다.');
+    } else if (status === 400) {
+      return Promise.reject('존재하지 않는 데이터입니다.');
+    } else if (status === 404) {
+      return Promise.reject('잘못된 접근입니다.');
+    } else if (status === 500) {
+      return Promise.reject('서버 에러');
+    }
+    return Promise.reject(error);
+  }
+);
 
 export { Instance };
