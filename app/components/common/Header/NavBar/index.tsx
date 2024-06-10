@@ -20,8 +20,18 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [loginState, setLoginState] = useState<'로그인' | '로그아웃'>('로그인');
   const token = LocalStorage.getItem('@token');
+  const loginHandler = () => {
+    if (loginState === '로그인') router.push('/login');
+    else {
+      LocalStorage.removeItem('@token');
+      LocalStorage.removeItem('@user');
+      LocalStorage.removeItem('@refresh');
+      router.push('/login');
+    }
+  };
   useEffect(() => {
     if (token) setLoginState('로그아웃');
+    else setLoginState('로그인');
   });
   return (
     <NavWrapper type={type}>
@@ -45,7 +55,7 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
             알림
           </ButtonWrapper>
           {/* TODO: 로그아웃 query 구현해야함 */}
-          <ButtonWrapper type={type} onClick={() => router.push('/login')}>
+          <ButtonWrapper type={type} onClick={loginHandler}>
             {loginState}
           </ButtonWrapper>
         </>
