@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import useAddComma from '@/hooks/useAddComma';
 import { usePathname } from 'next/navigation';
 import Button from '../common/Button';
-import { usePayment } from '@/hooks/queries/usePayment';
+import { usePayment, useSellNow } from '@/hooks/queries/usePayment';
 
 interface ProductPayPageProps {
   resultAmount: number;
@@ -18,16 +18,27 @@ const ProductPayPage = ({
   resultAmount,
 }: PropsWithChildren<ProductPayPageProps>) => {
   const pathname = usePathname();
-  const productNumber = pathname.replace('/sell/', '');
-  const size = 245;
-  const { data } = useDetailProduct(productNumber);
-  const { mutate } = usePayment();
   const addComma = useAddComma();
+  const PRODUCT_NUMBER = pathname.replace('/sell/', '');
+  // TODO: 앞의 페이지와 연결되면 size 수정하기
+  const SIZE = 245;
+  const { data } = useDetailProduct(PRODUCT_NUMBER);
+  const { mutate: mutatePayment } = usePayment();
+  const { mutate: mutateSellNow } = useSellNow();
 
   const handlePayment = async () => {
-    mutate({
+    mutatePayment({
       item_name: data?.productResponse.productName!,
       total_amount: resultAmount,
+    });
+  };
+
+  const handleSellNow = async () => {
+    mutateSellNow({
+      productNumber: Number(PRODUCT_NUMBER),
+      size: String(SIZE),
+      price: data?.productResponse.price!,
+      sellingBidDeadline: 0,
     });
   };
 
@@ -84,7 +95,7 @@ const ProductPayPage = ({
                   fontSize: theme.fontSize.body1,
                 }}
               >
-                {size}
+                {SIZE}
               </strong>
             </div>
           </div>
@@ -95,7 +106,7 @@ const ProductPayPage = ({
             buttonColor={pathname.startsWith('/sell') ? 'selling' : 'buying'}
             styles={{ border: 'none', height: '5.2rem' }}
             onClick={() =>
-              pathname.startsWith('/buy') ? handlePayment() : null
+              pathname.startsWith('/buy') ? handlePayment() : handleSellNow()
             }
           >
             <span

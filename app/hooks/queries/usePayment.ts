@@ -46,4 +46,56 @@ const usePayment = () => {
   });
 };
 
-export { usePayment };
+interface SellingResponse {
+  size: string;
+  price: number;
+  quantity: number;
+  createdAt: string;
+}
+
+interface SellNowProps {
+  productNumber: number;
+  size: string;
+  price: number;
+  sellingBidDeadline: number;
+}
+
+const useSellNow = () => {
+  return useMutation({
+    mutationFn: async ({
+      productNumber,
+      size,
+      price,
+      sellingBidDeadline,
+    }: SellNowProps) => {
+      const response: Response<SellingResponse> = await Instance.post(
+        ' /sell-now',
+        {
+          productNumber,
+          size,
+          price,
+          sellingBidDeadline,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${LocalStorage.getItem('@token')}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      return response;
+    },
+    onSuccess: (data) => {
+      if (data.resultCode === 'SUCCESS') {
+        console.log(data);
+      }
+    },
+    onError: (error) => {
+      console.error('usePayment: ', error);
+      throw error;
+    },
+  });
+};
+
+export { usePayment, useSellNow };
