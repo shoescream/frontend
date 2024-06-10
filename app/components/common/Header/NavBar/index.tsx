@@ -1,7 +1,7 @@
 'use client';
 import theme from '@/styles/theme';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../Modal';
 import LocalStorage from '@/utils/localStorage';
@@ -18,8 +18,11 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
   const router = useRouter();
   const path = usePathname();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [loginState, setLoginState] = useState<'로그인' | '로그아웃'>('로그인');
   const token = LocalStorage.getItem('@token');
-
+  useEffect(() => {
+    if (token) setLoginState('로그아웃');
+  });
   return (
     <NavWrapper type={type}>
       {data &&
@@ -43,7 +46,7 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
           </ButtonWrapper>
           {/* TODO: 로그아웃 query 구현해야함 */}
           <ButtonWrapper type={type} onClick={() => router.push('/login')}>
-            {token ? '로그아웃' : '로그인'}
+            {loginState}
           </ButtonWrapper>
         </>
       ) : (
