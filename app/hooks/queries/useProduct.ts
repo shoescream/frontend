@@ -3,7 +3,7 @@ import { Instance } from 'app/api';
 
 interface DetailProduct {
   productResponse: {
-    id: number;
+    productNumber: number;
     productCode: string;
     productName: string;
     productSubName: string;

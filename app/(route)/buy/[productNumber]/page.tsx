@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
@@ -9,11 +9,14 @@ import BuySectionPage from './BuySection';
 import { useBuyProducts } from '@/hooks/queries/useSellAndBuyProducts';
 import { usePathname } from 'next/navigation';
 import useAddComma from '@/hooks/useAddComma';
+import { useRouter } from 'next/router';
 
 const BuyPage: React.FC = () => {
     const [view, setView] = useState('buy');
     const pathname = usePathname();
-
+    // const router = useRouter();
+    // const { size } = router.query;
+    // const parsedSize = typeof size === 'string' ? size : '';
     const productNumber = parseInt(pathname.replace('/buy/', ''), 10);
     const size = '230'; // 임시 설정
     const { data } = useBuyProducts(productNumber, size);
