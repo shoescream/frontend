@@ -30,20 +30,18 @@ const useProductReviews = (productNumber: number) => {
 };
 
 interface ReviewProps {
-  result: {
-    reviewNumber: number;
-    memberId: string;
-    rating: number;
-    createdAt: string;
-    reviewTitle: string;
-    reviewContent: string;
-    reviewComments: string[];
-    reviewImages: string[];
-  };
+  reviewNumber: number;
+  memberId: string;
+  rating: number;
+  createdAt: string;
+  reviewTitle: string;
+  reviewContent: string;
+  reviewComments: string[];
+  reviewImages: string[];
 }
 
 const useGetReview = (reviewNumber: number) => {
-  return useQuery<ReviewProps>({
+  return useQuery<Result<ReviewProps>>({
     queryKey: ['Review', reviewNumber],
     retry: false,
     queryFn: async () => {
@@ -56,18 +54,18 @@ const useGetReview = (reviewNumber: number) => {
 
 interface ReviewPostData {
   productNumber: number;
-  memberId: string;
+  dealNumber: number;
   rating: number;
   reviewTitle: string;
   reviewContent: string;
-  reviewImages: string[];
+  reviewImages: File[];
 }
 
 const usePostReview = () => {
   return useMutation({
     mutationFn: async (reviewData: ReviewPostData) => {
       await Instance.post(`/review/post/${reviewData.productNumber}`, {
-        memberId: reviewData.memberId,
+        dealNumber: reviewData.dealNumber,
         rating: reviewData.rating,
         reviewTitle: reviewData.reviewTitle,
         reviewContent: reviewData.reviewContent,
