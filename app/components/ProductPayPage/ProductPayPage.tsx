@@ -38,8 +38,7 @@ const ProductPayPage = ({
     mutateSellNow({
       productNumber: Number(PRODUCT_NUMBER),
       size: String(SIZE),
-      price: data?.productResponse.price as number,
-      sellingBidDeadline: 10,
+      price: 106000,
     });
   };
 

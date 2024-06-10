@@ -2,6 +2,7 @@ import { Response } from '@/types/Response';
 import LocalStorage from '@/utils/localStorage';
 import { useMutation } from '@tanstack/react-query';
 import { Instance } from 'app/api';
+import { useRouter } from 'next/navigation';
 
 interface PaymentResponse {
   tid: string;
@@ -34,7 +35,6 @@ const usePayment = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log(data);
       if (data.next_redirect_pc_url) {
         window.location.href = data.next_redirect_pc_url;
       }
@@ -57,24 +57,19 @@ interface SellNowProps {
   productNumber: number;
   size: string;
   price: number;
-  sellingBidDeadline: number;
 }
 
 const useSellNow = () => {
+  const router = useRouter();
+
   return useMutation({
-    mutationFn: async ({
-      productNumber,
-      size,
-      price,
-      sellingBidDeadline,
-    }: SellNowProps) => {
-      const response: Response<SellingResponse> = await Instance.post(
+    mutationFn: async ({ productNumber, size, price }: SellNowProps) => {
+      const response: { data: Response<SellingResponse> } = await Instance.post(
         '/sell-now',
         {
           productNumber,
           size,
           price,
-          sellingBidDeadline,
         },
         {
           headers: {
@@ -87,9 +82,10 @@ const useSellNow = () => {
       return response;
     },
     onSuccess: (data) => {
-      console.log(data);
-      if (data.resultCode === 'SUCCESS') {
+      if (data.data.resultCode === 'SUCCESS') {
         console.log(data);
+        window.location.href = '/my/history/selling';
+        router.push('/my/history/selling');
       }
     },
     onError: (error) => {
