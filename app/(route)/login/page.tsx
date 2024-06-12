@@ -1,14 +1,15 @@
 'use client';
 
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import theme from '@/styles/theme';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import styled from 'styled-components';
 import KakaoLogin from '/public/kakao-login.svg';
-import { useRouter } from 'next/navigation';
 import { useLogin } from '@/hooks/queries/useAuth';
+import LocalStorage from '@/utils/localStorage';
 
 interface FormData {
   id: string;
@@ -17,7 +18,24 @@ interface FormData {
 
 const Login = () => {
   const router = useRouter();
-  const { mutate } = useLogin();
+  const { mutate } = useLogin({
+    successHandler: (data) => {
+      if (data.resultCode === 'SUCCESS') {
+        LocalStorage.setItem('@token', data.result?.tokenResponse.accessToken!);
+        localStorage.setItem(
+          '@refresh',
+          data.result?.tokenResponse.refreshToken!
+        );
+        LocalStorage.setItem(
+          '@user',
+          JSON.stringify(data.result?.memberResponse!)
+        );
+        console.log(data);
+        router.push('/subscribe');
+      }
+    },
+  });
+
   const {
     register,
     handleSubmit,

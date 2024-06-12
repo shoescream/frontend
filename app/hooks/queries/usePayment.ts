@@ -1,7 +1,7 @@
 import { Response } from '@/types/Response';
 import LocalStorage from '@/utils/localStorage';
 import { useMutation } from '@tanstack/react-query';
-import { Instance } from 'app/api';
+import { Instance, InstanceWithToken } from 'app/api';
 import { useRouter } from 'next/navigation';
 
 interface PaymentResponse {
@@ -60,7 +60,7 @@ interface SellNowProps {
 }
 
 const useSellNow = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
   return useMutation({
     mutationFn: async ({ productNumber, size, price }: SellNowProps) => {
@@ -75,7 +75,6 @@ const useSellNow = () => {
           headers: {
             Authorization: `Bearer ${LocalStorage.getItem('@token')}`,
           },
-          withCredentials: true,
         }
       );
 
@@ -84,8 +83,7 @@ const useSellNow = () => {
     onSuccess: (data) => {
       if (data.data.resultCode === 'SUCCESS') {
         console.log(data);
-        window.location.href = '/my/history/selling';
-        router.push('/my/history/selling');
+        // router.push('/my/history/selling');
       }
     },
     onError: (error) => {

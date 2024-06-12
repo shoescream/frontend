@@ -148,7 +148,8 @@ const DetailProduct = () => {
                   styles={{ height: '6rem' }}
                   onClick={() =>
                     isLoggedIn
-                      ? setIsSellingModalOpen('sell')
+                      ? // ? setIsSellingModalOpen('sell')
+                        router.push('/sell/1')
                       : router.push('/login')
                   }
                 >

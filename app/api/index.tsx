@@ -1,6 +1,6 @@
 // import LocalStorage from '@/utils/localStorage';
 import LocalStorage from '@/utils/localStorage';
-import axios, { InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
 const Instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -17,13 +17,6 @@ const InstanceWithToken = axios.create({
   },
   withCredentials: true,
 });
-
-InstanceWithToken.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    config.headers.authorization = `Bearer ${LocalStorage.getItem('@token')}`;
-    return config;
-  }
-);
 
 InstanceWithToken.interceptors.response.use(
   (response) => response,
@@ -48,4 +41,4 @@ InstanceWithToken.interceptors.response.use(
   }
 );
 
-export { Instance };
+export { Instance, InstanceWithToken };

@@ -8,6 +8,7 @@ import useAddComma from '@/hooks/useAddComma';
 import { usePathname } from 'next/navigation';
 import Button from '../common/Button';
 import { usePayment, useSellNow } from '@/hooks/queries/usePayment';
+import LocalStorage from '@/utils/localStorage';
 
 interface ProductPayPageProps {
   resultAmount: number;
@@ -26,6 +27,7 @@ const ProductPayPage = ({
   const { data } = useDetailProduct(PRODUCT_NUMBER);
   const { mutate: mutatePayment } = usePayment();
   const { mutate: mutateSellNow } = useSellNow();
+  const token = LocalStorage.getItem('@token');
 
   const handlePayment = async () => {
     mutatePayment({
@@ -37,8 +39,10 @@ const ProductPayPage = ({
   const handleSellNow = async () => {
     mutateSellNow({
       productNumber: Number(PRODUCT_NUMBER),
-      size: String(SIZE),
-      price: 106000,
+      // size: String(SIZE),
+      size: '225',
+      // price: 106000,
+      price: 96500,
     });
   };
 

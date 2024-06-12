@@ -2,11 +2,12 @@
 
 import { MYPAGE_NAV } from '@/constants/navMypage';
 import theme from '@/styles/theme';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 const MyPageLayout = ({ children }: PropsWithChildren) => {
+  const router = useRouter();
   const pathname = usePathname();
 
   return (
@@ -18,7 +19,6 @@ const MyPageLayout = ({ children }: PropsWithChildren) => {
           {MYPAGE_NAV.slice(0, 3).map((item) => (
             <ListItem key={item.name}>
               <ListText
-                href={item.path}
                 style={{
                   color:
                     pathname === item.path
@@ -26,6 +26,7 @@ const MyPageLayout = ({ children }: PropsWithChildren) => {
                       : theme.colors.text.secondary,
                   fontWeight: pathname === item.path ? 700 : 400,
                 }}
+                onClick={() => router.push(item.path)}
               >
                 {item.name}
               </ListText>
@@ -37,7 +38,6 @@ const MyPageLayout = ({ children }: PropsWithChildren) => {
           {MYPAGE_NAV.slice(3).map((item) => (
             <ListItem key={item.name}>
               <ListText
-                href={item.path}
                 style={{
                   color:
                     pathname === item.path
@@ -45,6 +45,7 @@ const MyPageLayout = ({ children }: PropsWithChildren) => {
                       : theme.colors.text.secondary,
                   fontWeight: pathname === item.path ? 700 : 400,
                 }}
+                onClick={() => router.push(item.path)}
               >
                 {item.name}
               </ListText>
@@ -76,11 +77,13 @@ const RightBox = styled.div`
 
 const ListItem = styled.li`
   margin-top: 1.2rem;
+  cursor: pointer;
 `;
 
 const ListText = styled.a`
   font-size: ${theme.fontSize.subtitle3};
   color: ${theme.colors.text.secondary};
+  cursor: pointer;
 `;
 
 const Column = styled.ul`
