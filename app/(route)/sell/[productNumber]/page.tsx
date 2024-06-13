@@ -60,18 +60,28 @@ const SellPage = () => {
                 <BottomSection>
                     <ButtonContainer>
                         <Button
-                            type='button'
                             buttonColor={view === 'bid' ? 'selling' : 'none'}
-                            size='xlarge'
                             onClick={() => setView('bid')}
+                            styles={{
+                                margin: '1rem',
+                                height: '4rem',
+                                fontSize: '1.2rem',
+                                border: 'none',
+                                borderRadius: '3rem'
+                            }}
                         >
                             판매 입찰
                         </Button>
                         <Button
-                            type='button'
                             buttonColor={view === 'sell' ? 'selling' : 'none'}
-                            size='xlarge'
                             onClick={() => setView('sell')}
+                            styles={{
+                                margin: '1rem',
+                                height: '4rem',
+                                fontSize: '1.2rem',
+                                border: 'none',
+                                borderRadius: '3rem'
+                            }}
                         >
                             즉시 판매
                         </Button>
@@ -180,6 +190,10 @@ const BottomSection = styled.div`
 
 const ButtonContainer = styled.div`
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+    justify-content: center; 
+    align-items: center; 
+    background-color: ${theme.colors.gray[100]};
+    border-radius: 3rem;
+    height: 5rem; 
+    margin-bottom: 2rem;
 `;
