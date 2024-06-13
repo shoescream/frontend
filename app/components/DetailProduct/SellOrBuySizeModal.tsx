@@ -35,7 +35,6 @@ const SellOrBuySizeModal = ({
 }: SellOrBuySizeModalProps) => {
   const [clickedItem, setClickedItem] = useState(0);
   const [selectedPrice, setSelectedPrice] = useState(data[clickedItem]);
-  const [selectedSize, setSelectedSize] = useState("");
 
   const router = useRouter();
   const addComma = useAddComma();
@@ -123,7 +122,7 @@ const SellOrBuySizeModal = ({
             style={{ position: 'absolute', bottom: 0 }}
             onClick={() => {
               const route = type === 'sell' ? '/sell/' : '/buy/';
-              router.push(`${route}${productNumber}?size=${selectedSize}`);
+              router.push(`${route}${productNumber}?size=${[clickedItem]}`);
             }}
           >
             <PriceText>{addComma(selectedPrice)}원</PriceText>

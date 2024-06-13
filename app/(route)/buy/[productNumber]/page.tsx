@@ -1,30 +1,27 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
-import BidSectionPage from './BidSection';
-import BuySectionPage from './BuySection';
+// import BidSectionPage from './BidSection';
+// import BuySectionPage from './BuySection';
+import SellOrBuyBidSection from '@/components/DetailProduct/SellOrBuyBidSection';
+import SellOrBuySection from '@/components/DetailProduct/SellOrBuySection';
 import { useBuyProducts } from '@/hooks/queries/useSellAndBuyProducts';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import useAddComma from '@/hooks/useAddComma';
-import { useRouter } from 'next/router';
 
 const BuyPage: React.FC = () => {
     const [view, setView] = useState('buy');
     const pathname = usePathname();
-    // const router = useRouter();
-    // const { size } = router.query;
-    // const parsedSize = typeof size === 'string' ? size : '';
+    const searchParams = useSearchParams();
     const productNumber = parseInt(pathname.replace('/buy/', ''), 10);
-    const size = '230'; // 임시 설정
+    const size = searchParams.get('size') || '';
+
     const { data } = useBuyProducts(productNumber, size);
 
     const addComma = useAddComma();
-
-    console.log("BUY PAGE DATA2: ", data);
-    console.log("BUY PAGE DATA: ", data && data.highestPrice ? data.highestPrice : "No data available");
 
     return (
         <MainContainer>
@@ -79,8 +76,8 @@ const BuyPage: React.FC = () => {
                             즉시 구매
                         </Button>
                     </ButtonContainer>
-                    {view === 'buy' && data && <BuySectionPage lowestPrice={data.lowestPrice} />}
-                    {view === 'bid' && <BidSectionPage />}
+                    {view === 'buy' && data && <SellOrBuySection type={'buy'} price={data.lowestPrice} />}
+                    {view === 'bid' && <SellOrBuyBidSection type={'buy'} price={0} />}
                 </BottomSection>
             </BuyContainer>
         </MainContainer>

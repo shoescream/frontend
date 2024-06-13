@@ -3,35 +3,29 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
 import useAddComma from '@/hooks/useAddComma';
-import SellSectionPage from './SellSection';
 
-interface BidSectionPageProps {
-    highestPrice: number;
+interface SellOrBuyBidSectionProps {
+    type: 'buy' | 'sell';
+    price: number;
 }
 
-const BidSectionPage: React.FC<BidSectionPageProps> = ({ highestPrice }) => {
-    const [bidPrice, setBidPrice] = useState('');
-    const [bidError, setBidError] = useState('');
+const SellOrBuyBidSection: React.FC<SellOrBuyBidSectionProps> = ({ type, price }) => {
+    const [inputPrice, setInputPrice] = useState('');
+    const [inputError, setInputError] = useState('');
     const [expiry, setExpiry] = useState<number | null>(null);
     const [expiryDate, setExpiryDate] = useState('');
     const [selectedButton, setSelectedButton] = useState<number | null>(null);
-    const [shouldRedirect, setShouldRedirect] = useState(false);
 
     const addComma = useAddComma();
 
-    const handleBidPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/,/g, '');
         if (/^\d+$/.test(value) && parseInt(value) >= 20000 && parseInt(value) % 1000 === 0) {
-            const numericValue = parseInt(value);
-            setBidPrice(addComma(numericValue));
-            setBidError('');
-            if (numericValue <= highestPrice) {
-                setShouldRedirect(true);
-            }
+            setInputPrice(addComma(parseInt(value)));
+            setInputError('');
         } else {
-            setBidPrice(value);
-            setBidError('2만원부터 천원단위로 입력하세요.');
-            setShouldRedirect(false);
+            setInputPrice(value);
+            setInputError('2만원부터 천원단위로 입력하세요.');
         }
     };
 
@@ -44,42 +38,28 @@ const BidSectionPage: React.FC<BidSectionPageProps> = ({ highestPrice }) => {
         setSelectedButton(days);
     };
 
-    if (shouldRedirect) {
-        return <SellSectionPage highestPrice={highestPrice} />;
-    }
-
-    const displayBidPrice = bidPrice ? `${bidPrice}원` : "-";
-
     return (
-        <BidSection>
+        <Section>
             <InfoRow>
-                <InfoLabel>판매 희망가</InfoLabel>
-                {bidError && <ErrorText>{bidError}</ErrorText>}
+                <InfoLabel>{type === 'buy' ? '구매 희망가' : '판매 희망가'}</InfoLabel>
+                {inputError && <ErrorText>{inputError}</ErrorText>}
             </InfoRow>
             <InfoRow style={{ justifyContent: 'flex-end' }}>
-                <BidInputWrapper>
-                    <BidInput
+                <InputWrapper>
+                    <Input
                         style={{ textAlign: 'right', marginTop: '0.2rem', marginRight: '0.2rem', border: 'none' }}
                         type="text"
                         placeholder="희망가 입력"
-                        value={bidPrice}
-                        onChange={handleBidPriceChange}
-                        isError={!!bidError}
+                        value={inputPrice}
+                        onChange={handlePriceChange}
+                        isError={!!inputError}
                     />
-                    <BidInputUnit>원</BidInputUnit>
-                </BidInputWrapper>
+                    <InputUnit>원</InputUnit>
+                </InputWrapper>
             </InfoRow>
-            <Separator isError={!!bidError} />
-            <InfoText>
-                <InfoRow>
-                    <LeftText>검수비</LeftText>
-                    <RightText>무료</RightText>
-                </InfoRow>
-                <InfoRow>
-                    <LeftText>배송비</LeftText>
-                    <RightText>선불 ・ 판매자 부담</RightText>
-                </InfoRow>
-            </InfoText>
+            <Separator isError={!!inputError} />
+            <InfoText>총 결제 금액은 다음 화면에서 계산됩니다.</InfoText>
+            <Separator />
             <InfoLabel>입찰 마감기한</InfoLabel>
             {expiry !== null && <ExpiryText>{expiry}일 ({expiryDate} 마감)</ExpiryText>}
             <ButtonContainer>
@@ -97,15 +77,17 @@ const BidSectionPage: React.FC<BidSectionPageProps> = ({ highestPrice }) => {
             </ButtonContainer>
             <Separator />
             <InfoRow>
-                <InfoLabel>정산금액</InfoLabel>
-                <TotalPrice>{displayBidPrice}</TotalPrice>
+                <InfoLabel>총 결제금액</InfoLabel>
+                <Next>다음 화면에서 확인</Next>
             </InfoRow>
-            <Button type='button' buttonColor='dark' size='full'>판매 입찰 계속</Button>
-        </BidSection>
+            <Button type='button' buttonColor='dark' size='full'>
+                {type === 'buy' ? '구매 입찰 계속' : '판매 입찰 계속'}
+            </Button>
+        </Section>
     );
 };
 
-export default BidSectionPage;
+export default SellOrBuyBidSection;
 
 const Separator = styled.div<{ isError?: boolean }>`
     width: 100%;
@@ -120,7 +102,7 @@ const ButtonContainer = styled.div`
     margin-bottom: 2rem;
 `;
 
-const BidSection = styled.div`
+const Section = styled.div`
     padding: 1rem;
     border-radius: 0.5rem;
 `;
@@ -140,20 +122,21 @@ const InfoLabel = styled.strong`
 
 const InfoText = styled.p`
     font-size: 1.2rem;
+    color: gray;
     text-align: left;
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
 `;
 
-const TotalPrice = styled.strong`
-    font-size: 1.5rem;
-    color: ${theme.colors.selling};
+const Next = styled.p`
+    font-size: 1.2rem;
+    color: ${theme.colors.gray[200]};
 `;
 
-interface BidInputProps {
+interface InputProps {
     isError: boolean;
 }
 
-const BidInput = styled.input<BidInputProps>`
+const Input = styled.input<InputProps>`
     font-size: 1.5rem;
     &:focus {
         outline: none;
@@ -178,25 +161,12 @@ const ExpiryText = styled.p`
     margin-top: 0.5rem;
 `;
 
-const BidInputWrapper = styled.div`
+const InputWrapper = styled.div`
     display: flex;
     align-items: center;
 `;
 
-const BidInputUnit = styled.span`
+const InputUnit = styled.span`
     align-self: flex-end;
     font-size: 1.8rem;
-`;
-
-const LeftText = styled.span`
-    flex: 1;
-    font-size: 1.2rem;
-    text-align: left;
-    color: gray;
-`;
-
-const RightText = styled.span`
-    flex: 1;
-    font-size: 1.2rem;
-    text-align: right;
 `;

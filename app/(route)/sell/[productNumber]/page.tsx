@@ -4,18 +4,20 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
-import BidSectionPage from './BidSection';
-import SellSectionPage from './SellSection';
+// import BidSectionPage from './BidSection';
+// import SellSectionPage from './SellSection';
+import SellOrBuyBidSection from '@/components/DetailProduct/SellOrBuyBidSection';
+import SellOrBuySection from '@/components/DetailProduct/SellOrBuySection';
 import { useSellProducts } from '@/hooks/queries/useSellAndBuyProducts';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import useAddComma from '@/hooks/useAddComma';
 
 const SellPage = () => {
     const [view, setView] = useState('sell');
     const pathname = usePathname();
-
+    const searchParams = useSearchParams();
     const productNumber = parseInt(pathname.replace('/sell/', ''), 10);
-    const size = '250'; // 임시 설정
+    const size = searchParams.get('size') || '';
 
     const addComma = useAddComma();
 
@@ -74,8 +76,8 @@ const SellPage = () => {
                             즉시 판매
                         </Button>
                     </ButtonContainer>
-                    {view === 'sell' && data && <SellSectionPage highestPrice={data.highestPrice} />}
-                    {view === 'bid' && data && <BidSectionPage highestPrice={data.highestPrice} />}
+                    {view === 'sell' && data && <SellOrBuySection type={'sell'} price={data.highestPrice} />}
+                    {view === 'bid' && data && <SellOrBuyBidSection type={'sell'} price={data.highestPrice} />}
                 </BottomSection>
             </SellContainer>
         </MainContainer>
