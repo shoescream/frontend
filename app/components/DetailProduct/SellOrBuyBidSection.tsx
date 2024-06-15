@@ -66,10 +66,14 @@ const SellOrBuyBidSection: React.FC<SellOrBuyBidSectionProps> = ({ type, price }
                 {[1, 3, 7, 30, 60, 90, 180].map((days) => (
                     <Button
                         key={days}
-                        type='button'
-                        buttonColor={selectedButton === days ? 'dark' : 'none'}
+                        buttonColor={selectedButton === days ? 'none' : 'none'}
                         size='small'
                         onClick={() => handleExpiryChange(days)}
+                        styles={{
+                            fontSize: '1.2rem',
+                            height: '4rem',
+                            border: selectedButton === days ? '0.3rem solid black' : '0.1rem solid black',
+                        }}
                     >
                         {days}일
                     </Button>
@@ -80,7 +84,14 @@ const SellOrBuyBidSection: React.FC<SellOrBuyBidSectionProps> = ({ type, price }
                 <InfoLabel>총 결제금액</InfoLabel>
                 <Next>다음 화면에서 확인</Next>
             </InfoRow>
-            <Button type='button' buttonColor='dark' size='full'>
+            <Button
+                type='button'
+                buttonColor='dark'
+                size='full'
+                styles={{
+                    fontSize: '1.2rem',
+                }}
+            >
                 {type === 'buy' ? '구매 입찰 계속' : '판매 입찰 계속'}
             </Button>
         </Section>

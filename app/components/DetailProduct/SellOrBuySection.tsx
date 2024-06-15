@@ -49,7 +49,14 @@ const SellOrBuySection: React.FC<SellOrBuySectionProps> = ({ type, price }) => {
                     </InfoRow>
                 </>
             )}
-            <Button type='button' buttonColor='dark' size='full'>
+            <Button
+                type='button'
+                buttonColor='dark'
+                size='full'
+                styles={{
+                    fontSize: '1.2rem',
+                }}
+            >
                 {isBuy ? '즉시 구매 계속' : '즉시 판매 계속'}
             </Button>
         </Section>

@@ -63,7 +63,7 @@ const SellPage = () => {
                             buttonColor={view === 'bid' ? 'selling' : 'none'}
                             onClick={() => setView('bid')}
                             styles={{
-                                margin: '1rem',
+                                margin: '0.5rem',
                                 height: '4rem',
                                 fontSize: '1.2rem',
                                 border: 'none',
@@ -76,7 +76,7 @@ const SellPage = () => {
                             buttonColor={view === 'sell' ? 'selling' : 'none'}
                             onClick={() => setView('sell')}
                             styles={{
-                                margin: '1rem',
+                                margin: '0.5rem',
                                 height: '4rem',
                                 fontSize: '1.2rem',
                                 border: 'none',
@@ -195,5 +195,5 @@ const ButtonContainer = styled.div`
     background-color: ${theme.colors.gray[100]};
     border-radius: 3rem;
     height: 5rem; 
-    margin-bottom: 2rem;
+    margin: 1rem;
 `;
