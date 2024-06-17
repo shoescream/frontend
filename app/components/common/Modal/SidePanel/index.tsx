@@ -4,12 +4,14 @@ import { TfiClose } from 'react-icons/tfi';
 import { useNotification } from '@/hooks/queries/useNotification';
 import { IoNotifications } from 'react-icons/io5';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface SidePanelProps {
   onClick: () => void;
 }
 
 const SidePanel = ({ onClick }: SidePanelProps) => {
+  const router = useRouter();
   const { data } = useNotification();
   const [isClosed, setIsClosed] = useState(false);
 
@@ -26,6 +28,16 @@ const SidePanel = ({ onClick }: SidePanelProps) => {
     return '2024년 6월 17일';
   };
 
+  const showText = (type: string) => {
+    if (type === 'PAYMENT') {
+      return '상품을 결제 완료하였습니다.';
+    } else if (type === 'COMPLETE_BUY') {
+      return '상품을 구매 완료하였습니다..';
+    } else if (type === 'COMPLETE_SELL') {
+      return '상품을 판매 완료하였습니다.';
+    }
+  };
+
   return (
     <SidePanelWrapper $isClosed={isClosed}>
       <SidePanelHeader>
@@ -34,12 +46,17 @@ const SidePanel = ({ onClick }: SidePanelProps) => {
         </h1>
         <h1 style={{ marginBottom: '0.4rem' }}>알림</h1>
       </SidePanelHeader>
-      <SidepanelConent onClick={() => null}>
+      <SidepanelConent
+        onClick={() => {
+          router.push('my/history/buying');
+          handleClose();
+        }}
+      >
         <h3 style={{ fontSize: '1.6rem', margin: '2.4rem 0 1.6rem' }}>
           지난 알림
         </h3>
         {data?.result?.map((item) => (
-          <>
+          <div key={item.notificationNumber}>
             <Content>
               <AlarmIconWrapper>
                 <IoNotifications size={23} />
@@ -58,7 +75,7 @@ const SidePanel = ({ onClick }: SidePanelProps) => {
                     color: theme.colors.text.primary,
                   }}
                 >
-                  {item.object.productName} 상품을 결제했습니다.
+                  {item.object.productName} {showText(item.notificationType)}
                 </p>
                 <time style={{ fontSize: '1.3rem' }} id="alarm__time">
                   {handleDate(item.createdAt)}
@@ -67,7 +84,7 @@ const SidePanel = ({ onClick }: SidePanelProps) => {
               <ItemImg></ItemImg>
             </Content>
             <Divider />
-          </>
+          </div>
         ))}
       </SidepanelConent>
     </SidePanelWrapper>
@@ -127,6 +144,7 @@ const Content = styled.div`
   width: 100%;
   display: flex;
   margin-top: 2rem;
+  cursor: pointer;
 `;
 
 const Divider = styled.div`
