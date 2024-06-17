@@ -74,7 +74,7 @@ const ShopPage = () => {
               key={index}
               product={{
                 ...product,
-                price: parseInt(String(product.price)),
+                price: String(product.price),
               }}
               showLikeButton
               pageType={'shop'}
