@@ -20,7 +20,6 @@ const ProductPayPage = ({
 }: PropsWithChildren<ProductPayPageProps>) => {
   const pathname = usePathname();
   const addComma = useAddComma();
-  const PATH = pathname.split('/')[1];
   const PRODUCT_NUMBER = pathname.replace(
     pathname.startsWith('/sell') ? '/sell/' : '/buy/',
     ''
@@ -38,17 +37,10 @@ const ProductPayPage = ({
   };
 
   const handleSellNow = async () => {
-    console.log({
-      productNumber: Number(PRODUCT_NUMBER),
-      size: String(size),
-      price: data?.productResponse.price, // TODO: 입찰/즉시구매에서 넘어온 값으로 변경할 것.
-    });
     mutateSellNow({
       productNumber: Number(PRODUCT_NUMBER),
-      // size: String(SIZE),
-      size: '225',
-      // price: 106000,
-      price: 96500,
+      size: String(size),
+      price: Number(data?.productResponse.price), // TODO: 입찰/즉시구매에서 넘어온 값으로 변경할 것.
     });
   };
 
@@ -113,10 +105,10 @@ const ProductPayPage = ({
         {children}
         <Section>
           <Button
-            buttonColor={PATH === 'sell' ? 'selling' : 'buying'}
+            buttonColor={pathname.startsWith('/sell') ? 'selling' : 'buying'}
             styles={{ border: 'none', height: '5.2rem' }}
             onClick={() =>
-              PATH === 'sell' ? handleSellNow() : handlePayment()
+              pathname.startsWith('/sell') ? handleSellNow() : handlePayment()
             }
           >
             <span
@@ -146,7 +138,9 @@ const ProductPayPage = ({
                 fontFamily: theme.fonts.pretendard,
               }}
             >
-              {PATH === 'buy' ? '카카오 페이로 결제하기' : '판매하기'}
+              {pathname.startsWith('/sell')
+                ? '판매하기'
+                : '카카오 페이로 결제하기'}
             </span>
           </Button>
         </Section>
