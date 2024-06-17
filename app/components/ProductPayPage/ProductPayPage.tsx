@@ -27,7 +27,6 @@ const ProductPayPage = ({
   const { data } = useDetailProduct(PRODUCT_NUMBER);
   const { mutate: mutatePayment } = usePayment();
   const { mutate: mutateSellNow } = useSellNow();
-  const token = LocalStorage.getItem('@token');
 
   const handlePayment = async () => {
     mutatePayment({
@@ -37,6 +36,13 @@ const ProductPayPage = ({
   };
 
   const handleSellNow = async () => {
+    console.log({
+      productNumber: Number(PRODUCT_NUMBER),
+      // size: String(SIZE),
+      size: '225',
+      // price: 106000,
+      price: 96500,
+    });
     mutateSellNow({
       productNumber: Number(PRODUCT_NUMBER),
       // size: String(SIZE),

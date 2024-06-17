@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../Modal';
 import LocalStorage from '@/utils/localStorage';
+import Notification from '../../Notification';
 
 interface NavDataProps {
   title?: string;
@@ -44,12 +45,10 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
         ))}
       {type === 'top' ? ( // 알람과 modal창을 띄워야해서 따로 분리 했습니다.
         <>
-          <ButtonWrapper
+          <Notification
             type={type}
             onClick={() => setIsOpenModal(!isOpenModal)}
-          >
-            알림
-          </ButtonWrapper>
+          />
           <ButtonWrapper
             type={type}
             onClick={() => (token ? logout() : router.push('/login'))}
@@ -78,7 +77,7 @@ const NavWrapper = styled.nav<{ type: string }>`
   top: 0;
   right: 0;
 `;
-const ButtonWrapper = styled.button<{ type: string; active?: string }>`
+export const ButtonWrapper = styled.button<{ type: string; active?: string }>`
   width: ${(props) => (props.type === 'top' ? '7rem' : '10rem')};
   margin: 0 1rem 0 0.5rem;
   background-color: #ffffff;

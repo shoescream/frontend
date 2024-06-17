@@ -25,10 +25,10 @@ const MAIN_NAV_DATA = [
     title: 'SHOP',
     path: '/shop',
   },
-  {
-    title: '이벤트',
-    path: '/event',
-  },
+  // {
+  //   title: '이벤트',
+  //   path: '/event',
+  // },
 ];
 
 export const NAV_DATA = {

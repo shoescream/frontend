@@ -18,8 +18,6 @@ const useSubscribeNotifications = ({ memberId }: { memberId: number }) => {
         },
       });
 
-      console.log(response);
-
       return response.data;
     },
   });
