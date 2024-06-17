@@ -13,10 +13,8 @@ const SidePanel = ({ onClick }: SidePanelProps) => {
   const { data } = useNotification();
   const [isClosed, setIsClosed] = useState(false);
 
-  console.log(data);
-
   const handleClose = () => {
-    setIsClosed(false);
+    setIsClosed(true);
     setTimeout(onClick, 500);
   };
 
