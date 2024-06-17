@@ -77,7 +77,7 @@ const StyledFooter = styled.footer`
   padding: 4rem 0rem 3.5rem;
   border-top: 0.1rem solid ${theme.colors.border};
   width: 128rem;
-  z-index: 3;
+  z-index: 2;
 `;
 
 const Flex = styled.div`
