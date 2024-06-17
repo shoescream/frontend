@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
@@ -7,9 +7,12 @@ import useAddComma from '@/hooks/useAddComma';
 interface SellOrBuyBidSectionProps {
     type: 'buy' | 'sell';
     price: number;
+    immediatePurchasePrice: number; 
+    onPriceBuyChange: (isHigher: boolean) => void; 
+    onPriceSellChange: (isLower: boolean) => void; 
 }
 
-const SellOrBuyBidSection: React.FC<SellOrBuyBidSectionProps> = ({ type, price }) => {
+const SellOrBuyBidSection: React.FC<SellOrBuyBidSectionProps> = ({ type, price, immediatePurchasePrice, onPriceBuyChange, onPriceSellChange }) => {
     const [inputPrice, setInputPrice] = useState('');
     const [inputError, setInputError] = useState('');
     const [expiry, setExpiry] = useState<number | null>(null);
@@ -18,14 +21,23 @@ const SellOrBuyBidSection: React.FC<SellOrBuyBidSectionProps> = ({ type, price }
 
     const addComma = useAddComma();
 
+    useEffect(() => {
+        handleExpiryChange(180);
+    }, []);
+
     const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/,/g, '');
         if (/^\d+$/.test(value) && parseInt(value) >= 20000 && parseInt(value) % 1000 === 0) {
-            setInputPrice(addComma(parseInt(value)));
+            const newPrice = parseInt(value);
+            setInputPrice(addComma(newPrice));
             setInputError('');
+            onPriceBuyChange(newPrice >= immediatePurchasePrice);
+            onPriceSellChange(newPrice <= immediatePurchasePrice);
         } else {
             setInputPrice(value);
             setInputError('2만원부터 천원단위로 입력하세요.');
+            onPriceBuyChange(false);
+            onPriceSellChange(false);
         }
     };
 
@@ -72,7 +84,7 @@ const SellOrBuyBidSection: React.FC<SellOrBuyBidSectionProps> = ({ type, price }
                         styles={{
                             fontSize: '1.2rem',
                             height: '4rem',
-                            border: selectedButton === days ? '0.3rem solid black' : '0.1rem solid black',
+                            border: selectedButton === days ? '0.2rem solid black' : '0.1rem solid gray',
                         }}
                     >
                         {days}일

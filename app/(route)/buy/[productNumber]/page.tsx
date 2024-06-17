@@ -1,11 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
-// import BidSectionPage from './BidSection';
-// import BuySectionPage from './BuySection';
 import SellOrBuyBidSection from '@/components/DetailProduct/SellOrBuyBidSection';
 import SellOrBuySection from '@/components/DetailProduct/SellOrBuySection';
 import { useBuyProducts } from '@/hooks/queries/useSellAndBuyProducts';
@@ -18,10 +16,15 @@ const BuyPage: React.FC = () => {
     const searchParams = useSearchParams();
     const productNumber = parseInt(pathname.replace('/buy/', ''), 10);
     const size = searchParams.get('size') || '';
-
     const { data } = useBuyProducts(productNumber, size);
 
     const addComma = useAddComma();
+
+    const handlePriceChange = (isHigher: boolean) => {
+        if (isHigher) {
+            setView('buy');
+        }
+    };
 
     return (
         <MainContainer>
@@ -86,8 +89,20 @@ const BuyPage: React.FC = () => {
                             즉시 구매
                         </Button>
                     </ButtonContainer>
-                    {view === 'buy' && data && <SellOrBuySection type={'buy'} price={data.lowestPrice} />}
-                    {view === 'bid' && <SellOrBuyBidSection type={'buy'} price={0} />}
+                    {view === 'buy' && data &&
+                        <SellOrBuySection
+                            type={'buy'}
+                            price={data.lowestPrice}
+                        />}
+                    {view === 'bid' && data && (
+                        <SellOrBuyBidSection
+                            type={'buy'}
+                            price={0}
+                            immediatePurchasePrice={data.lowestPrice}
+                            onPriceBuyChange={handlePriceChange}
+                            onPriceSellChange={function (isLower: boolean): void { }}
+                        />
+                    )}
                 </BottomSection>
             </BuyContainer>
         </MainContainer>

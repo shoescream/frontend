@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
-// import BidSectionPage from './BidSection';
-// import SellSectionPage from './SellSection';
 import SellOrBuyBidSection from '@/components/DetailProduct/SellOrBuyBidSection';
 import SellOrBuySection from '@/components/DetailProduct/SellOrBuySection';
 import { useSellProducts } from '@/hooks/queries/useSellAndBuyProducts';
@@ -18,10 +16,15 @@ const SellPage = () => {
     const searchParams = useSearchParams();
     const productNumber = parseInt(pathname.replace('/sell/', ''), 10);
     const size = searchParams.get('size') || '';
+    const { data } = useSellProducts(productNumber, size);
 
     const addComma = useAddComma();
 
-    const { data } = useSellProducts(productNumber, size);
+    const handlePriceChange = (isLower: boolean) => {
+        if (isLower) {
+            setView('sell');
+        }
+    };
 
     return (
         <MainContainer>
@@ -86,8 +89,20 @@ const SellPage = () => {
                             즉시 판매
                         </Button>
                     </ButtonContainer>
-                    {view === 'sell' && data && <SellOrBuySection type={'sell'} price={data.highestPrice} />}
-                    {view === 'bid' && data && <SellOrBuyBidSection type={'sell'} price={data.highestPrice} />}
+                    {view === 'sell' && data &&
+                        <SellOrBuySection
+                            type={'sell'}
+                            price={data.highestPrice}
+                        />}
+                    {view === 'bid' && data && (
+                        <SellOrBuyBidSection
+                            type={'sell'}
+                            price={0}
+                            immediatePurchasePrice={data.highestPrice}
+                            onPriceSellChange={handlePriceChange}
+                            onPriceBuyChange={function (isHigher: boolean): void { }}
+                        />
+                    )}
                 </BottomSection>
             </SellContainer>
         </MainContainer>
