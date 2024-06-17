@@ -47,8 +47,8 @@ const SizeListModal = ({
             customFontSize="1.4rem"
             styles={{ height: '4.2rem' }}
             onClick={() => {
+              onSetValue(Number(currentItem));
               onClose();
-              onSetValue(Number(SIZES[currentItem]));
             }}
           >
             확인

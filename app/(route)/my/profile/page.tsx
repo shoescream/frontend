@@ -2,7 +2,7 @@
 'use client';
 
 import theme from '@/styles/theme';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import SizeListModal from '@/components/common/Modal/SizeListModal';
@@ -28,6 +28,14 @@ const Profile = () => {
   const [currentItem, setCurrentItem] = useState(NaN);
   const methods = useForm<FormData>();
   const { setValue, handleSubmit } = methods;
+  const user = JSON.parse(LocalStorage.getItem('@user')!);
+
+  useEffect(() => {
+    setValue('email', user.email);
+    setValue('id', user.memberId);
+    setValue('image', user.profileImage);
+    setValue('nickname', user.memberId);
+  }, []);
 
   const onSubmit = (data: FormData) => {
     console.log('Submitted data:', data);
@@ -62,6 +70,7 @@ const Profile = () => {
                 },
                 { name: 'introduction', label: '소개', type: 'text' },
               ]}
+              originId={user.memberId}
             />
           </FormWrapper>
         </Section>

@@ -15,6 +15,7 @@ interface StyledInputProps extends Pick<HTMLInputElement, 'type'> {
   isEditable?: boolean;
   helperText?: string;
   onClickModify?: () => void;
+  originId?: string;
 }
 
 const StyledInput = ({
@@ -26,10 +27,13 @@ const StyledInput = ({
   isEditable = false,
   helperText,
   onClickModify,
+  originId,
 }: StyledInputProps) => {
   const [changeToEdit, setChangeToEdit] = useState(false);
+  const [initialValue, setInitialValue] = useState<string | undefined>();
   const {
     register,
+    getValues,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -45,7 +49,7 @@ const StyledInput = ({
   };
 
   const handleCancel = () => {
-    setValue(name as keyof FormData, '');
+    setValue(name as keyof FormData, initialValue as string);
     setChangeToEdit(false);
   };
 
@@ -54,10 +58,20 @@ const StyledInput = ({
       {!changeToEdit && (
         <ModifyButton
           onClickModify={() => {
-            if (onClickModify) {
-              onClickModify();
+            if (
+              !originId?.startsWith('kakao') &&
+              ['id', 'password', 'email'].includes(name)
+            ) {
+              alert(
+                '카카오 로그인 사용자는 아이디 및 비밀번호를 수정할 수 없습니다.'
+              );
             } else {
-              setChangeToEdit(true);
+              if (onClickModify) {
+                onClickModify();
+              } else {
+                setInitialValue(getValues(name as keyof FormData) as string);
+                setChangeToEdit(true);
+              }
             }
           }}
         >

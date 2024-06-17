@@ -25,8 +25,6 @@ const PriceGrid = ({
 }: PriceGridProps) => {
   const addComma = useAddComma();
 
-  console.log(data);
-
   return (
     <Grid style={{ gridTemplateColumns: customGridTemplate || '1fr 1fr 1fr' }}>
       {data &&
