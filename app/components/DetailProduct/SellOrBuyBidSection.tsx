@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
 import useAddComma from '@/hooks/useAddComma';
+import { useRouter } from 'next/navigation';
 
 interface SellOrBuyBidSectionProps {
     type: 'buy' | 'sell';
@@ -18,6 +19,7 @@ const SellOrBuyBidSection: React.FC<SellOrBuyBidSectionProps> = ({ type, price, 
     const [expiry, setExpiry] = useState<number | null>(null);
     const [expiryDate, setExpiryDate] = useState('');
     const [selectedButton, setSelectedButton] = useState<number | null>(null);
+    const router = useRouter();
 
     const addComma = useAddComma();
 
@@ -103,6 +105,7 @@ const SellOrBuyBidSection: React.FC<SellOrBuyBidSectionProps> = ({ type, price, 
                 styles={{
                     fontSize: '1.2rem',
                 }}
+                onClick={() => router.push('/')} // TODO: 다음 페이지로 변경
             >
                 {type === 'buy' ? '구매 입찰 계속' : '판매 입찰 계속'}
             </Button>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
 import useAddComma from '@/hooks/useAddComma';
+import { useRouter } from 'next/navigation';
 
 interface SellOrBuySectionProps {
     type: 'buy' | 'sell';
@@ -11,6 +12,7 @@ interface SellOrBuySectionProps {
 
 const SellOrBuySection: React.FC<SellOrBuySectionProps> = ({ type, price }) => {
     const [view, setView] = useState('main');
+    const router = useRouter();
     const addComma = useAddComma();
     const isBuy = type === 'buy';
 
@@ -56,6 +58,7 @@ const SellOrBuySection: React.FC<SellOrBuySectionProps> = ({ type, price }) => {
                 styles={{
                     fontSize: '1.2rem',
                 }}
+                onClick={() => router.push('/')} // TODO: 다음 페이지로 변경
             >
                 {isBuy ? '즉시 구매 계속' : '즉시 판매 계속'}
             </Button>
