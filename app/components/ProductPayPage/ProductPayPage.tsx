@@ -5,7 +5,7 @@ import Image from 'next/image';
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import useAddComma from '@/hooks/useAddComma';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import Button from '../common/Button';
 import { usePayment, useSellNow } from '@/hooks/queries/usePayment';
 import LocalStorage from '@/utils/localStorage';
@@ -21,9 +21,11 @@ const ProductPayPage = ({
   const pathname = usePathname();
   const addComma = useAddComma();
   const PATH = pathname.split('/')[1];
-  const PRODUCT_NUMBER = pathname.replace('/sell/', '');
-  // TODO: 앞의 페이지와 연결되면 size 수정하기
-  const SIZE = 245;
+  const PRODUCT_NUMBER = pathname.replace(
+    pathname.startsWith('/sell') ? '/sell/' : '/buy/',
+    ''
+  );
+  const { size } = useParams();
   const { data } = useDetailProduct(PRODUCT_NUMBER);
   const { mutate: mutatePayment } = usePayment();
   const { mutate: mutateSellNow } = useSellNow();
@@ -38,10 +40,8 @@ const ProductPayPage = ({
   const handleSellNow = async () => {
     console.log({
       productNumber: Number(PRODUCT_NUMBER),
-      // size: String(SIZE),
-      size: '225',
-      // price: 106000,
-      price: 96500,
+      size: String(size),
+      price: data?.productResponse.price, // TODO: 입찰/즉시구매에서 넘어온 값으로 변경할 것.
     });
     mutateSellNow({
       productNumber: Number(PRODUCT_NUMBER),
@@ -105,7 +105,7 @@ const ProductPayPage = ({
                   fontSize: theme.fontSize.body1,
                 }}
               >
-                {SIZE}
+                {size}
               </strong>
             </div>
           </div>

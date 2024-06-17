@@ -74,15 +74,8 @@ const DetailProduct = () => {
       {isSellingModalOpen !== 'none' && (
         <SellOrBuySizeModal
           onClose={() => setIsSellingModalOpen('none')}
-          data={isSellingModalOpen === 'buy'
-            ? data?.productOptionResponse.sizeAndPriceBuyInfo!
-            : data?.productOptionResponse.sizeAndPriceSellInfo!}
+          data={isSellingModalOpen === 'buy' ? data! : data!}
           type={isSellingModalOpen}
-          productCode={data?.productResponse.productCode!}
-          productName={data?.productResponse.productName!}
-          productSubName={data?.productResponse.productSubName!}
-          productImage={data?.productResponse.productImageResponse.productImage[0] || ''}
-          productNumber={data?.productResponse.productNumber!}
         />
       )}
       <Container>
@@ -150,8 +143,7 @@ const DetailProduct = () => {
                   styles={{ height: '6rem' }}
                   onClick={() =>
                     isLoggedIn
-                      ? // ? setIsSellingModalOpen('sell')
-                        router.push('/sell/1')
+                      ? setIsSellingModalOpen('sell')
                       : router.push('/login')
                   }
                 >

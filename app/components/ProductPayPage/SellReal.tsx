@@ -24,7 +24,7 @@ const TABLE_ITEM = [
   },
 ];
 
-const Sell = () => {
+const SellReal = () => {
   const addComma = useAddComma();
   const [isOpen, setIsOpen] = useState(false);
   const value = 228000;
@@ -135,7 +135,7 @@ const Sell = () => {
   );
 };
 
-export default Sell;
+export default SellReal;
 
 const Section = styled.section`
   width: 70rem;

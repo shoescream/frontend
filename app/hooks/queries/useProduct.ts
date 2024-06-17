@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Instance } from 'app/api';
 
-interface DetailProduct {
+export interface DetailProduct {
   productResponse: {
     productNumber: number;
     productCode: string;

@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { IoIosArrowForward } from 'react-icons/io';
 import { useForm } from 'react-hook-form';
 import theme from '@/styles/theme';
+import { usePathname } from 'next/navigation';
 
 const TABLE_ITEM = [
   {
@@ -31,8 +32,10 @@ interface FormData {
   point: number;
 }
 
-const Buy = () => {
+const BuyReal = () => {
   const addComma = useAddComma();
+  const pathname = usePathname();
+  const productNumber = pathname.replace('/buy/', '');
   const value = 89000;
   const sum =
     value +
@@ -115,7 +118,7 @@ const Buy = () => {
   );
 };
 
-export default Buy;
+export default BuyReal;
 
 const Section = styled.section`
   width: 70rem;
