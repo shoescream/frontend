@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { Instance } from 'app/api';
 
 export interface ShopProductType {
@@ -15,7 +16,9 @@ export interface ShopProductType {
 }
 
 const fetchProducts = async (): Promise<ShopProductType[]> => {
-    const response = await Instance.get('/products');
+    // const response = await Instance.get('/products');
+    const response = await axios.get('https://shoescream.shop/products')
+    console.log('shop page data:', response.data);
     return response.data.result;
 };
 
