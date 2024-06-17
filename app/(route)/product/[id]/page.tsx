@@ -59,7 +59,6 @@ const DetailProduct = () => {
   if (isLoading) {
     return <Container>noting</Container>;
   }
-
   return (
     <>
       {isOpen && (
@@ -73,12 +72,15 @@ const DetailProduct = () => {
       {isSellingModalOpen !== 'none' && (
         <SellOrBuySizeModal
           onClose={() => setIsSellingModalOpen('none')}
-          data={
-            isSellingModalOpen === 'buy'
-              ? data?.productOptionResponse.sizeAndPriceBuyInfo!
-              : data?.productOptionResponse.sizeAndPriceSellInfo!
-          }
+          data={isSellingModalOpen === 'buy'
+            ? data?.productOptionResponse.sizeAndPriceBuyInfo!
+            : data?.productOptionResponse.sizeAndPriceSellInfo!}
           type={isSellingModalOpen}
+          productCode={data?.productResponse.productCode!}
+          productName={data?.productResponse.productName!}
+          productSubName={data?.productResponse.productSubName!}
+          productImage={data?.productResponse.productImageResponse.productImage[0] || ''}
+          productNumber={data?.productResponse.productNumber!}
         />
       )}
       <Container>
@@ -213,11 +215,11 @@ const DetailProduct = () => {
                 <DetailTitle>시세</DetailTitle>
               </DetailTitleBox>
               <Charts
-                productNumber={String(data?.productResponse.id)}
+                productNumber={String(data?.productResponse.productNumber)}
                 size={currentSizeItem}
               />
               <Bids
-                productNumber={String(data?.productResponse.id)}
+                productNumber={String(data?.productResponse.productNumber)}
                 size={currentSizeItem}
                 currentFilterBySize={currentFilterBySize}
                 onSetCurrentFilterBySize={setCurrentFilterBySize}
