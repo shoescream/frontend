@@ -64,20 +64,20 @@ const OptionBox = styled.div`
 `;
 
 const OptionTitle = styled.span`
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   font-weight: 400;
   color: ${theme.colors.main};
 `;
 
 const SeeMoreOptions = styled.span`
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   font-weight: 400;
   color: ${theme.colors.text.secondary};
   cursor: pointer;
 `;
 
 const CategoryName = styled.div`
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   line-height: 1.7rem;
   display: flex;
   align-items: center;
@@ -89,12 +89,12 @@ const CategoryName = styled.div`
 const Point = styled.span`
   color: ${theme.colors.text.secondary};
   width: 4rem;
-  font-size: 1.2rem;
+  font-size: ${theme.fontSize.caption1};
   margin-right: 1rem;
 `;
 
 const PointDetail = styled.span`
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   color: ${theme.colors.main};
 `;
 

@@ -64,7 +64,7 @@ const Title = styled.th`
   width: 50%;
   border-bottom: 0.1rem solid #ebebeb;
   color: ${theme.colors.text.secondary};
-  font-size: 1.2rem;
+  font-size: ${theme.fontSize.caption1};
   font-weight: 400;
   padding-bottom: 0.9rem;
   height: 1.4rem;
@@ -86,7 +86,7 @@ const RightTitle = styled.th`
   width: 50%;
   border-bottom: 0.1rem solid #ebebeb;
   color: ${theme.colors.text.secondary};
-  font-size: 1.2rem;
+  font-size: ${theme.fontSize.caption1};
   font-weight: 400;
   padding-bottom: 0.9rem;
   height: 1.4rem;
@@ -102,7 +102,7 @@ const LastTitle = styled.th`
   text-align: right;
   border-bottom: 0.1rem solid #ebebeb;
   color: ${theme.colors.text.secondary};
-  font-size: 1.2rem;
+  font-size: ${theme.fontSize.caption1};
   font-weight: 400;
   padding-bottom: 0.9rem;
   height: 1.4rem;
@@ -114,7 +114,7 @@ const SizeData = styled.td`
   flex-shrink: 1;
   width: 50%;
   color: ${theme.colors.main};
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   font-weight: 300;
   padding-top: 0.9rem;
   text-align: left;
@@ -127,7 +127,7 @@ const RightSizeData = styled.td`
   flex-shrink: 1;
   width: 50%;
   color: ${theme.colors.main};
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   font-weight: 300;
   padding-top: 0.9rem;
 `;
@@ -141,7 +141,7 @@ const LastSizeData = styled.td`
   padding-right: 0;
   text-align: right;
   color: ${theme.colors.main};
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   font-weight: 300;
   padding-top: 0.9rem;
 `;

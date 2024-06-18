@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import theme from './styles/theme';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -12,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-size: 1.6rem;
     font-weight: 400;
+    font-family: ${theme.fonts.pretendard} !important;
   }
   h1,
   h2,

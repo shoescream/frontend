@@ -46,7 +46,7 @@ const FilterItem = styled.li<{ $clicked: boolean }>`
   width: 100%;
   height: 3.2rem;
   margin: 0.2rem;
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   padding: 0.7rem 0.9rem;
   border-radius: 0.8rem;
   cursor: pointer;

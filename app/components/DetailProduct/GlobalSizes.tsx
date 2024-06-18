@@ -73,8 +73,10 @@ const GlobalSizes = () => {
 export default GlobalSizes;
 
 const Box = styled.div`
+  width: 128rem;
   padding-bottom: 4rem;
   border-bottom: 0.1rem solid ${theme.colors.gray[100]};
+  margin: 0 auto;
 `;
 
 const TableContainer = styled.div`
@@ -96,7 +98,7 @@ const TableHeader = styled.th`
   text-align: center;
   background-color: #fafafa;
   color: ${theme.colors.text.primary};
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   font-weight: 400;
   position: sticky;
   left: 0;
@@ -109,7 +111,7 @@ const TableCell = styled.td`
   padding: 1.1rem;
   text-align: center;
   color: ${theme.colors.text.primary};
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   font-weight: 400;
 `;
 

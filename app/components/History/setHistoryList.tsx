@@ -1,9 +1,8 @@
 import { ProductHistory } from '@/hooks/queries/useHistory';
 import useAddComma from '@/hooks/useAddComma';
 import theme from '@/styles/theme';
-import dayjs from 'dayjs';
 import moment from 'moment';
-import { use, useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 interface SetHistoryListProps {

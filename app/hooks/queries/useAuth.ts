@@ -23,9 +23,11 @@ interface LoginProps {
   password: string;
 }
 
-const useLogin = () => {
-  const router = useRouter();
-
+const useLogin = ({
+  successHandler,
+}: {
+  successHandler: (data: Response<LoginResponse>) => void;
+}) => {
   return useMutation({
     mutationFn: async ({ userId, password }: LoginProps) => {
       const response: { data: Response<LoginResponse> } = await Instance.post(
@@ -37,20 +39,7 @@ const useLogin = () => {
       );
       return response.data;
     },
-    onSuccess: (data) => {
-      if (data.resultCode === 'SUCCESS' && data.result) {
-        LocalStorage.setItem('@token', data.result.tokenResponse.accessToken);
-        localStorage.setItem(
-          '@refresh',
-          data.result.tokenResponse.refreshToken
-        );
-        localStorage.setItem(
-          '@user',
-          JSON.stringify(data.result.memberResponse)
-        );
-        window.location.href = '/';
-      }
-    },
+    onSuccess: (data) => successHandler(data),
     onError: (error) => {
       console.error('useLogin: ', error);
       throw error;
@@ -134,7 +123,11 @@ const useKakaoProfile = (access: string, refresh: string) => {
   });
 };
 
-const useSocialLogin = () => {
+const useSocialLogin = ({
+  successHandler,
+}: {
+  successHandler: (data: any) => void;
+}) => {
   return useMutation({
     mutationFn: async (props: SocialLoginProps) => {
       const response = await Instance.post('/kakao-login', {
@@ -143,20 +136,7 @@ const useSocialLogin = () => {
 
       return response.data;
     },
-    onSuccess: (data) => {
-      if (data.resultCode === 'SUCCESS') {
-        localStorage.setItem('@token', data.result!.tokenResponse.accessToken);
-        localStorage.setItem(
-          '@refresh',
-          data.result!.tokenResponse.refreshToken
-        );
-        localStorage.setItem(
-          '@user',
-          JSON.stringify(data.result!.memberResponse)
-        );
-        window.location.href = '/';
-      }
-    },
+    onSuccess: (data) => successHandler(data),
     onError: (error) => {
       console.error('useSocialLogin: ', error);
       throw error;

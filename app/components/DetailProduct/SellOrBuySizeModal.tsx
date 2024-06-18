@@ -9,39 +9,35 @@ import styled from 'styled-components';
 import Button from '../common/Button';
 import useAddComma from '@/hooks/useAddComma';
 import { useRouter } from 'next/navigation';
+import { DetailProduct } from '@/hooks/queries/useProduct';
 
 interface SellOrBuySizeModalProps {
-  data: {
-    [key: string]: number;
-  };
+  data: DetailProduct;
   onClose: () => void;
   type: 'buy' | 'sell';
-  productCode: string;
-  productName: string;
-  productSubName: string;
-  productImage: string;
-  productNumber: number;
 }
 
 const SellOrBuySizeModal = ({
   onClose,
   data,
   type,
-  productCode,
-  productName,
-  productSubName,
-  productImage,
-  productNumber
 }: SellOrBuySizeModalProps) => {
+  const productData = data.productResponse;
+  const priceData =
+    type === 'buy'
+      ? data.productOptionResponse.sizeAndPriceBuyInfo
+      : data.productOptionResponse.sizeAndPriceSellInfo;
   const [clickedItem, setClickedItem] = useState(0);
-  const [selectedPrice, setSelectedPrice] = useState(data[clickedItem]);
+  const [selectedPrice, setSelectedPrice] = useState<number>(
+    priceData[clickedItem]
+  );
 
   const router = useRouter();
   const addComma = useAddComma();
 
   useEffect(() => {
-    setSelectedPrice(data[clickedItem]);
-  }, [clickedItem, data]);
+    setSelectedPrice(priceData[clickedItem]);
+  }, [clickedItem, priceData]);
 
   return (
     <StyledSizeModal onClose={onClose} height="61.4rem">
@@ -70,7 +66,13 @@ const SellOrBuySizeModal = ({
             onClick={onClose}
           />
         </ModalHeader>
-        <div style={{ padding: '0 3.2rem', maxHeight: 'calc(100% - 12rem)', overflowY: 'auto' }}>
+        <div
+          style={{
+            padding: '0 3.2rem',
+            maxHeight: 'calc(100% - 12rem)',
+            overflowY: 'auto',
+          }}
+        >
           <div
             style={{
               display: 'flex',
@@ -85,8 +87,8 @@ const SellOrBuySizeModal = ({
             }}
           >
             <img
-              src={productImage}
-              alt={productName}
+              src={productData.productImageResponse.productImage[0]}
+              alt={productData.productName}
               width={80}
               height={80}
               style={{ borderRadius: '0.8rem' }}
@@ -98,15 +100,15 @@ const SellOrBuySizeModal = ({
                 gap: '0.4rem',
               }}
             >
-              <strong>{productCode}</strong>
-              <p>{productName}</p>
+              <strong>{productData.productCode}</strong>
+              <p>{productData.productName}</p>
               <p style={{ color: theme.colors.border }}>
-                {productSubName}
+                {productData.productSubName}
               </p>
             </div>
           </div>
           <PriceGrid
-            data={data}
+            data={priceData}
             clickedItem={clickedItem}
             onSetClickedItem={setClickedItem}
             isTypeSell
@@ -116,13 +118,17 @@ const SellOrBuySizeModal = ({
       {clickedItem !== 0 && (
         <ModalFooter>
           <Button
-            type='button'
-            buttonColor='dark'
-            size='full'
+            type="button"
+            buttonColor="dark"
+            size="full"
             style={{ position: 'absolute', bottom: 0 }}
             onClick={() => {
-              const route = type === 'sell' ? '/sell/' : '/buy/';
-              router.push(`${route}${productNumber}?size=${[clickedItem]}`);
+              const route = type === 'sell' ? '/sell' : '/buy';
+              router.push(
+                `${route}/${productData.productNumber}?type=ask&size=${[
+                  clickedItem,
+                ]}`
+              );
             }}
           >
             <PriceText>{addComma(selectedPrice)}원</PriceText>
@@ -159,9 +165,9 @@ const ModalFooter = styled.div`
 `;
 
 const PriceText = styled.strong`
-  font-size: 1.4rem; 
+  font-size: 1.4rem;
 `;
 
 const DeliveryText = styled.p`
-  font-size: 1rem; 
+  font-size: 1rem;
 `;

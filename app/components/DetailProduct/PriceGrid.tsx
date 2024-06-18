@@ -84,7 +84,7 @@ const GridItem = styled.div<{ $clicked: boolean }>`
 `;
 
 const GridItemTitle = styled.p<{ $clicked: boolean }>`
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
   font-weight: ${(props) => (props.$clicked ? 600 : 400)};
 `;
 
@@ -93,7 +93,7 @@ const GridItemPrice = styled.p<{
   $clicked: boolean;
   $isTypeSell: boolean;
 }>`
-  font-size: 1.2rem;
+  font-size: ${theme.fontSize.caption1};
   margin-top: 0.2rem;
   font-weight: ${(props) => (props.$clicked ? 600 : 400)};
   color: ${({ $isFirstItem, $isTypeSell }) =>
