@@ -1,5 +1,6 @@
 'use client';
 
+import AuthLayout from '@/components/Layout/AuthLayout';
 import BuyAsk from '@/components/ProductPayPage/BuyAsk';
 import BuyReal from '@/components/ProductPayPage/BuyReal';
 
@@ -21,7 +22,11 @@ const BuyProduct = () => {
     return null;
   }
 
-  return <Component />;
+  return (
+    <AuthLayout>
+      <Component />
+    </AuthLayout>
+  );
 };
 
 export default BuyProduct;

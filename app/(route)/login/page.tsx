@@ -31,6 +31,7 @@ const Login = () => {
           JSON.stringify(data.result?.memberResponse!)
         );
         console.log(data);
+        LocalStorage.setItem('canAccessSubscribe', 'true');
         router.push('/subscribe');
       }
     },
@@ -61,7 +62,7 @@ const Login = () => {
     <LoginContainer>
       <Content>
         <Logo>
-          <h1>KREAM</h1>
+          <img src="/shoe.png" alt="logo" width={130} height={70} />
           <p>KICKS RULE EVERYTHING AROUND ME</p>
         </Logo>
         <Form onSubmit={handleSubmit(submitHandler)}>

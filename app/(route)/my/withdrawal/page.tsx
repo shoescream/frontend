@@ -44,7 +44,7 @@ const Withdrawal = () => {
           </div>
           <div>
             <WithdrawalTitle>
-              KREAM을 탈퇴하면 회원 정보 및 서비스 이용 기록이 삭제됩니다.
+              SHOESCREAM을 탈퇴하면 회원 정보 및 서비스 이용 기록이 삭제됩니다.
             </WithdrawalTitle>
             <ListItem>
               - 내 프로필, 거래내역(구매/판매), 관심상품, 보유상품, STYLE

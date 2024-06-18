@@ -1,5 +1,6 @@
 'use client';
 
+import AuthLayout from '@/components/Layout/AuthLayout';
 import SellAsk from '@/components/ProductPayPage/SellAsk';
 import SellReal from '@/components/ProductPayPage/SellReal';
 
@@ -21,7 +22,11 @@ const SellProduct = () => {
     return null;
   }
 
-  return <Component />;
+  return (
+    <AuthLayout>
+      <Component />
+    </AuthLayout>
+  );
 };
 
 export default SellProduct;

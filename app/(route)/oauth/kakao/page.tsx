@@ -5,6 +5,7 @@ import {
   useKakaoProfile,
   useSocialLogin,
 } from '@/hooks/queries/useAuth';
+import LocalStorage from '@/utils/localStorage';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -31,6 +32,7 @@ const Kakao = () => {
           '@user',
           JSON.stringify(data.result!.memberResponse)
         );
+        LocalStorage.setItem('canAccessSubscribe', 'true');
         router.push('/subscribe');
       }
     },

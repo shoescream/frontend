@@ -14,8 +14,15 @@ const Subscribe = () => {
   useSubscribeNotifications({ memberId });
 
   useEffect(() => {
-    if (!user) {
+    const canAccess = LocalStorage.getItem('canAccessSubscribe');
+
+    if (!user || !canAccess) {
       router.push('/login');
+    }
+
+    if (canAccess) {
+      LocalStorage.removeItem('canAccessSubscribe');
+      router.back();
     }
   }, [router, user]);
 
