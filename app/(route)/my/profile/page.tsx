@@ -27,14 +27,21 @@ const Profile = () => {
   const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState(NaN);
   const methods = useForm<FormData>();
-  const { setValue, handleSubmit } = methods;
-  const user = JSON.parse(LocalStorage.getItem('@user')!);
+  const { setValue, handleSubmit, getValues } = methods;
 
   useEffect(() => {
-    setValue('email', user.email);
-    setValue('id', user.memberId);
-    setValue('image', user.profileImage);
-    setValue('nickname', user.memberId);
+    if (typeof window !== 'undefined') {
+      const userData = LocalStorage.getItem('@user');
+      if (userData) {
+        const user = JSON.parse(userData);
+        setValue('email', user.email);
+        setValue('image', user.profileImage);
+        setValue('id', user.memberId);
+        setValue('nickname', user.memberId);
+      } else {
+        router.push('/login');
+      }
+    }
   }, []);
 
   const onSubmit = (data: FormData) => {
@@ -70,7 +77,7 @@ const Profile = () => {
                 },
                 { name: 'introduction', label: '소개', type: 'text' },
               ]}
-              originId={user.memberId}
+              originId={getValues('id') || ''}
             />
           </FormWrapper>
         </Section>

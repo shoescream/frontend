@@ -7,12 +7,17 @@ import { useEffect } from 'react';
 
 const Subscribe = () => {
   const router = useRouter();
-  const user = JSON.parse(LocalStorage.getItem('@user')!).memberId;
-  useSubscribeNotifications({ memberId: user?.memberId });
+  const userData = LocalStorage.getItem('@user');
+  const user = userData ? JSON.parse(userData) : null;
+
+  const { memberId } = user || {};
+  useSubscribeNotifications({ memberId });
 
   useEffect(() => {
-    router.push('/');
-  }, [router]);
+    if (!user) {
+      router.push('/login');
+    }
+  }, [router, user]);
 
   return <div></div>;
 };

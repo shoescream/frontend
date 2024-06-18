@@ -59,7 +59,8 @@ const StyledInput = ({
         <ModifyButton
           onClickModify={() => {
             if (
-              !originId?.startsWith('kakao') &&
+              originId &&
+              !originId.startsWith('kakao') &&
               ['id', 'password', 'email'].includes(name)
             ) {
               alert(
