@@ -47,7 +47,9 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
         <>
           <Notification
             type={type}
-            onClick={() => setIsOpenModal(!isOpenModal)}
+            onClick={() =>
+              token ? setIsOpenModal(!isOpenModal) : router.push('/login')
+            }
           />
           <ButtonWrapper
             type={type}

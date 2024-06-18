@@ -91,7 +91,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  padding-top: 13rem;
+  padding-top: 12rem;
 
   &.full-width {
     width: 100%;

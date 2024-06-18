@@ -17,7 +17,7 @@ const Header = () => {
   const Logo = () => {
     return (
       <div id="header__logo" onClick={() => router.push('/')}>
-        KREAM
+        SHOESCREAM
       </div>
     );
   };
@@ -46,14 +46,14 @@ const Header = () => {
         <HeaderInner>
           <Logo />
           <MultiNavBar type="main" data={NAV_DATA.MAIN_NAV_DATA} />
-          <SearchContainer>
+          {/* <SearchContainer>
             <InputStyled type="text" placeholder="Search in site"></InputStyled>
             <ImageStyled
               src="/search.png"
               alt="돋보기 이미지"
               onClick={() => null}
             />
-          </SearchContainer>
+          </SearchContainer> */}
         </HeaderInner>
       )}
     </HeaderWrapper>
@@ -62,7 +62,7 @@ const Header = () => {
 
 const HeaderWrapper = styled.header`
   width: 100%;
-  height: 13rem;
+  height: 12rem;
   display: flex;
   flex-direction: column;
   border-bottom: 0.1rem solid ${theme.colors.border};
@@ -72,7 +72,7 @@ const HeaderWrapper = styled.header`
 
 const HeaderTop = styled.div`
   position: relative;
-  height: 10rem;
+  height: 5rem;
   margin-top: 1rem;
 `;
 
@@ -83,6 +83,7 @@ const HeaderInner = styled.div`
     font-size: ${theme.fontSize.headline1};
     font-weight: bold;
     cursor: pointer;
+    font-style: italic;
   }
   position: relative;
 `;

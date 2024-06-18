@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <StyledFooter>
       <div>
-        <Flex>
+        <Flex style={{ marginBottom: '1.6rem' }}>
           <Row>
             {[
               '서비스소개',
@@ -47,23 +47,19 @@ const Footer = () => {
             </a>
           </Row>
         </Flex>
-        <Flex>
-          <Company>
-            <CompanyText>크림 주식회사 · 대표 김창욱</CompanyText>
-            <CompanyText>
-              사업자등록번호 : 570-88-01618 <a>사업자 정보 확인</a>
-            </CompanyText>
-            <CompanyText style={{ marginRight: '1.7rem' }}>
-              통신판매업 : 제 2021-성남분당C-0093호
-            </CompanyText>
-            <CompanyText>
-              사업장소재지 : 경기도 성남시 분당구 분당내곡로 131 판교테크원
-              타워1, 8층
-            </CompanyText>
-            <CompanyText style={{ marginRight: '1.7rem' }}>
-              호스팅 서비스 : 네이버 클라우드 ㈜
-            </CompanyText>
-          </Company>
+        <Flex
+          style={{
+            height: '6rem',
+            marginTop: '2rem',
+          }}
+        >
+          <div>
+            <DevelopersTitle>🧑🏻‍💻👩🏻‍💻 개발진</DevelopersTitle>
+            <Company>
+              <CompanyText>FE · 배동우 서유민 심채윤</CompanyText>
+              <CompanyText>BE · 배준오 최나영</CompanyText>
+            </Company>
+          </div>
           <Copyright>© SHOESCREAM Corp.</Copyright>
         </Flex>
       </div>
@@ -85,7 +81,6 @@ const Flex = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 1.6rem;
   position: relative;
 `;
 
@@ -103,26 +98,31 @@ const Row = styled.ul`
 `;
 
 const Company = styled.div`
-  max-width: 65.4rem;
+  max-width: 70rem;
   color: ${theme.colors.text.secondary};
   font-size: ${theme.fontSize.body2};
   display: flex;
-  flex-wrap: wrap;
   position: relative;
+  margin-top: 0.5rem;
 
   & a {
     cursor: pointer;
   }
 `;
 
+const DevelopersTitle = styled.span`
+  font-size: 1.5rem;
+  color: ${theme.colors.text.primary};
+  font-weight: 550;
+`;
+
 const CompanyText = styled.span`
   line-height: 2rem;
+  margin-right: 1.5rem;
 `;
 
 const Copyright = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0;
   font-size: ${theme.fontSize.caption2};
   color: ${theme.colors.text.secondary};
+  align-self: flex-end;
 `;
