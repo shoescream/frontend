@@ -7,10 +7,10 @@ const TOP_NAV_DATA = (token: string) => [
     title: '마이페이지',
     path: token ? '/my' : '/login',
   },
-  {
-    title: '관심상품',
-    path: token ? '/favorites' : '/login',
-  },
+  // {
+  //   title: '관심상품',
+  //   path: token ? '/favorites' : '/login',
+  // },
 ];
 const MAIN_NAV_DATA = [
   {
