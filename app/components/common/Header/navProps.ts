@@ -1,8 +1,8 @@
 const TOP_NAV_DATA = (token: string) => [
-  {
-    title: '고객센터',
-    path: '/center',
-  },
+  // {
+  //   title: '고객센터',
+  //   path: '/center',
+  // },
   {
     title: '마이페이지',
     path: token ? '/my' : '/login',
