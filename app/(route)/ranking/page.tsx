@@ -82,4 +82,5 @@ const ImageContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 3rem;
   width: 128rem;
+  justify-content: flex-start;
 `;
