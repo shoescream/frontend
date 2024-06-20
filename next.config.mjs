@@ -12,6 +12,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'kream-phinf.pstatic.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
   experimental: {

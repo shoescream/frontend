@@ -48,7 +48,7 @@ const Button = ({
       $size={sizeValue}
       style={{
         ...styles,
-        width: sizeValue,
+        width: styles?.width || sizeValue,
         backgroundColor: buttonColorValue,
         color: buttonColor === 'none' ? theme.colors.text.primary : 'white',
         fontWeight: buttonColor === 'none' ? 400 : 'bold',

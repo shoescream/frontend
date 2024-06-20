@@ -54,7 +54,7 @@ const ErrorButton = styled.button`
 `;
 
 const Subtitle = styled.h3`
-  font-size: 2rem;
+  font-size: ${theme.fontSize.title1};
   font-weight: 300;
 `;
 

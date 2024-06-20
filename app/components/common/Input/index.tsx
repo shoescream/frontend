@@ -11,6 +11,7 @@ interface InputProps extends Pick<HTMLInputElement, 'type' | 'name'> {
   errormessage: string;
   placeholder?: string;
   styles?: CSSProperties;
+  inputStyle?: CSSProperties;
   readonly?: boolean;
   isFromMypage?: boolean;
 }
@@ -26,6 +27,7 @@ const Input = ({
   styles,
   readonly = false,
   isFromMypage = false,
+  inputStyle,
 }: InputProps) => {
   const labelColor = () => {
     if (errormessage) {
@@ -34,6 +36,12 @@ const Input = ({
       return theme.colors.text.secondary;
     }
     return theme.colors.main;
+  };
+
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    if (type === 'text' && name === 'accountNumber') {
+      e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+    }
   };
 
   return (
@@ -47,6 +55,8 @@ const Input = ({
         errormessage={errormessage}
         placeholder={placeholder}
         readOnly={readonly}
+        style={inputStyle}
+        onInput={handleInput}
       />
       {errormessage && <ErrorText>{errormessage}</ErrorText>}
     </InputWrapper>
@@ -60,7 +70,6 @@ export default Input;
 const InputWrapper = styled.div`
   padding: 1rem 0 1.4rem;
   position: relative;
-  height: 8rem;
   margin: 0 auto;
 `;
 

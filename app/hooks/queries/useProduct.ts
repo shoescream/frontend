@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { Instance } from 'app/api';
 
-interface DetailProduct {
+export interface DetailProduct {
   productResponse: {
-    id: number;
+    productNumber: number;
     productCode: string;
     productName: string;
     productSubName: string;
@@ -31,10 +31,12 @@ interface DetailProduct {
 const useDetailProduct = (productNumber: string) => {
   return useQuery<DetailProduct>({
     queryKey: ['detail-product', productNumber],
-    enabled: !!productNumber,
+    enabled: !!Number(productNumber),
     retry: false,
     queryFn: async () => {
       const response = await Instance.get('/products/' + productNumber);
+
+      console.log(response);
 
       return response.data.result;
     },
@@ -60,7 +62,7 @@ const useGetTransactions = ({
 }) => {
   return useQuery<ProductTransactions>({
     queryKey: ['transactions', productNumber, size],
-    enabled: !!productNumber && !!size,
+    enabled: !!Number(productNumber) && !!size,
     retry: false,
     queryFn: async () => {
       const response = await Instance.get('/deal-history', {
@@ -96,7 +98,7 @@ const useGetBid = ({
 }) => {
   return useQuery<ProductBids>({
     queryKey: ['bids', productNumber, size],
-    enabled: !!productNumber && !!size,
+    enabled: !!Number(productNumber) && !!size,
     retry: false,
     queryFn: async () => {
       const response = await Instance.get('/bid-history', {

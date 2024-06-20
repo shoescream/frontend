@@ -2,13 +2,14 @@
 'use client';
 
 import theme from '@/styles/theme';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import SizeListModal from '@/components/common/Modal/SizeListModal';
 import ProfileBox from '@/components/Profile/ProfileBox';
 import FormSection from '@/components/Profile/FormSection';
 import { useRouter } from 'next/navigation';
+import LocalStorage from '@/utils/localStorage';
 
 export interface FormData {
   id: string;
@@ -26,7 +27,22 @@ const Profile = () => {
   const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState(NaN);
   const methods = useForm<FormData>();
-  const { setValue, handleSubmit } = methods;
+  const { setValue, handleSubmit, getValues } = methods;
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userData = LocalStorage.getItem('@user');
+      if (userData) {
+        const user = JSON.parse(userData);
+        setValue('email', user.email);
+        setValue('image', user.profileImage);
+        setValue('id', user.memberId);
+        setValue('nickname', user.memberId);
+      } else {
+        router.push('/login');
+      }
+    }
+  }, []);
 
   const onSubmit = (data: FormData) => {
     console.log('Submitted data:', data);
@@ -61,6 +77,7 @@ const Profile = () => {
                 },
                 { name: 'introduction', label: '소개', type: 'text' },
               ]}
+              originId={getValues('id') || ''}
             />
           </FormWrapper>
         </Section>
@@ -136,7 +153,7 @@ const FormWrapper = styled.form`
 `;
 
 const WithDrawal = styled.a`
-  font-size: 1.3rem;
+  font-size: ${theme.fontSize.body2};
   color: ${theme.colors.text.secondary};
   margin-top: 8.5rem;
   padding: 0.5rem 0;
