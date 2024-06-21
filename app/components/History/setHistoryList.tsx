@@ -124,7 +124,7 @@ const SetHistoryList = ({
         totalPages={totalPages}
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-      ></RenderPageNumbers>
+      />
     </>
   );
 };

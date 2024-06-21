@@ -37,6 +37,7 @@ const UpdateReview = ({
       rating: selectedRating,
     };
     update.mutate(reviewData);
+    closeModal();
   };
 
   useEffect(() => {

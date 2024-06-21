@@ -4,7 +4,7 @@ import { FaEllipsisV, FaStar } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useDeleteReview, useProductReviews } from '@/hooks/queries/useReview';
 import moment from 'moment';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UpdateReview from '../Review/ReviewUpdate';
 import RenderPageNumbers from '@/components/common/Paging';
 
@@ -34,6 +34,7 @@ const Review = ({ productNumber, productName, productImage }: ReviewProps) => {
   const closeModal = () => {
     setIsModalOpen(!isModalOpen);
     setSelectedReview(null);
+    productReview.refetch();
   };
 
   const handlePageChange = (pageNumber: number) => {
@@ -51,6 +52,7 @@ const Review = ({ productNumber, productName, productImage }: ReviewProps) => {
   const handleDelete = (reviewNumber: number) => {
     deleteReview.mutate(reviewNumber);
     closeModal();
+    productReview.refetch();
   };
   return (
     <>
@@ -121,7 +123,7 @@ const Review = ({ productNumber, productName, productImage }: ReviewProps) => {
         totalPages={totalPages}
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-      ></RenderPageNumbers>
+      />
       {isModalOpen && (
         <UpdateReview
           closeModal={closeModal}

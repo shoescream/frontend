@@ -21,6 +21,7 @@ const PostReview = () => {
   const [reviewDetails, setReviewDetails] = useState<ReviewDetails | null>(
     null
   );
+  const { data: reviewList, refetch: refetch } = useGetMyReviews();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   const handlePageChange = (pageNumber: number) => {
@@ -34,9 +35,9 @@ const PostReview = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setReviewDetails(null);
+    refetch();
   };
 
-  const { data: reviewList } = useGetMyReviews();
   if (!reviewList?.result) return <>loading...</>;
 
   const totalPages = Math.ceil(reviewList.result.length / itemsPerPage);
@@ -107,7 +108,7 @@ const PostReview = () => {
         totalPages={totalPages}
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-      ></RenderPageNumbers>
+      />
       {isModalOpen && (
         <ReviewPost
           closeModal={closeModal}

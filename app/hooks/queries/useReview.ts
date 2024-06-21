@@ -60,7 +60,7 @@ const usePostReview = ({ productNumber, closeModal }: PostReviewProps) => {
     },
     onSuccess: () => {
       closeModal();
-      window.location.reload();
+      // window.location.reload();
     },
     onError: (e) => {
       console.error(e);
@@ -97,7 +97,7 @@ const useDeleteReview = () => {
       await InstanceWithToken.post(`/review/delete/${reviewNumber}`);
     },
     onSuccess: () => {
-      window.location.reload();
+      // window.location.reload();
     },
     onError: (e) => {
       console.error(e);
@@ -120,7 +120,7 @@ const useUpdateReview = (reviewNumber: number) => {
       );
     },
     onSuccess: () => {
-      window.location.reload();
+      // window.location.reload();
     },
     onError: (e) => {
       console.error(e);
