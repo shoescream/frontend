@@ -103,7 +103,11 @@ const PostReview = () => {
           </ReviewItem>
         ))}
       </ReviewsList>
-      {RenderPageNumbers({ totalPages, currentPage, handlePageChange })}
+      <RenderPageNumbers
+        totalPages={totalPages}
+        currentPage={currentPage}
+        handlePageChange={handlePageChange}
+      ></RenderPageNumbers>
       {isModalOpen && (
         <ReviewPost
           closeModal={closeModal}

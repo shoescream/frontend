@@ -117,7 +117,11 @@ const Review = ({ productNumber, productName, productImage }: ReviewProps) => {
           </ReviewContainer>
         ))}
       </Container>
-      {RenderPageNumbers({ currentPage, totalPages, handlePageChange })}
+      <RenderPageNumbers
+        totalPages={totalPages}
+        currentPage={currentPage}
+        handlePageChange={handlePageChange}
+      ></RenderPageNumbers>
       {isModalOpen && (
         <UpdateReview
           closeModal={closeModal}

@@ -120,7 +120,11 @@ const SetHistoryList = ({
   return (
     <>
       {renderItem()}
-      {RenderPageNumbers({ totalPages, currentPage, handlePageChange })}
+      <RenderPageNumbers
+        totalPages={totalPages}
+        currentPage={currentPage}
+        handlePageChange={handlePageChange}
+      ></RenderPageNumbers>
     </>
   );
 };
