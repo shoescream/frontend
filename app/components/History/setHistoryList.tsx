@@ -4,7 +4,7 @@ import theme from '@/styles/theme';
 import moment from 'moment';
 import { useState } from 'react';
 import styled from 'styled-components';
-import RenderPageNumbers from '../common/Paging';
+import RenderPageNumbers from '@/components/common/Paging';
 
 interface SetHistoryListProps {
   selectState: number[];

@@ -5,8 +5,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useDeleteReview, useProductReviews } from '@/hooks/queries/useReview';
 import moment from 'moment';
 import { useState } from 'react';
-import RenderPageNumbers from '../common/Paging';
 import UpdateReview from '../Review/ReviewUpdate';
+import RenderPageNumbers from '@/components/common/Paging';
 
 interface ReviewProps {
   productNumber: number;
