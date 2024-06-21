@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../Modal';
 import LocalStorage from '@/utils/localStorage';
+import Notification from '../../Notification';
 
 interface NavDataProps {
   title?: string;
@@ -18,21 +19,17 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
   const router = useRouter();
   const path = usePathname();
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [loginState, setLoginState] = useState<'로그인' | '로그아웃'>('로그인');
-  const token = LocalStorage.getItem('@token');
-  const loginHandler = () => {
-    if (loginState === '로그인') router.push('/login');
-    else {
-      LocalStorage.removeItem('@token');
-      LocalStorage.removeItem('@user');
-      LocalStorage.removeItem('@refresh');
-      router.push('/login');
-    }
-  };
+  const [token, setToken] = useState<string | null>(null);
+
   useEffect(() => {
-    if (token) setLoginState('로그아웃');
-    else setLoginState('로그인');
-  });
+    setToken(LocalStorage.getItem('@token'));
+  }, []);
+
+  const logout = () => {
+    LocalStorage.removeItem('@token');
+    window.location.href = '/';
+  };
+
   return (
     <NavWrapper type={type}>
       {data &&
@@ -48,15 +45,17 @@ const MultiNavBar = ({ type = 'top', data }: NavProps) => {
         ))}
       {type === 'top' ? ( // 알람과 modal창을 띄워야해서 따로 분리 했습니다.
         <>
+          <Notification
+            type={type}
+            onClick={() =>
+              token ? setIsOpenModal(!isOpenModal) : router.push('/login')
+            }
+          />
           <ButtonWrapper
             type={type}
-            onClick={() => setIsOpenModal(!isOpenModal)}
+            onClick={() => (token ? logout() : router.push('/login'))}
           >
-            알림
-          </ButtonWrapper>
-          {/* TODO: 로그아웃 query 구현해야함 */}
-          <ButtonWrapper type={type} onClick={loginHandler}>
-            {loginState}
+            {token ? '로그아웃' : '로그인'}
           </ButtonWrapper>
         </>
       ) : (
@@ -80,7 +79,7 @@ const NavWrapper = styled.nav<{ type: string }>`
   top: 0;
   right: 0;
 `;
-const ButtonWrapper = styled.button<{ type: string; active?: string }>`
+export const ButtonWrapper = styled.button<{ type: string; active?: string }>`
   width: ${(props) => (props.type === 'top' ? '7rem' : '10rem')};
   margin: 0 1rem 0 0.5rem;
   background-color: #ffffff;

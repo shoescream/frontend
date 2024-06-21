@@ -16,14 +16,15 @@ interface FieldType {
 interface FormSectionProps {
   title: string;
   fields: FieldType[];
+  originId?: string;
 }
 
-const FormSection = ({ title, fields }: FormSectionProps) => {
+const FormSection = ({ title, fields, originId }: FormSectionProps) => {
   return (
     <SectionWrapper>
       <Category>{title}</Category>
       {fields.map((props) => (
-        <StyledInput {...props} key={props.name} />
+        <StyledInput {...props} key={props.name} originId={originId} />
       ))}
     </SectionWrapper>
   );

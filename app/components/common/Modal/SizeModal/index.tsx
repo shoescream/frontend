@@ -1,5 +1,6 @@
 import styled, { CSSProperties } from 'styled-components';
 import { MouseEvent, PropsWithChildren } from 'react';
+import theme from '@/styles/theme';
 
 interface SizeModalProps {
   onClose: () => void;
@@ -72,6 +73,6 @@ const ModalHeader = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: 700;
-  font-size: 1.8rem;
+  font-size: ${theme.fontSize.title2};
   height: 5.8rem;
 `;

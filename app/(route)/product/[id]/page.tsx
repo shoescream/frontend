@@ -25,13 +25,13 @@ import Image from 'next/image';
 import Bids from '@/components/DetailProduct/Bids';
 import Charts from '@/components/DetailProduct/Charts';
 import GlobalSizes from '@/components/DetailProduct/GlobalSizes';
+import LocalStorage from '@/utils/localStorage';
 
 const DetailProduct = () => {
   const router = useRouter();
   const pathname = usePathname();
   const addComma = useAddComma();
-  // const isLoggedIn = localStorage.getItem('@token');
-  const isLoggedIn = true;
+  const isLoggedIn = LocalStorage.getItem('@token');
   const [favorite, setFavorite] = useState(false);
   const [saveShop, setSaveShop] = useState(false);
   const [currentFilterBySize, setCurrentFilterBySize] = useState('체결 거래');
@@ -44,6 +44,8 @@ const DetailProduct = () => {
   const { data, isLoading } = useDetailProduct(
     pathname.replace('/product/', '')
   );
+
+  console.log(pathname.replace('/product/', ''));
 
   useEffect(() => {
     if (isOpen || isSellingModalOpen !== 'none') {
@@ -58,9 +60,8 @@ const DetailProduct = () => {
   }, [isOpen, isSellingModalOpen]);
 
   if (isLoading) {
-    return <Container>noting</Container>;
+    return <Container>Loading...</Container>;
   }
-
   return (
     <>
       {isOpen && (
@@ -74,11 +75,7 @@ const DetailProduct = () => {
       {isSellingModalOpen !== 'none' && (
         <SellOrBuySizeModal
           onClose={() => setIsSellingModalOpen('none')}
-          data={
-            isSellingModalOpen === 'buy'
-              ? data?.productOptionResponse.sizeAndPriceBuyInfo!
-              : data?.productOptionResponse.sizeAndPriceSellInfo!
-          }
+          data={isSellingModalOpen === 'buy' ? data! : data!}
           type={isSellingModalOpen}
         />
       )}
@@ -99,7 +96,7 @@ const DetailProduct = () => {
           <RightBox>
             <div>
               <div>
-                <PriceLabel>즉시 구매가</PriceLabel>
+                <PriceLabel>즉시 구매가!</PriceLabel>
                 <Price>{addComma(data?.productResponse.price!)}원</Price>
               </div>
               <FavoriteWrapper>
@@ -177,6 +174,7 @@ const DetailProduct = () => {
                     width={44}
                     height={44}
                     style={{ borderRadius: 100, objectFit: 'cover' }}
+                    loader={({ src }) => src}
                   />
                   <div style={{ marginLeft: '1rem' }}>
                     <ShopText>
@@ -214,11 +212,11 @@ const DetailProduct = () => {
                 <DetailTitle>시세</DetailTitle>
               </DetailTitleBox>
               <Charts
-                productNumber={String(data?.productResponse.id)}
+                productNumber={String(data?.productResponse.productNumber)}
                 size={currentSizeItem}
               />
               <Bids
-                productNumber={String(data?.productResponse.id)}
+                productNumber={String(data?.productResponse.productNumber)}
                 size={currentSizeItem}
                 currentFilterBySize={currentFilterBySize}
                 onSetCurrentFilterBySize={setCurrentFilterBySize}
@@ -236,6 +234,7 @@ const DetailProduct = () => {
           paddingBottom: '3.5rem',
           borderBottom: `0.1rem solid ${theme.colors.gray[100]}`,
           cursor: 'pointer',
+          width: '128rem',
         }}
       >
         <p
@@ -296,11 +295,15 @@ const DetailProduct = () => {
 export default DetailProduct;
 
 const Container = styled.div`
+  width: 128rem;
   padding: 4rem;
   height: auto;
   display: flex;
+  justify-content: center;
   margin-bottom: 10rem;
   position: relative;
+  background-color: white;
+  margin: 0 auto;
 `;
 
 const LeftBox = styled.div``;
@@ -343,7 +346,7 @@ const NameBox = styled.div`
 `;
 
 const EngName = styled.p`
-  font-size: 1.8rem;
+  font-size: ${theme.fontSize.title1};
   font-weight: 300;
   margin-bottom: 0.4rem;
 `;
@@ -363,7 +366,7 @@ const SizeButton = styled.div`
   border-radius: 1rem;
   cursor: pointer;
   width: 100%;
-  font-size: 1.5rem;
+  font-size: ${theme.fontSize.subtitle3};
   font-weight: 600;
   display: flex;
   justify-content: space-between;
@@ -423,7 +426,7 @@ const DetailTitleBox = styled.div`
 `;
 
 const DetailTitle = styled.p`
-  font-size: 1.8rem;
+  font-size: ${theme.fontSize.title2};
   font-weight: 600;
 `;
 
@@ -457,11 +460,11 @@ const BlurBoxText = styled.span`
   white-space: pre-wrap;
   text-align: center;
   color: ${theme.colors.main};
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
 `;
 
 const ButtonText = styled.span`
-  font-size: 1.4rem;
+  font-size: ${theme.fontSize.body1};
 `;
 
 const ModalHeader = styled.div`

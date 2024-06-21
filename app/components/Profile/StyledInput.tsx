@@ -5,6 +5,7 @@ import { RegisterOptions, useFormContext } from 'react-hook-form';
 import theme from '@/styles/theme';
 import Button from '../common/Button';
 import { FormData } from 'app/(route)/my/profile/page';
+import ModifyButton from '../common/Button/ModifyButton';
 
 interface StyledInputProps extends Pick<HTMLInputElement, 'type'> {
   label: string;
@@ -14,6 +15,7 @@ interface StyledInputProps extends Pick<HTMLInputElement, 'type'> {
   isEditable?: boolean;
   helperText?: string;
   onClickModify?: () => void;
+  originId?: string;
 }
 
 const StyledInput = ({
@@ -25,10 +27,13 @@ const StyledInput = ({
   isEditable = false,
   helperText,
   onClickModify,
+  originId,
 }: StyledInputProps) => {
   const [changeToEdit, setChangeToEdit] = useState(false);
+  const [initialValue, setInitialValue] = useState<string | undefined>();
   const {
     register,
+    getValues,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -44,7 +49,7 @@ const StyledInput = ({
   };
 
   const handleCancel = () => {
-    setValue(name as keyof FormData, '');
+    setValue(name as keyof FormData, initialValue as string);
     setChangeToEdit(false);
   };
 
@@ -52,11 +57,22 @@ const StyledInput = ({
     <InputWrapper>
       {!changeToEdit && (
         <ModifyButton
-          onClick={() => {
-            if (onClickModify) {
-              onClickModify();
+          onClickModify={() => {
+            if (
+              originId &&
+              !originId.startsWith('kakao') &&
+              ['id', 'password', 'email'].includes(name)
+            ) {
+              alert(
+                '카카오 로그인 사용자는 아이디 및 비밀번호를 수정할 수 없습니다.'
+              );
             } else {
-              setChangeToEdit(true);
+              if (onClickModify) {
+                onClickModify();
+              } else {
+                setInitialValue(getValues(name as keyof FormData) as string);
+                setChangeToEdit(true);
+              }
             }
           }}
         >
@@ -117,24 +133,6 @@ const InputWrapper = styled.div`
   position: relative;
 `;
 
-const ModifyButton = styled.button`
-  position: absolute;
-  right: 0;
-  bottom: 2.2rem;
-  z-index: 1;
-  height: 3.4rem;
-  border: 0.1rem solid ${theme.colors.border};
-  color: ${theme.colors.text.primary};
-  background-color: white;
-  border-radius: 1rem;
-  font-size: 1.2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 1.1rem;
-  cursor: pointer;
-`;
-
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -143,7 +141,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const HelperText = styled.p`
-  font-size: 1.1rem;
+  font-size: ${theme.fontSize.caption2};
   color: ${theme.colors.text.secondary};
   line-height: 1.6rem;
 `;

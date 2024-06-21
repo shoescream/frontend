@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Instance } from 'app/api';
+import { Instance, InstanceWithToken } from 'app/api';
 export interface ProductHistory {
   productName: string;
   productImage: string;
@@ -32,13 +32,15 @@ const useProductHistory = ({
     enabled: !!type,
     retry: false,
     queryFn: async () => {
-      const response = await Instance.get(
+      const response = await InstanceWithToken.get(
         '/my/' +
           type +
           `?status=${status}` +
           `&startDate=${startDate}` +
           `&endDate=${endDate}`
       );
+
+      console.log(response);
       return response.data;
     },
   });

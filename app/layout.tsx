@@ -8,6 +8,7 @@ import theme from '@/styles/theme';
 import GlobalStyle from './GlobalStyle';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import { usePathname } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'] });
 const pretendard = localFont({
@@ -21,6 +22,10 @@ interface RootLayoutProps {
 }
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+  const pathname = usePathname();
+  const isProductPayPage =
+    pathname.includes('/buy/') || pathname.includes('/sell/');
+
   return (
     <ReactQueryClientProvider>
       <ThemeProvider theme={theme}>
@@ -28,13 +33,21 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
           <body className={`${inter.className} ${pretendard.className}`}>
             <GlobalStyle />
             <Container>
-              <Content>
-                <HeaderWrapper>
+              <HeaderWrapper>
+                <div style={{ width: '128rem' }}>
                   <Header />
-                </HeaderWrapper>
-                <ContentWrapper>{children}</ContentWrapper>
-                <Footer />
+                </div>
+              </HeaderWrapper>
+              <Content className={isProductPayPage ? 'full-width' : ''}>
+                <ContentWrapper
+                  className={isProductPayPage ? 'full-width' : ''}
+                >
+                  {children}
+                </ContentWrapper>
               </Content>
+              <FooterWrapper>
+                <Footer />
+              </FooterWrapper>
             </Container>
           </body>
         </html>
@@ -48,23 +61,47 @@ export default RootLayout;
 const Container = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Content = styled.div`
-  width: 128rem;
   height: 100%;
   margin: 0 auto;
   padding: 0 4rem;
+
+  &.full-width {
+    width: 100%;
+    margin: 13rem 0 0;
+    padding: 0;
+  }
 `;
 
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
   background-color: white;
-  width: 120rem;
+  width: 100%;
   z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ContentWrapper = styled.div`
-  padding-top: 13rem;
+  padding-top: 12rem;
+
+  &.full-width {
+    width: 100%;
+    padding: 0;
+  }
+`;
+
+const FooterWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

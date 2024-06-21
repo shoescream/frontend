@@ -77,7 +77,7 @@ const Avatar = styled.div`
 `;
 
 const Nickname = styled.strong`
-  font-size: 1.8rem;
+  font-size: ${theme.fontSize.title2};
 `;
 
 const StyledImage = styled.img`
@@ -92,7 +92,7 @@ export const CustomButton = styled.div`
   color: ${theme.colors.text.primary};
   background-color: white;
   border-radius: 1rem;
-  font-size: 1.2rem;
+  font-size: ${theme.fontSize.caption1};
   display: flex;
   justify-content: center;
   align-items: center;

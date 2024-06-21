@@ -5,11 +5,38 @@ import {
   useKakaoProfile,
   useSocialLogin,
 } from '@/hooks/queries/useAuth';
+import LocalStorage from '@/utils/localStorage';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Kakao = () => {
+  const router = useRouter();
   const [code, setCode] = useState('');
+  const { data: loginData, isError: loginError } = useKakaoLogin(code);
+  const kakaoAccessToken = loginData?.data.access_token;
+  const kakaoRefreshToken = loginData?.data.refresh_token;
+  const { data: newData } = useKakaoProfile(
+    kakaoAccessToken,
+    kakaoRefreshToken
+  );
+  const { mutate } = useSocialLogin({
+    successHandler: (data) => {
+      if (data.resultCode === 'SUCCESS') {
+        localStorage.setItem('@token', data.result!.tokenResponse.accessToken);
+        localStorage.setItem(
+          '@refresh',
+          data.result!.tokenResponse.refreshToken
+        );
+        localStorage.setItem(
+          '@user',
+          JSON.stringify(data.result!.memberResponse)
+        );
+        LocalStorage.setItem('canAccessSubscribe', 'true');
+        router.push('/subscribe');
+      }
+    },
+  });
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
@@ -18,15 +45,6 @@ const Kakao = () => {
       setCode(codeFromURL);
     }
   }, []);
-
-  const { data: loginData, isError: loginError } = useKakaoLogin(code);
-  const kakaoAccessToken = loginData?.data.access_token;
-  const kakaoRefreshToken = loginData?.data.refresh_token;
-  const { data: newData } = useKakaoProfile(
-    kakaoAccessToken,
-    kakaoRefreshToken
-  );
-  const { mutate } = useSocialLogin();
 
   useEffect(() => {
     if (newData) {

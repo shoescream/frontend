@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Instance, PostInstance } from 'app/api';
+import { Instance, InstanceWithToken, PostInstance } from 'app/api';
 import { Result } from './useHistory';
 
 interface useAllReviewsProps {
@@ -85,7 +85,7 @@ const useGetMyReviews = () => {
     queryKey: ['MyReview', 'my'],
     retry: false,
     queryFn: async () => {
-      const response = await Instance.get('my/review');
+      const response = await InstanceWithToken.get('my/review');
       return response.data;
     },
   });
@@ -94,7 +94,7 @@ const useGetMyReviews = () => {
 const useDeleteReview = () => {
   return useMutation({
     mutationFn: async (reviewNumber: number) => {
-      await Instance.post(`/review/delete/${reviewNumber}`);
+      await InstanceWithToken.post(`/review/delete/${reviewNumber}`);
     },
     onSuccess: () => {
       window.location.reload();
@@ -114,7 +114,10 @@ interface updateReviewProps {
 const useUpdateReview = (reviewNumber: number) => {
   return useMutation({
     mutationFn: async (reviewData: updateReviewProps) => {
-      await Instance.post(`/review/update/${reviewNumber}`, reviewData);
+      await InstanceWithToken.post(
+        `/review/update/${reviewNumber}`,
+        reviewData
+      );
     },
     onSuccess: () => {
       window.location.reload();
