@@ -1,7 +1,7 @@
 'use client';
 import ReviewPost from '@/components/Review/ReviewPost';
 import Button from '@/components/common/Button';
-// import RenderPageNumbers from '@/components/common/Paging';
+import RenderPageNumbers from '@/components/common/RenderPaging';
 import { useGetMyReviews } from '@/hooks/queries/useReview';
 import theme from '@/styles/theme';
 import { useState } from 'react';
@@ -104,11 +104,11 @@ const PostReview = () => {
           </ReviewItem>
         ))}
       </ReviewsList>
-      {/* <RenderPageNumbers
+      <RenderPageNumbers
         totalPages={totalPages}
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-      /> */}
+      />
       {isModalOpen && (
         <ReviewPost
           closeModal={closeModal}

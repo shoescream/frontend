@@ -6,7 +6,7 @@ import { useDeleteReview, useProductReviews } from '@/hooks/queries/useReview';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import UpdateReview from '../Review/ReviewUpdate';
-// import RenderPageNumbers from '@/components/common/Paging';
+import RenderPageNumbers from '../common/RenderPaging';
 
 interface ReviewProps {
   productNumber: number;
@@ -119,11 +119,11 @@ const Review = ({ productNumber, productName, productImage }: ReviewProps) => {
           </ReviewContainer>
         ))}
       </Container>
-      {/* <RenderPageNumbers
+      <RenderPageNumbers
         totalPages={totalPages}
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-      /> */}
+      />
       {isModalOpen && (
         <UpdateReview
           closeModal={closeModal}
