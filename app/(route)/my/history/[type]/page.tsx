@@ -21,14 +21,6 @@ const MyHistory = (props: any) => {
   const title = type === 'selling' ? '판매' : '구매';
 
   const router = useRouter();
-  const fetchProductHistory = (status: 'bidding' | 'pending' | 'finished') => {
-    return useProductHistory({
-      type,
-      status,
-      startDate: startDate.format('YYYY-MM-DD'),
-      endDate: endDate.format('YYYY-MM-DD'),
-    });
-  };
 
   const { data: bidding, refetch: bidRe } = useProductHistory({
     type,
