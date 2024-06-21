@@ -17,12 +17,28 @@ const InstanceWithToken = axios.create({
   withCredentials: true,
 });
 
+const PostInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+});
+
 InstanceWithToken.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     config.headers.authorization = `Bearer ${LocalStorage.getItem('@token')}`;
     return config;
   }
 );
+Instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  config.headers.authorization = `Bearer ${LocalStorage.getItem('@token')}`;
+  return config;
+});
+
+PostInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  config.headers.authorization = `Bearer ${LocalStorage.getItem('@token')}`;
+  return config;
+});
 
 InstanceWithToken.interceptors.response.use(
   (response) => response,
@@ -47,4 +63,4 @@ InstanceWithToken.interceptors.response.use(
   }
 );
 
-export { Instance };
+export { Instance, PostInstance };
