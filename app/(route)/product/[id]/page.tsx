@@ -284,7 +284,11 @@ const DetailProduct = () => {
         </div>
       </div>
       {/* 삭제될 수 있음. end */}
-      <Review productNumber={Number(productNumber)} />
+      <Review
+        productNumber={Number(productNumber)}
+        productName={data?.productResponse.productName}
+        productImage={data?.productResponse.productImageResponse.productImage}
+      />
     </>
   );
 };
