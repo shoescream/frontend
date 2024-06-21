@@ -1,10 +1,10 @@
 import { ProductHistory } from '@/hooks/queries/useHistory';
 import useAddComma from '@/hooks/useAddComma';
 import theme from '@/styles/theme';
-import dayjs from 'dayjs';
 import moment from 'moment';
-import { use, useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import RenderPageNumbers from '../common/Paging';
 
 interface SetHistoryListProps {
   selectState: number[];
@@ -25,7 +25,6 @@ const SetHistoryList = ({
   const [finData, setFinData] = useState(finished);
   const addComma = useAddComma();
   const pageSize = 5;
-  const maxPageButtons = 10;
   const getTotalItems = () => {
     if (selectState[0] === 1) {
       return bidding.length;
@@ -118,60 +117,10 @@ const SetHistoryList = ({
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-  const renderPageNumbers = () => {
-    const startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
-    const endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
-    const pageNumbers = [];
-    if (startPage > 1) {
-      pageNumbers.push(
-        <PageNumber key="first" onClick={() => handlePageChange(1)}>
-          {1}
-        </PageNumber>
-      );
-    }
-
-    if (startPage > 2) {
-      pageNumbers.push(
-        <PageNumber key="firstDot" disabled>
-          ...
-        </PageNumber>
-      );
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(
-        <PageNumber
-          key={i}
-          onClick={() => handlePageChange(i)}
-          active={currentPage === i ? 1 : 0}
-        >
-          {i}
-        </PageNumber>
-      );
-    }
-
-    if (endPage < totalPages - 1) {
-      pageNumbers.push(
-        <PageNumber key="lastDot" disabled>
-          ...
-        </PageNumber>
-      );
-    }
-
-    if (endPage < totalPages) {
-      pageNumbers.push(
-        <PageNumber key="last" onClick={() => handlePageChange(totalPages)}>
-          {totalPages}
-        </PageNumber>
-      );
-    }
-    return pageNumbers;
-  };
-
   return (
     <>
       {renderItem()}
-      {totalPages > 1 && <Pagination>{renderPageNumbers()}</Pagination>}
+      {RenderPageNumbers({ totalPages, currentPage, handlePageChange })}
     </>
   );
 };
@@ -214,17 +163,5 @@ const ProductNameOption = styled.div`
     font-size: ${theme.fontSize.subtitle3};
     color: ${theme.colors.gray[200]};
   }
-`;
-
-const Pagination = styled.div`
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-`;
-
-const PageNumber = styled.span<{ active?: number; disabled?: boolean }>`
-  margin: 0 0.5rem;
-  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
-  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
 `;
 export default SetHistoryList;
