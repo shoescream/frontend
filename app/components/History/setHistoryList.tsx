@@ -4,8 +4,7 @@ import theme from '@/styles/theme';
 import moment from 'moment';
 import { useState } from 'react';
 import styled from 'styled-components';
-import RenderPageNumbers from '../common/Paging';
-// import RenderPageNumbers from '@/components/common/Paging';
+import RenderPageNumbers from '../common/RenderPaging';
 
 interface SetHistoryListProps {
   selectState: number[];
@@ -121,11 +120,6 @@ const SetHistoryList = ({
   return (
     <>
       {renderItem()}
-      {/* <RenderPageNumbers
-        totalPages={totalPages}
-        currentPage={currentPage}
-        handlePageChange={handlePageChange}
-      /> */}
       <RenderPageNumbers
         totalPages={totalPages}
         currentPage={currentPage}
