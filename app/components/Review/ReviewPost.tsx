@@ -1,19 +1,18 @@
 import { usePostReview } from '@/hooks/queries/useReview';
 import theme from '@/styles/theme';
+import { ReviewDetails } from 'app/(route)/my/review/page';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 interface reviewPostProps {
   closeModal: () => void;
+  reviewDetails: ReviewDetails | null;
 }
 
-const ReviewPost = ({ closeModal }: reviewPostProps) => {
+const ReviewPost = ({ closeModal, reviewDetails }: reviewPostProps) => {
   const [selectedRating, setSelectedRating] = useState(1);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [reviewText, setReviewText] = useState('');
-  const [reviewTitle, setReviewTitle] = useState(
-    '나이키 V2K 런 퓨어 플래티넘 라이트 아이언 오어'
-  );
   const handleStarClick = (rating: number) => {
     setSelectedRating(rating);
   };
@@ -31,17 +30,24 @@ const ReviewPost = ({ closeModal }: reviewPostProps) => {
     }
   };
 
-  const post = usePostReview();
-  const postReviewHandler = () => {
+  const post = usePostReview({ productNumber: reviewDetails?.id, closeModal });
+
+  const postReviewHandler = async () => {
+    const formData = new FormData();
     const reviewData = {
-      productNumber: 1,
-      reviewTitle: reviewTitle,
+      reviewTitle: reviewText,
       reviewContent: reviewText,
       rating: selectedRating,
-      dealNumber: 1,
-      reviewImages: selectedFiles,
+      dealNumber: reviewDetails?.dealNumber,
     };
-    post.mutate(reviewData);
+    formData.append(
+      'reviewPostRequest',
+      new Blob([JSON.stringify(reviewData)], { type: 'application/json' })
+    );
+    selectedFiles.forEach((file) => {
+      formData.append('reviewImage', file);
+    });
+    post.mutate(formData);
   };
   const handleRemoveFile = (index: number) => {
     const updatedFiles = [...selectedFiles];
@@ -53,12 +59,13 @@ const ReviewPost = ({ closeModal }: reviewPostProps) => {
       <ModalContent>
         <CloseButton onClick={closeModal}>&times;</CloseButton>
         <ModalHeader>
-          <ModalProductImage src="" alt="Product" />
+          <ModalProductImage
+            src={reviewDetails?.productImage}
+            alt={reviewDetails?.productImage}
+          />
           <ModalProductInfo>
-            <ProductName>
-              나이키 V2K 런 퓨어 플래티넘 라이트 아이언 오어
-            </ProductName>
-            <ProductPrice>96000</ProductPrice>
+            <ProductName>{reviewDetails?.productName}</ProductName>
+            <ProductOption>{reviewDetails?.dealPrice}</ProductOption>
           </ModalProductInfo>
         </ModalHeader>
         <RatingSection>
@@ -75,9 +82,8 @@ const ReviewPost = ({ closeModal }: reviewPostProps) => {
         <ImagesSection>
           <FilePreviewWrapper>
             {selectedFiles.map((file, index) => (
-              <FilePreviewContainer>
+              <FilePreviewContainer key={index}>
                 <ImagePreview
-                  key={index}
                   src={URL.createObjectURL(file)}
                   alt={`Review Image ${index + 1}`}
                 />
@@ -105,7 +111,6 @@ const ReviewPost = ({ closeModal }: reviewPostProps) => {
             cols={30}
             onChange={(e) => setReviewText(e.target.value)}
           ></Textarea>
-          <Tags>추천 태그 | #나이키</Tags>
           <SubmitButton type="button" onClick={postReviewHandler}>
             리뷰작성
           </SubmitButton>
@@ -191,7 +196,7 @@ const ModalProductInfo = styled.div`
   flex-direction: column;
 `;
 
-const ProductPrice = styled.div`
+const ProductOption = styled.div`
   color: #ff6f61;
   font-size: ${theme.fontSize.body2};
   margin-bottom: 0.5rem;
@@ -264,12 +269,6 @@ const Textarea = styled.textarea`
   border-radius: 0.5rem;
   margin-bottom: 1rem;
   resize: none;
-`;
-
-const Tags = styled.div`
-  margin-bottom: 1rem;
-  font-size: ${theme.fontSize.body2};
-  color: ${theme.colors.gray[500]};
 `;
 
 const SubmitButton = styled.button`
