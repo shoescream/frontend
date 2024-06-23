@@ -40,6 +40,7 @@ const DetailProduct = () => {
   const [isSellingModalOpen, setIsSellingModalOpen] = useState<
     'none' | 'sell' | 'buy'
   >('none');
+  const productNumber = pathname.replace('/product/', '');
   const { data, isLoading } = useDetailProduct(
     pathname.replace('/product/', '')
   );
@@ -282,7 +283,11 @@ const DetailProduct = () => {
         </div>
       </div>
       {/* 삭제될 수 있음. end */}
-      <Review />
+      <Review
+        productNumber={Number(productNumber)}
+        productName={data?.productResponse.productName}
+        productImage={data?.productResponse.productImageResponse.productImage}
+      />
     </>
   );
 };

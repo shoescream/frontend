@@ -8,7 +8,6 @@ const Instance = axios.create({
     Accept: 'application/json',
   },
 });
-
 const InstanceWithToken = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
@@ -17,5 +16,12 @@ const InstanceWithToken = axios.create({
   },
   withCredentials: true,
 });
+const PostInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    Authorization: `Bearer ${LocalStorage.getItem('@token')}`,
+  },
+});
 
-export { Instance, InstanceWithToken };
+export { Instance, InstanceWithToken, PostInstance };
