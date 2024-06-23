@@ -12,7 +12,8 @@ import {
 
 const ShopPage = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
+  const addComma = useAddComma();
+  
   const { data: products = [] } = useShopProducts();
 
   const onSetSelectedOptions = (option: string) => {
@@ -74,7 +75,7 @@ const ShopPage = () => {
               key={index}
               product={{
                 ...product,
-                price: String(product.price),
+                price: (product.price),
               }}
               showLikeButton
               pageType={'shop'}

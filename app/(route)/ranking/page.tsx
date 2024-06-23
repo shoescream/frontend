@@ -4,14 +4,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import ItemBox from '@/components/ShopPage/ItemBox';
-import useAddComma from '@/hooks/useAddComma';
 import useRankingProducts from '@/hooks/queries/useRankingProducts';
 
 const RankingPage = () => {
   const [additionalImagesCounts, setAdditionalImagesCounts] = useState([
     5, 5, 5,
   ]);
-  const addComma = useAddComma();
 
   const { data: rankingData = [] } = useRankingProducts();
 
@@ -43,7 +41,7 @@ const RankingPage = () => {
                   key={i}
                   product={{
                     ...item,
-                    price: addComma(parseInt(item.price)) + '원',
+                    price: (item.price),
                   }}
                   pageType={'ranking'}
                 />
@@ -83,4 +81,6 @@ const ImageContainer = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 3rem;
+  width: 128rem;
+  justify-content: flex-start;
 `;
